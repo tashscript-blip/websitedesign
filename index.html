@@ -89,7 +89,45 @@
       transform: scaleX(1);
     }
 
-    /* FOOTER */
+    /* HOLOGRAPHIC PANELS */
+    .holo-panel {
+      background: rgba(0, 255, 195, 0.05);
+      border: 1px solid rgba(0, 255, 195, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 20px rgba(0, 255, 195, 0.15);
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 1s ease;
+    }
+
+    .holo-panel.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .holo-panel:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 0 30px rgba(0, 255, 195, 0.3);
+    }
+
+    /* ICONS */
+    .icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+      color: #00ffc3;
+      text-shadow: 0 0 15px #00ffc3;
+      animation: iconFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes iconFloat {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0); }
+    }
+
     .footer {
       text-align: center;
       padding: 40px;
@@ -110,6 +148,11 @@
       A unified, intelligent stronghold for your entire digital life — built to eliminate fragmentation,
       reduce risk, and give people clarity, control, and peace of mind.
     </p>
+
+    <div class="holo-panel">
+      <div class="icon">⚡</div>
+      <p>Real-time clarity. Guided protection. A future-proof foundation.</p>
+    </div>
   </section>
 
   <div class="divider"></div>
@@ -117,11 +160,14 @@
   <!-- PROBLEM -->
   <section>
     <h2>Our Digital Lives Are Dangerously Fragmented</h2>
-    <p>
-      Passwords, financial accounts, crypto wallets, legal documents, cloud storage, and final wishes
-      are scattered across dozens of insecure services. This creates persistent anxiety and exposes
-      people to catastrophic risk.
-    </p>
+    <div class="holo-panel">
+      <div class="icon">🧩</div>
+      <p>
+        Passwords, financial accounts, crypto wallets, legal documents, cloud storage, and final wishes
+        are scattered across dozens of insecure services. This creates persistent anxiety and exposes
+        people to catastrophic risk.
+      </p>
+    </div>
   </section>
 
   <div class="divider"></div>
@@ -129,11 +175,14 @@
   <!-- GAPS -->
   <section>
     <h2>The Universal Unmet Need</h2>
-    <p>
-      Our research uncovered three systemic gaps: the Actionability Gap, the Integration Gap, and the
-      Guidance Gap. People understand the need to organize their digital lives — but they lack a
-      single platform that helps them actually do it.
-    </p>
+    <div class="holo-panel">
+      <div class="icon">🚀</div>
+      <p>
+        Our research uncovered three systemic gaps: the Actionability Gap, the Integration Gap, and the
+        Guidance Gap. People understand the need to organize their digital lives — but they lack a
+        single platform that helps them actually do it.
+      </p>
+    </div>
   </section>
 
   <div class="divider"></div>
@@ -141,22 +190,13 @@
   <!-- CUSTOMER -->
   <section>
     <h2>The Proactive Digital Steward</h2>
-    <p>
-      Professionals, small business owners, and heads of households who manage complex digital
-      footprints and value security, privacy, and legacy planning. They are willing to invest in a
-      premium, trustworthy platform that reduces risk and delivers peace of mind.
-    </p>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- VISION -->
-  <section>
-    <h2>The Vision</h2>
-    <p>
-      A single, intelligent stronghold for your entire digital identity — transforming abstract security
-      concepts into guided workflows, automated tools, and a holistic command center.
-    </p>
+    <div class="holo-panel">
+      <div class="icon">👤</div>
+      <p>
+        Professionals, small business owners, and heads of households who manage complex digital
+        footprints and value security, privacy, and legacy planning.
+      </p>
+    </div>
   </section>
 
   <div class="divider"></div>
@@ -164,44 +204,36 @@
   <!-- PLATFORM PILLARS -->
   <section>
     <h2>Platform Pillars</h2>
-    <p><strong>Unified Digital Asset Dashboard:</strong> Eliminates fragmentation and blind spots.</p>
-    <p><strong>Secure Credential Hub:</strong> Enterprise-grade password and passkey management.</p>
-    <p><strong>Data Guardian Toolkit:</strong> Automated data broker removal and privacy workflows.</p>
-    <p><strong>Digital Wealth Hub:</strong> Crypto/NFT tracking and analytics.</p>
-    <p><strong>Secure Vault & Advisor Portal:</strong> Encrypted document storage and collaboration.</p>
-    <p><strong>Digital Legacy Planner:</strong> Executor tools, multimedia wishes, and continuity planning.</p>
-  </section>
 
-  <div class="divider"></div>
+    <div class="holo-panel">
+      <div class="icon">📊</div>
+      <p><strong>Unified Digital Asset Dashboard:</strong> Eliminates fragmentation and blind spots.</p>
+    </div>
 
-  <!-- MONETIZATION -->
-  <section>
-    <h2>Monetization Strategy</h2>
-    <p><strong>Freemium:</strong> Footprint scan and basic tools.</p>
-    <p><strong>Personal Premium ($9–$15/mo):</strong> Full suite for individuals.</p>
-    <p><strong>Business/Family ($20–$35/mo per user):</strong> Team dashboards and collaboration.</p>
-    <p>Secondary revenue through affiliate partnerships and expert consultations.</p>
-  </section>
+    <div class="holo-panel">
+      <div class="icon">🔐</div>
+      <p><strong>Secure Credential Hub:</strong> Enterprise-grade password and passkey management.</p>
+    </div>
 
-  <div class="divider"></div>
+    <div class="holo-panel">
+      <div class="icon">🛡️</div>
+      <p><strong>Data Guardian Toolkit:</strong> Automated data broker removal and privacy workflows.</p>
+    </div>
 
-  <!-- COMPETITIVE -->
-  <section>
-    <h2>Competitive Advantage</h2>
-    <p>
-      Unlike niche tools, the Command Center integrates identity, finance, legal, and legacy into a
-      single guided platform — offering a 360° view of digital life.
-    </p>
-  </section>
+    <div class="holo-panel">
+      <div class="icon">💎</div>
+      <p><strong>Digital Wealth Hub:</strong> Crypto/NFT tracking and analytics.</p>
+    </div>
 
-  <div class="divider"></div>
+    <div class="holo-panel">
+      <div class="icon">📁</div>
+      <p><strong>Secure Vault & Advisor Portal:</strong> Encrypted document storage and collaboration.</p>
+    </div>
 
-  <!-- ROADMAP -->
-  <section>
-    <h2>Roadmap to Market Leadership</h2>
-    <p><strong>Phase 1 (0–6 months):</strong> MVP with core security features.</p>
-    <p><strong>Phase 2 (6–18 months):</strong> Pilot launch, iteration, partnerships.</p>
-    <p><strong>Phase 3 (18+ months):</strong> Premium tiers, advisor network, thought leadership.</p>
+    <div class="holo-panel">
+      <div class="icon">🌙</div>
+      <p><strong>Digital Legacy Planner:</strong> Executor tools, multimedia wishes, and continuity planning.</p>
+    </div>
   </section>
 
   <div class="divider"></div>
@@ -209,11 +241,14 @@
   <!-- CTA -->
   <section>
     <h2>It’s Time to Build the Foundation</h2>
-    <p>
-      With research, vision, and execution aligned, we are ready to build the definitive platform for
-      digital identity management. Let’s transform digital chaos into clarity, control, and legacy-grade
-      peace of mind.
-    </p>
+    <div class="holo-panel">
+      <div class="icon">🏛️</div>
+      <p>
+        With research, vision, and execution aligned, we are ready to build the definitive platform for
+        digital identity management. Let’s transform digital chaos into clarity, control, and legacy-grade
+        peace of mind.
+      </p>
+    </div>
   </section>
 
   <div class="footer">
@@ -224,6 +259,7 @@
   <script>
     const sections = document.querySelectorAll("section");
     const dividers = document.querySelectorAll(".divider");
+    const panels = document.querySelectorAll(".holo-panel");
 
     const reveal = () => {
       const trigger = window.innerHeight * 0.85;
@@ -236,6 +272,11 @@
       dividers.forEach(div => {
         const top = div.getBoundingClientRect().top;
         if (top < trigger) div.classList.add("visible");
+      });
+
+      panels.forEach(panel => {
+        const top = panel.getBoundingClientRect().top;
+        if (top < trigger) panel.classList.add("visible");
       });
     };
 

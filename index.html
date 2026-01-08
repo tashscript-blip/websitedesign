@@ -15,27 +15,7 @@
       overflow-x: hidden;
     }
 
-    section {
-      padding: 80px 20px;
-      max-width: 900px;
-      margin: auto;
-      position: relative;
-      z-index: 2;
-    }
-
-    h1, h2 {
-      color: #00ffc3;
-      text-shadow: 0 0 20px #00ffc3;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    p {
-      line-height: 1.6;
-      opacity: 0.9;
-      font-size: 1.1rem;
-    }
-
+    /* PARALLAX GRID BACKGROUND */
     .grid-bg {
       position: fixed;
       top: 0;
@@ -47,16 +27,69 @@
       background-size: 40px 40px;
       opacity: 0.05;
       z-index: 0;
+      animation: drift 20s linear infinite;
     }
 
+    @keyframes drift {
+      from { transform: translateY(0); }
+      to { transform: translateY(-200px); }
+    }
+
+    /* SECTION BASE */
+    section {
+      padding: 80px 20px;
+      max-width: 900px;
+      margin: auto;
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s ease;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* HEADERS */
+    h1, h2 {
+      color: #00ffc3;
+      text-shadow: 0 0 20px #00ffc3;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      animation: glowPulse 4s infinite ease-in-out;
+    }
+
+    @keyframes glowPulse {
+      0% { text-shadow: 0 0 10px #00ffc3; }
+      50% { text-shadow: 0 0 25px #00ffc3; }
+      100% { text-shadow: 0 0 10px #00ffc3; }
+    }
+
+    p {
+      line-height: 1.6;
+      opacity: 0.9;
+      font-size: 1.1rem;
+    }
+
+    /* DIVIDER */
     .divider {
       height: 2px;
       width: 100%;
       background: linear-gradient(to right, transparent, #00ffc3, transparent);
       margin: 60px 0;
-      opacity: 0.4;
+      opacity: 0;
+      transform: scaleX(0.5);
+      transition: all 1s ease;
     }
 
+    .divider.visible {
+      opacity: 0.4;
+      transform: scaleX(1);
+    }
+
+    /* FOOTER */
     .footer {
       text-align: center;
       padding: 40px;
@@ -186,6 +219,29 @@
   <div class="footer">
     © 2026 LEGACY GROVE CODEX LLC
   </div>
+
+  <!-- SCROLL REVEAL SCRIPT -->
+  <script>
+    const sections = document.querySelectorAll("section");
+    const dividers = document.querySelectorAll(".divider");
+
+    const reveal = () => {
+      const trigger = window.innerHeight * 0.85;
+
+      sections.forEach(sec => {
+        const top = sec.getBoundingClientRect().top;
+        if (top < trigger) sec.classList.add("visible");
+      });
+
+      dividers.forEach(div => {
+        const top = div.getBoundingClientRect().top;
+        if (top < trigger) div.classList.add("visible");
+      });
+    };
+
+    window.addEventListener("scroll", reveal);
+    reveal();
+  </script>
 
 </body>
 </html>

@@ -1,74 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LEGACY GROVE CODEX</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LEGACY GROVE CODEX</title>
 
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: black;
-            color: #e0e0e0;
-            font-family: "Segoe UI", sans-serif;
-            overflow-x: hidden;
-        }
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+      font-family: 'Segoe UI', sans-serif;
+      color: #e0e0e0;
+      overflow-x: hidden;
+    }
 
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
-        }
+    .grid-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(#00ffc3 0.5px, transparent 0.5px),
+                        radial-gradient(#00ffc3 0.5px, transparent 0.5px);
+      background-size: 40px 40px;
+      opacity: 0.05;
+      z-index: 0;
+    }
 
-        h1 {
-            font-size: 3.5rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin: 0;
-            color: #c9a86a;
-        }
+    .hero {
+      position: relative;
+      z-index: 1;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
 
-        p {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin-top: 20px;
-            opacity: 0.8;
-        }
+    h1 {
+      font-size: 3.5rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #00ffc3;
+      text-shadow: 0 0 20px #00ffc3;
+    }
 
-        .glow {
-            animation: glowPulse 3s infinite ease-in-out;
-        }
+    p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin-top: 20px;
+      opacity: 0.85;
+    }
 
-        @keyframes glowPulse {
-            0% { text-shadow: 0 0 10px #c9a86a; }
-            50% { text-shadow: 0 0 25px #c9a86a; }
-            100% { text-shadow: 0 0 10px #c9a86a; }
-        }
+    .footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      opacity: 0.5;
+    }
 
-        .footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 0.9rem;
-            opacity: 0.5;
-        }
-    </style>
+    .beam {
+      position: absolute;
+      bottom: 0;
+      width: 4px;
+      height: 100px;
+      background: linear-gradient(to top, #00ffc3, transparent);
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.2; }
+      50% { opacity: 1; }
+      100% { opacity: 0.2; }
+    }
+  </style>
 </head>
 
 <body>
-    <div class="hero">
-        <h1 class="glow">LEGACY GROVE CODEX</h1>
-        <p>Digital construction is underway.  
-        The Citadel awakens.  
-        2026 systems are being forged in real time.</p>
-    </div>
+  <div class="grid-bg"></div>
 
-    <div class="footer">
-        © 2026 LEGACY GROVE CODEX LLC
-    </div>
+  <div class="hero">
+    <h1>The Call to Organize</h1>
+    <p>Your Digital Identity Foundation is being forged.  
+    LEGACY GROVE CODEX awakens.</p>
+    <div class="beam"></div>
+  </div>
+
+  <div class="footer">
+    © 2026 LEGACY GROVE CODEX LLC
+  </div>
 </body>
 </html>

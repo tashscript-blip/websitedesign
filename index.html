@@ -13,6 +13,7 @@
       color: #e0e0e0;
       font-family: "Segoe UI", sans-serif;
       overflow-x: hidden;
+      scroll-behavior: smooth;
     }
 
     /* PARALLAX GRID BACKGROUND */
@@ -35,6 +36,106 @@
       to { transform: translateY(-200px); }
     }
 
+    /* FLOATING NAVIGATION BAR */
+    nav {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 255, 195, 0.08);
+      border: 1px solid rgba(0, 255, 195, 0.3);
+      padding: 12px 30px;
+      border-radius: 14px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(0, 255, 195, 0.2);
+      z-index: 10;
+      display: flex;
+      gap: 25px;
+    }
+
+    nav a {
+      color: #00ffc3;
+      text-decoration: none;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: 0.3s ease;
+    }
+
+    nav a:hover {
+      text-shadow: 0 0 10px #00ffc3;
+      transform: translateY(-2px);
+    }
+
+    /* HERO HOLOGRAPHIC ANIMATION */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .holo-ring {
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      border: 2px solid rgba(0, 255, 195, 0.4);
+      box-shadow: 0 0 40px rgba(0, 255, 195, 0.3);
+      animation: spin 12s linear infinite, pulse 3s ease-in-out infinite;
+      position: absolute;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 20px rgba(0, 255, 195, 0.2); }
+      50% { box-shadow: 0 0 40px rgba(0, 255, 195, 0.5); }
+      100% { box-shadow: 0 0 20px rgba(0, 255, 195, 0.2); }
+    }
+
+    .hero-core {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,255,195,0.7), rgba(0,255,195,0.1));
+      animation: corePulse 4s ease-in-out infinite;
+      position: absolute;
+    }
+
+    @keyframes corePulse {
+      0% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.15); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.7; }
+    }
+
+    .hero h1 {
+      margin-top: 320px;
+      font-size: 3rem;
+      color: #00ffc3;
+      text-shadow: 0 0 20px #00ffc3;
+      animation: glowPulse 4s infinite ease-in-out;
+    }
+
+    @keyframes glowPulse {
+      0% { text-shadow: 0 0 10px #00ffc3; }
+      50% { text-shadow: 0 0 25px #00ffc3; }
+      100% { text-shadow: 0 0 10px #00ffc3; }
+    }
+
+    .hero p {
+      max-width: 600px;
+      margin-top: 20px;
+      opacity: 0.85;
+      font-size: 1.2rem;
+    }
+
     /* SECTION BASE */
     section {
       padding: 80px 20px;
@@ -50,27 +151,6 @@
     section.visible {
       opacity: 1;
       transform: translateY(0);
-    }
-
-    /* HEADERS */
-    h1, h2 {
-      color: #00ffc3;
-      text-shadow: 0 0 20px #00ffc3;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      animation: glowPulse 4s infinite ease-in-out;
-    }
-
-    @keyframes glowPulse {
-      0% { text-shadow: 0 0 10px #00ffc3; }
-      50% { text-shadow: 0 0 25px #00ffc3; }
-      100% { text-shadow: 0 0 10px #00ffc3; }
-    }
-
-    p {
-      line-height: 1.6;
-      opacity: 0.9;
-      font-size: 1.1rem;
     }
 
     /* DIVIDER */
@@ -141,68 +221,56 @@
 
   <div class="grid-bg"></div>
 
-  <!-- HERO -->
-  <section>
-    <h1>The Digital Identity Command Center</h1>
-    <p>
-      A unified, intelligent stronghold for your entire digital life — built to eliminate fragmentation,
-      reduce risk, and give people clarity, control, and peace of mind.
-    </p>
+  <!-- FLOATING NAVIGATION -->
+  <nav>
+    <a href="#problem">Problem</a>
+    <a href="#gaps">Gaps</a>
+    <a href="#customer">Customer</a>
+    <a href="#pillars">Pillars</a>
+    <a href="#roadmap">Roadmap</a>
+  </nav>
 
-    <div class="holo-panel">
-      <div class="icon">⚡</div>
-      <p>Real-time clarity. Guided protection. A future-proof foundation.</p>
-    </div>
-  </section>
+  <!-- HOLOGRAPHIC HERO -->
+  <div class="hero">
+    <div class="holo-ring"></div>
+    <div class="hero-core"></div>
 
-  <div class="divider"></div>
+    <h1>Digital Identity Command Center</h1>
+    <p>The Codex awakens. Your digital foundation begins here.</p>
+  </div>
 
-  <!-- PROBLEM -->
-  <section>
+  <!-- CONTENT SECTIONS -->
+  <section id="problem">
     <h2>Our Digital Lives Are Dangerously Fragmented</h2>
     <div class="holo-panel">
       <div class="icon">🧩</div>
-      <p>
-        Passwords, financial accounts, crypto wallets, legal documents, cloud storage, and final wishes
-        are scattered across dozens of insecure services. This creates persistent anxiety and exposes
-        people to catastrophic risk.
-      </p>
+      <p>Passwords, financial accounts, crypto wallets, legal documents, cloud storage, and final wishes are scattered across dozens of insecure services.</p>
     </div>
   </section>
 
   <div class="divider"></div>
 
-  <!-- GAPS -->
-  <section>
+  <section id="gaps">
     <h2>The Universal Unmet Need</h2>
     <div class="holo-panel">
       <div class="icon">🚀</div>
-      <p>
-        Our research uncovered three systemic gaps: the Actionability Gap, the Integration Gap, and the
-        Guidance Gap. People understand the need to organize their digital lives — but they lack a
-        single platform that helps them actually do it.
-      </p>
+      <p>The Actionability Gap, Integration Gap, and Guidance Gap prevent people from organizing their digital lives effectively.</p>
     </div>
   </section>
 
   <div class="divider"></div>
 
-  <!-- CUSTOMER -->
-  <section>
+  <section id="customer">
     <h2>The Proactive Digital Steward</h2>
     <div class="holo-panel">
       <div class="icon">👤</div>
-      <p>
-        Professionals, small business owners, and heads of households who manage complex digital
-        footprints and value security, privacy, and legacy planning.
-      </p>
+      <p>Professionals and heads of households who value security, privacy, and legacy planning.</p>
     </div>
   </section>
 
   <div class="divider"></div>
 
-  <!-- PLATFORM PILLARS -->
-  <section>
+  <section id="pillars">
     <h2>Platform Pillars</h2>
 
     <div class="holo-panel">
@@ -227,62 +295,4 @@
 
     <div class="holo-panel">
       <div class="icon">📁</div>
-      <p><strong>Secure Vault & Advisor Portal:</strong> Encrypted document storage and collaboration.</p>
-    </div>
-
-    <div class="holo-panel">
-      <div class="icon">🌙</div>
-      <p><strong>Digital Legacy Planner:</strong> Executor tools, multimedia wishes, and continuity planning.</p>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- CTA -->
-  <section>
-    <h2>It’s Time to Build the Foundation</h2>
-    <div class="holo-panel">
-      <div class="icon">🏛️</div>
-      <p>
-        With research, vision, and execution aligned, we are ready to build the definitive platform for
-        digital identity management. Let’s transform digital chaos into clarity, control, and legacy-grade
-        peace of mind.
-      </p>
-    </div>
-  </section>
-
-  <div class="footer">
-    © 2026 LEGACY GROVE CODEX LLC
-  </div>
-
-  <!-- SCROLL REVEAL SCRIPT -->
-  <script>
-    const sections = document.querySelectorAll("section");
-    const dividers = document.querySelectorAll(".divider");
-    const panels = document.querySelectorAll(".holo-panel");
-
-    const reveal = () => {
-      const trigger = window.innerHeight * 0.85;
-
-      sections.forEach(sec => {
-        const top = sec.getBoundingClientRect().top;
-        if (top < trigger) sec.classList.add("visible");
-      });
-
-      dividers.forEach(div => {
-        const top = div.getBoundingClientRect().top;
-        if (top < trigger) div.classList.add("visible");
-      });
-
-      panels.forEach(panel => {
-        const top = panel.getBoundingClientRect().top;
-        if (top < trigger) panel.classList.add("visible");
-      });
-    };
-
-    window.addEventListener("scroll", reveal);
-    reveal();
-  </script>
-
-</body>
-</html>
+      <p><strong>Secure Vault & Advisor Portal:</strong> Encrypted document storage and collaboration

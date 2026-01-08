@@ -214,12 +214,55 @@
       opacity: 0.5;
       font-size: 0.9rem;
     }
+    /* NODE NETWORK CANVAS */
+#nodeNetwork {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+/* GLYPH CONSTELLATIONS */
+.glyph-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.glyph {
+  position: absolute;
+  font-size: 28px;
+  color: #00ffc3;
+  opacity: 0.15;
+  text-shadow: 0 0 12px #00ffc3;
+  animation: driftGlyph 12s infinite ease-in-out;
+}
+
+@keyframes driftGlyph {
+  0% { transform: translateY(0) translateX(0); opacity: 0.1; }
+  50% { transform: translateY(-40px) translateX(20px); opacity: 0.25; }
+  100% { transform: translateY(0) translateX(0); opacity: 0.1; }
+}
   </style>
 </head>
 
 <body>
 
   <div class="grid-bg"></div>
+  <!-- NODE NETWORK BACKGROUND -->
+<canvas id="nodeNetwork"></canvas>
+
+<!-- FLOATING GLYPH CONSTELLATIONS -->
+<div class="glyph-layer"></div>
 
   <!-- FLOATING NAVIGATION -->
   <nav>
@@ -295,4 +338,131 @@
 
     <div class="holo-panel">
       <div class="icon">📁</div>
-      <p><strong>Secure Vault & Advisor Portal:</strong> Encrypted document storage and collaboration
+      <p><strong>Secure Vault & Advisor Portal:</strong> Encrypted document storage and collaboration.</p>
+    </div>
+
+    <div class="holo-panel">
+      <div class="icon">🌙</div>
+      <p><strong>Digital Legacy Planner:</strong> Executor tools, multimedia wishes, and continuity planning.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="roadmap">
+    <h2>Roadmap to Market Leadership</h2>
+    <div class="holo-panel">
+      <div class="icon">🏛️</div>
+      <p>Phase 1: MVP. Phase 2: Pilot + Partnerships. Phase 3: Premium tiers + Advisor Network.</p>
+    </div>
+  </section>
+
+  <div class="footer">
+    © 2026 LEGACY GROVE CODEX LLC
+  </div>
+
+  <!-- SCROLL REVEAL SCRIPT -->
+  <script>
+    const sections = document.querySelectorAll("section");
+    const dividers = document.querySelectorAll(".divider");
+    const panels = document.querySelectorAll(".holo-panel");
+
+    const reveal = () => {
+      const trigger = window.innerHeight * 0.85;
+
+      sections.forEach(sec => {
+        const top = sec.getBoundingClientRect().top;
+        if (top < trigger) sec.classList.add("visible");
+      });
+
+      dividers.forEach(div => {
+        const top = div.getBoundingClientRect().top;
+        if (top < trigger) div.classList.add("visible");
+      });
+
+      panels.forEach(panel => {
+        const top = panel.getBoundingClientRect().top;
+        if (top < trigger) panel.classList.add("visible");
+      });
+    };
+
+    window.addEventListener("scroll", reveal);
+    reveal();
+  </script>
+<script>
+/* ============================
+   NODE NETWORK BACKGROUND
+   ============================ */
+const canvas = document.getElementById("nodeNetwork");
+const ctx = canvas.getContext("2d");
+
+let nodes = [];
+const nodeCount = 60;
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+for (let i = 0; i < nodeCount; i++) {
+  nodes.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    vx: (Math.random() - 0.5) * 0.3,
+    vy: (Math.random() - 0.5) * 0.3,
+    r: 2 + Math.random() * 2
+  });
+}
+
+function drawNetwork() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  nodes.forEach(n => {
+    n.x += n.vx;
+    n.y += n.vy;
+
+    if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
+    if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
+
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(0,255,195,0.8)";
+    ctx.fill();
+
+    nodes.forEach(n2 => {
+      const dist = Math.hypot(n.x - n2.x, n.y - n2.y);
+      if (dist < 150) {
+        ctx.beginPath();
+        ctx.moveTo(n.x, n.y);
+        ctx.lineTo(n2.x, n2.y);
+        ctx.strokeStyle = "rgba(0,255,195," + (1 - dist / 150) * 0.2 + ")";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    });
+  });
+
+  requestAnimationFrame(drawNetwork);
+}
+drawNetwork();
+
+/* ============================
+   FLOATING GLYPH CONSTELLATIONS
+   ============================ */
+const glyphs = ["✦", "✧", "✺", "✹", "✶", "✷", "✸", "✴", "❂", "❉", "❖"];
+const glyphLayer = document.querySelector(".glyph-layer");
+
+for (let i = 0; i < 20; i++) {
+  const g = document.createElement("div");
+  g.classList.add("glyph");
+  g.innerText = glyphs[Math.floor(Math.random() * glyphs.length)];
+  g.style.left = Math.random() * 100 + "vw";
+  g.style.top = Math.random() * 100 + "vh";
+  g.style.animationDuration = 10 + Math.random() * 10 + "s";
+  glyphLayer.appendChild(g);
+}
+</script>
+</body>
+</html>

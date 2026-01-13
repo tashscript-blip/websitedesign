@@ -1,530 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LEGACY GROVE CODEX — Digital Identity Command Center</title>
-
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: #0a0f14;
-      color: #e0e0e0;
-      font-family: "Segoe UI", sans-serif;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-    }
-
-    /* PARALLAX GRID BACKGROUND */
-    .grid-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: radial-gradient(#00ffc3 0.5px, transparent 0.5px),
-                        radial-gradient(#00ffc3 0.5px, transparent 0.5px);
-      background-size: 40px 40px;
-      opacity: 0.05;
-      z-index: 0;
-      animation: drift 20s linear infinite;
-    }
-
-    @keyframes drift {
-      from { transform: translateY(0); }
-      to { transform: translateY(-200px); }
-    }
-
-    /* FLOATING NAVIGATION BAR */
-    nav {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 255, 195, 0.08);
-      border: 1px solid rgba(0, 255, 195, 0.3);
-      padding: 12px 30px;
-      border-radius: 14px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 20px rgba(0, 255, 195, 0.2);
-      z-index: 10;
-      display: flex;
-      gap: 25px;
-    }
-
-    nav a {
-      color: #00ffc3;
-      text-decoration: none;
-      font-size: 0.95rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      transition: 0.3s ease;
-    }
-
-    nav a:hover {
-      text-shadow: 0 0 10px #00ffc3;
-      transform: translateY(-2px);
-    }
-
-    /* HERO HOLOGRAPHIC ANIMATION */
-    .hero {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      z-index: 2;
-    }
-
-    .holo-ring {
-      width: 260px;
-      height: 260px;
-      border-radius: 50%;
-      border: 2px solid rgba(0, 255, 195, 0.4);
-      box-shadow: 0 0 40px rgba(0, 255, 195, 0.3);
-      animation: spin 12s linear infinite, pulse 3s ease-in-out infinite;
-      position: absolute;
-    }
-
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    @keyframes pulse {
-      0% { box-shadow: 0 0 20px rgba(0, 255, 195, 0.2); }
-      50% { box-shadow: 0 0 40px rgba(0, 255, 195, 0.5); }
-      100% { box-shadow: 0 0 20px rgba(0, 255, 195, 0.2); }
-    }
-
-    .hero-core {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,255,195,0.7), rgba(0,255,195,0.1));
-      animation: corePulse 4s ease-in-out infinite;
-      position: absolute;
-    }
-
-    @keyframes corePulse {
-      0% { transform: scale(1); opacity: 0.7; }
-      50% { transform: scale(1.15); opacity: 1; }
-      100% { transform: scale(1); opacity: 0.7; }
-    }
-
-    .hero h1 {
-      margin-top: 320px;
-      font-size: 3rem;
-      color: #00ffc3;
-      text-shadow: 0 0 20px #00ffc3;
-      animation: glowPulse 4s infinite ease-in-out;
-    }
-
-    @keyframes glowPulse {
-      0% { text-shadow: 0 0 10px #00ffc3; }
-      50% { text-shadow: 0 0 25px #00ffc3; }
-      100% { text-shadow: 0 0 10px #00ffc3; }
-    }
-
-    .hero p {
-      max-width: 600px;
-      margin-top: 20px;
-      opacity: 0.85;
-      font-size: 1.2rem;
-    }
-
-    /* SECTION BASE */
-    section {
-      padding: 80px 20px;
-      max-width: 900px;
-      margin: auto;
-      position: relative;
-      z-index: 2;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 1s ease;
-    }
-
-    section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* DIVIDER */
-    .divider {
-      height: 2px;
-      width: 100%;
-      background: linear-gradient(to right, transparent, #00ffc3, transparent);
-      margin: 60px 0;
-      opacity: 0;
-      transform: scaleX(0.5);
-      transition: all 1s ease;
-    }
-
-    .divider.visible {
-      opacity: 0.4;
-      transform: scaleX(1);
-    }
-
-    /* HOLOGRAPHIC PANELS */
-    .holo-panel {
-      background: rgba(0, 255, 195, 0.05);
-      border: 1px solid rgba(0, 255, 195, 0.3);
-      border-radius: 12px;
-      padding: 20px;
-      margin-top: 20px;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 0 20px rgba(0, 255, 195, 0.15);
-      transform: translateY(20px);
-      opacity: 0;
-      transition: all 1s ease;
-    }
-
-    .holo-panel.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .holo-panel:hover {
-      transform: translateY(-10px) scale(1.02);
-      box-shadow: 0 0 30px rgba(0, 255, 195, 0.3);
-    }
-
-    /* ICONS */
-    .icon {
-      font-size: 40px;
-      margin-bottom: 10px;
-      color: #00ffc3;
-      text-shadow: 0 0 15px #00ffc3;
-      animation: iconFloat 3s ease-in-out infinite;
-    }
-
-    @keyframes iconFloat {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-      100% { transform: translateY(0); }
-    }
-
-    .footer {
-      text-align: center;
-      padding: 40px;
-      opacity: 0.5;
-      font-size: 0.9rem;
-    }
-    /* NODE NETWORK CANVAS */
-#nodeNetwork {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  opacity: 0.25;
-  pointer-events: none;
-}
-
-/* GLYPH CONSTELLATIONS */
-.glyph-layer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.glyph {
-  position: absolute;
-  font-size: 28px;
-  color: #00ffc3;
-  opacity: 0.15;
-  text-shadow: 0 0 12px #00ffc3;
-  animation: driftGlyph 12s infinite ease-in-out;
-}
-
-@keyframes driftGlyph {
-  0% { transform: translateY(0) translateX(0); opacity: 0.1; }
-  50% { transform: translateY(-40px) translateX(20px); opacity: 0.25; }
-  100% { transform: translateY(0) translateX(0); opacity: 0.1; }
-}
-    /* MULTI-LAYER PARALLAX STARFIELD */
-.starfield {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 200%;
-  height: 200%;
-  pointer-events: none;
-  z-index: 0;
-  background-repeat: repeat;
-  background-size: contain;
-  opacity: 0.25;
-}
-
-/* Layer 1 — tiny, dense, slow */
-.layer1 {
-  background-image: radial-gradient(2px 2px at 20px 30px, #ffffff 60%, transparent),
-                    radial-gradient(1px 1px at 80px 120px, #ffffff 60%, transparent),
-                    radial-gradient(1px 1px at 200px 90px, #ffffff 60%, transparent);
-  animation: drift1 120s linear infinite;
-  opacity: 0.15;
-}
-
-/* Layer 2 — medium, moderate drift */
-.layer2 {
-  background-image: radial-gradient(3px 3px at 50px 80px, #ffffff 70%, transparent),
-                    radial-gradient(2px 2px at 150px 200px, #ffffff 70%, transparent),
-                    radial-gradient(2px 2px at 300px 150px, #ffffff 70%, transparent);
-  animation: drift2 90s linear infinite;
-  opacity: 0.2;
-}
-
-/* Layer 3 — large, sparse, faster */
-.layer3 {
-  background-image: radial-gradient(4px 4px at 100px 200px, #ffffff 80%, transparent),
-                    radial-gradient(3px 3px at 250px 100px, #ffffff 80%, transparent),
-                    radial-gradient(3px 3px at 400px 300px, #ffffff 80%, transparent);
-  animation: drift3 60s linear infinite;
-  opacity: 0.3;
-}
-
-/* Parallax drift animations */
-@keyframes drift1 {
-  from { transform: translate3d(0,0,0); }
-  to   { transform: translate3d(-200px, -200px, 0); }
-}
-
-@keyframes drift2 {
-  from { transform: translate3d(0,0,0); }
-  to   { transform: translate3d(-400px, -300px, 0); }
-}
-
-@keyframes drift3 {
-  from { transform: translate3d(0,0,0); }
-  to   { transform: translate3d(-600px, -500px, 0); }
-}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Digital Vault Blueprint</title>
+    <link rel="stylesheet" href="vault.css">
 </head>
 
 <body>
 
-  <div class="grid-bg"></div>
-  <!-- MULTI-LAYER PARALLAX STARFIELD -->
-<div class="starfield layer1"></div>
-<div class="starfield layer2"></div>
-<div class="starfield layer3"></div>
-  
-  <!-- NODE NETWORK BACKGROUND -->
-<canvas id="nodeNetwork"></canvas>
+    <!-- ================= HERO SECTION ================= -->
+    <section class="hero">
+        <canvas id="starfield"></canvas>
 
-<!-- FLOATING GLYPH CONSTELLATIONS -->
-<div class="glyph-layer"></div>
+        <div class="vault-door"></div>
 
-  <!-- FLOATING NAVIGATION -->
-  <nav>
-    <a href="#problem">Problem</a>
-    <a href="#gaps">Gaps</a>
-    <a href="#customer">Customer</a>
-    <a href="#pillars">Pillars</a>
-    <a href="#roadmap">Roadmap</a>
-  </nav>
+        <h1 class="hero-title">THE DIGITAL VAULT BLUEPRINT</h1>
+        <p class="hero-sub">Your Digital Identity Foundation</p>
 
-  <!-- HOLOGRAPHIC HERO -->
-  <div class="hero">
-    <div class="holo-ring"></div>
-    <div class="hero-core"></div>
+        <div class="cta-row">
+            <a class="cta primary">Download Blueprint</a>
+            <a class="cta secondary" href="#vault">Explore the Vault</a>
+        </div>
+    </section>
 
-    <h1>Digital Identity Command Center</h1>
-    <p>The Codex awakens. Your digital foundation begins here.</p>
-  </div>
+    <!-- ================= SIX PILLARS ================= -->
+    <section id="vault" class="pillars">
+        <h2 class="section-title">Inside the Vault</h2>
 
-  <!-- CONTENT SECTIONS -->
-  <section id="problem">
-    <h2>Our Digital Lives Are Dangerously Fragmented</h2>
-    <div class="holo-panel">
-      <div class="icon">🧩</div>
-      <p>Passwords, financial accounts, crypto wallets, legal documents, cloud storage, and final wishes are scattered across dozens of insecure services.</p>
-    </div>
-  </section>
+        <div class="pillar-grid">
+            <div class="pillar">
+                <h3>Master Identity</h3>
+                <p>Your legal, personal, and foundational identity details.</p>
+            </div>
 
-  <div class="divider"></div>
+            <div class="pillar">
+                <h3>Account Access</h3>
+                <p>Your banking, email, cloud, and device access map.</p>
+            </div>
 
-  <section id="gaps">
-    <h2>The Universal Unmet Need</h2>
-    <div class="holo-panel">
-      <div class="icon">🚀</div>
-      <p>The Actionability Gap, Integration Gap, and Guidance Gap prevent people from organizing their digital lives effectively.</p>
-    </div>
-  </section>
+            <div class="pillar">
+                <h3>Digital Wealth</h3>
+                <p>Crypto wallets, seed phrase locations, and digital assets.</p>
+            </div>
 
-  <div class="divider"></div>
+            <div class="pillar">
+                <h3>Legal Clarity</h3>
+                <p>Will, insurance, deeds, and essential legal documents.</p>
+            </div>
 
-  <section id="customer">
-    <h2>The Proactive Digital Steward</h2>
-    <div class="holo-panel">
-      <div class="icon">👤</div>
-      <p>Professionals and heads of households who value security, privacy, and legacy planning.</p>
-    </div>
-  </section>
+            <div class="pillar">
+                <h3>Emergency Response</h3>
+                <p>Your first 24 hours guide and shutdown checklist.</p>
+            </div>
 
-  <div class="divider"></div>
+            <div class="pillar">
+                <h3>Legacy Notes</h3>
+                <p>Your ethical will and letters to loved ones.</p>
+            </div>
+        </div>
+    </section>
 
-  <section id="pillars">
-    <h2>Platform Pillars</h2>
+    <!-- ================= WHY THIS MATTERS ================= -->
+    <section class="why">
+        <h2 class="section-title">Why This Matters</h2>
 
-    <div class="holo-panel">
-      <div class="icon">📊</div>
-      <p><strong>Unified Digital Asset Dashboard:</strong> Eliminates fragmentation and blind spots.</p>
-    </div>
+        <p class="why-text">
+            Your digital life is vast. Without a map, it becomes lost.
+            The Digital Vault Blueprint ensures your family is never left searching in the dark.
+            Security is the ultimate luxury — and clarity is the ultimate gift.
+        </p>
+    </section>
 
-    <div class="holo-panel">
-      <div class="icon">🔐</div>
-      <p><strong>Secure Credential Hub:</strong> Enterprise-grade password and passkey management.</p>
-    </div>
+    <!-- ================= WORKBOOK PREVIEW ================= -->
+    <section class="preview">
+        <h2 class="section-title">Preview the Blueprint</h2>
 
-    <div class="holo-panel">
-      <div class="icon">🛡️</div>
-      <p><strong>Data Guardian Toolkit:</strong> Automated data broker removal and privacy workflows.</p>
-    </div>
+        <div class="mockup-row">
+            <div class="mockup"></div>
+            <div class="mockup"></div>
+            <div class="mockup"></div>
+        </div>
 
-    <div class="holo-panel">
-      <div class="icon">💎</div>
-      <p><strong>Digital Wealth Hub:</strong> Crypto/NFT tracking and analytics.</p>
-    </div>
+        <ul class="checklist">
+            <li>✔ Master Identity Sheet</li>
+            <li>✔ Password & Account Index</li>
+            <li>✔ Crypto & Digital Asset Registry</li>
+            <li>✔ Legal Document Locator</li>
+            <li>✔ Emergency Response Protocol</li>
+            <li>✔ Ethical Will & Legacy Notes</li>
+        </ul>
 
-    <div class="holo-panel">
-      <div class="icon">📁</div>
-      <p><strong>Secure Vault & Advisor Portal:</strong> Encrypted document storage and collaboration.</p>
-    </div>
+        <a class="cta primary">Get the Digital Vault Blueprint</a>
+    </section>
 
-    <div class="holo-panel">
-      <div class="icon">🌙</div>
-      <p><strong>Digital Legacy Planner:</strong> Executor tools, multimedia wishes, and continuity planning.</p>
-    </div>
-  </section>
+    <!-- ================= BREAK GLASS ================= -->
+    <section class="breakglass">
+        <h2 class="section-title red">Break-Glass Protocol</h2>
 
-  <div class="divider"></div>
+        <div class="glass-frame">
+            <p class="glass-text">In an emergency, this protocol guides your family through the first 24 hours.</p>
+        </div>
 
-  <section id="roadmap">
-    <h2>Roadmap to Market Leadership</h2>
-    <div class="holo-panel">
-      <div class="icon">🏛️</div>
-      <p>Phase 1: MVP. Phase 2: Pilot + Partnerships. Phase 3: Premium tiers + Advisor Network.</p>
-    </div>
-  </section>
+        <div class="glass-grid">
+            <div class="glass-item">First 24 Hours Guide</div>
+            <div class="glass-item">Digital Shutdown Checklist</div>
+            <div class="glass-item">Family Access Card</div>
+        </div>
+    </section>
 
-  <div class="footer">
-    © 2026 LEGACY GROVE CODEX LLC
-  </div>
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+        <p>© 2026 LEGACY GROVE CODEX LLC — Digital Vault Blueprint</p>
+    </footer>
 
-  <!-- SCROLL REVEAL SCRIPT -->
-  <script>
-    const sections = document.querySelectorAll("section");
-    const dividers = document.querySelectorAll(".divider");
-    const panels = document.querySelectorAll(".holo-panel");
-
-    const reveal = () => {
-      const trigger = window.innerHeight * 0.85;
-
-      sections.forEach(sec => {
-        const top = sec.getBoundingClientRect().top;
-        if (top < trigger) sec.classList.add("visible");
-      });
-
-      dividers.forEach(div => {
-        const top = div.getBoundingClientRect().top;
-        if (top < trigger) div.classList.add("visible");
-      });
-
-      panels.forEach(panel => {
-        const top = panel.getBoundingClientRect().top;
-        if (top < trigger) panel.classList.add("visible");
-      });
-    };
-
-    window.addEventListener("scroll", reveal);
-    reveal();
-  </script>
-<script>
-/* ============================
-   NODE NETWORK BACKGROUND
-   ============================ */
-const canvas = document.getElementById("nodeNetwork");
-const ctx = canvas.getContext("2d");
-
-let nodes = [];
-const nodeCount = 60;
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
-
-for (let i = 0; i < nodeCount; i++) {
-  nodes.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    vx: (Math.random() - 0.5) * 0.3,
-    vy: (Math.random() - 0.5) * 0.3,
-    r: 2 + Math.random() * 2
-  });
-}
-
-function drawNetwork() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  nodes.forEach(n => {
-    n.x += n.vx;
-    n.y += n.vy;
-
-    if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
-    if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
-
-    ctx.beginPath();
-    ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(0,255,195,0.8)";
-    ctx.fill();
-
-    nodes.forEach(n2 => {
-      const dist = Math.hypot(n.x - n2.x, n.y - n2.y);
-      if (dist < 150) {
-        ctx.beginPath();
-        ctx.moveTo(n.x, n.y);
-        ctx.lineTo(n2.x, n2.y);
-        ctx.strokeStyle = "rgba(0,255,195," + (1 - dist / 150) * 0.2 + ")";
-        ctx.lineWidth = 1;
-        ctx.stroke();
-      }
-    });
-  });
-
-  requestAnimationFrame(drawNetwork);
-}
-drawNetwork();
-
-/* ============================
-   FLOATING GLYPH CONSTELLATIONS
-   ============================ */
-const glyphs = ["✦", "✧", "✺", "✹", "✶", "✷", "✸", "✴", "❂", "❉", "❖"];
-const glyphLayer = document.querySelector(".glyph-layer");
-
-for (let i = 0; i < 20; i++) {
-  const g = document.createElement("div");
-  g.classList.add("glyph");
-  g.innerText = glyphs[Math.floor(Math.random() * glyphs.length)];
-  g.style.left = Math.random() * 100 + "vw";
-  g.style.top = Math.random() * 100 + "vh";
-  g.style.animationDuration = 10 + Math.random() * 10 + "s";
-  glyphLayer.appendChild(g);
-}
-</script>
+    <script src="vault.js"></script>
 </body>
 </html>
-

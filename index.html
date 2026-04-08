@@ -24,7 +24,7 @@
             <a href="#financials">Financial Navigation</a>
             <a href="#community">Community</a>
         </div>
-        <button class="btn btn-primary glow-on-hover">Access Codex</button>
+        <a href="#marketplace" class="btn btn-primary glow-on-hover" style="text-decoration: none;">Access Codex</a>
     </nav>
 
     <main>
@@ -39,8 +39,8 @@
                     Bridge the economic gap through our advanced marketplace. Integrate financial navigation tools into a cohesive, sovereign knowledge system designed for your legacy.
                 </p>
                 <div class="hero-actions">
-                    <button class="btn btn-primary glow-on-hover px-large">Enter the Marketplace</button>
-                    <button class="btn btn-secondary px-large">Explore the Codex</button>
+                    <a href="#marketplace" class="btn btn-primary glow-on-hover px-large" style="text-decoration: none;">Enter the Marketplace</a>
+                    <a href="#knowledge" class="btn btn-secondary px-large" style="text-decoration: none;">Explore the Codex</a>
                 </div>
             </div>
             
@@ -76,7 +76,7 @@
             </div>
         </header>
 
-        <section id="features" class="features-section">
+        <section id="marketplace" class="features-section">
             <h2 class="section-title text-center">Core Pillars of <span class="gradient-text">Legacy</span></h2>
             <div class="features-grid">
                 
@@ -86,13 +86,13 @@
                     <p>A dynamic, decentralized hub connecting minority-owned businesses with resources, partners, and high-value economic opportunities.</p>
                 </div>
 
-                <div class="glass-card feature-card">
+                <div id="knowledge" class="glass-card feature-card">
                     <div class="feature-icon">🧠</div>
                     <h3>Sovereign Knowledge</h3>
                     <p>Unlock proprietary blueprints, curated insights, and a resilient database designed to ensure your intellectual and economic independence.</p>
                 </div>
 
-                <div class="glass-card feature-card">
+                <div id="financials" class="glass-card feature-card">
                     <div class="feature-icon">📈</div>
                     <h3>Financial Navigation</h3>
                     <p>Advanced diagnostic tools and projection algorithms that demystify cash flow, helping you map the path to generational wealth.</p>
@@ -150,13 +150,13 @@
              </div>
         </section>
         
-        <section class="cta-section">
+        <section id="community" class="cta-section">
             <div class="glass-card cta-card">
                 <h2>Ready to Build Your Legacy?</h2>
                 <p>Join the sovereign ecosystem and access the tools to redefine your financial future.</p>
                 <div class="cta-form">
-                    <input type="email" placeholder="Enter your email to get early access" class="premium-input">
-                    <button class="btn btn-primary glow-on-hover">Claim Your Spot</button>
+                    <input type="email" placeholder="Enter your email to get early access" class="premium-input" id="email-access">
+                    <button class="btn btn-primary glow-on-hover" onclick="alert('Access Claimed! Welcome to the Legacy Grove Codex.')">Claim Your Spot</button>
                 </div>
             </div>
         </section>

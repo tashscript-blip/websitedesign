@@ -4,190 +4,218 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Legacy Grove Codex - A sovereign knowledge system and marketplace platform empowering minority-owned small businesses with advanced financial navigation tools.">
-    <title>Legacy Grove Codex | Sovereign Knowledge & Marketplace</title>
+    <title>LGC LLC | Legacy Grove Codex</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
     <script src="script.js" defer></script>
 </head>
-<body>
-    <div class="glow-bg"></div>
-    <div class="glow-bg highlight"></div>
+<body class="dark-theme">
+    <div id="particles-js"></div>
+    <div class="ambient-glow bg-left"></div>
+    <div class="ambient-glow bg-right"></div>
 
-    <nav class="navbar glassmorphism">
-        <div class="logo">
-            <span class="logo-mark">LGC</span>
-            <span class="logo-text">Legacy Grove Codex</span>
-        </div>
-        <div class="nav-links">
-            <a href="#marketplace">Marketplace</a>
-            <a href="#knowledge">Knowledge System</a>
-            <a href="#financials">Financial Navigation</a>
-            <a href="#community">Community</a>
-        </div>
-        <a href="#marketplace" class="btn btn-primary glow-on-hover" style="text-decoration: none;">Access Codex</a>
-    </nav>
-
-    <main>
-        <header class="hero">
-            <div class="hero-content">
-                <div class="badge">Sovereign Ecosystem</div>
-                <h1 class="hero-title">
-                    Empowering The Future Of <br>
-                    <span class="gradient-text">Minority-Owned Business</span>
-                </h1>
-                <p class="hero-subtitle">
-                    Bridge the economic gap through our advanced marketplace. Integrate financial navigation tools into a cohesive, sovereign knowledge system designed for your legacy.
-                </p>
-                <div class="hero-actions">
-                    <a href="#marketplace" class="btn btn-primary glow-on-hover px-large" style="text-decoration: none;">Enter the Marketplace</a>
-                    <a href="#knowledge" class="btn btn-secondary px-large" style="text-decoration: none;">Explore the Codex</a>
+    <nav class="navbar glass-effect">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="lgc-symbol-wrapper">
+                    <svg class="lgc-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#FFD700" />
+                                <stop offset="100%" stop-color="#B8860B" />
+                            </linearGradient>
+                            <linearGradient id="emerald-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#059669" />
+                                <stop offset="100%" stop-color="#10B981" />
+                            </linearGradient>
+                        </defs>
+                        <!-- Hexagon frame -->
+                        <polygon points="50,5 88.97,27.5 88.97,72.5 50,95 11.03,72.5 11.03,27.5" fill="none" stroke="url(#emerald-grad)" stroke-width="4" stroke-linejoin="round"/>
+                        <!-- Inner glowing core -->
+                        <circle cx="50" cy="50" r="14" fill="url(#gold-grad)" opacity="0.8">
+                            <animate attributeName="r" values="14;16;14" dur="3s" repeatCount="indefinite" />
+                        </circle>
+                        <!-- Intersecting lines / tree roots -->
+                        <path d="M50 25 L50 40 M35 60 L45 50 M65 60 L55 50" stroke="url(#gold-grad)" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-name">Legacy Grove</span>
+                    <span class="brand-legal">LGC LLC</span>
                 </div>
             </div>
             
-            <div class="hero-visual">
-                <div class="glass-card mockup-card">
-                    <div class="mockup-header">
-                        <div class="dots"><span></span><span></span><span></span></div>
-                        <div class="mockup-title">Codex Dashboard</div>
-                    </div>
-                    <div class="mockup-body">
-                        <div class="chart-skeleton">
-                            <div class="bar" style="height: 60%"></div>
-                            <div class="bar" style="height: 80%"></div>
-                            <div class="bar" style="height: 40%"></div>
-                            <div class="bar" style="height: 90%"></div>
-                            <div class="bar" style="height: 30%"></div>
-                        </div>
-                        <div class="stats-row">
-                            <div class="stat-box">
-                                <div class="stat-label">Capital Flow</div>
-                                <div class="stat-value text-accent">+24.5%</div>
-                            </div>
-                            <div class="stat-box">
-                                <div class="stat-label">Ecosystem Rank</div>
-                                <div class="stat-value">Tier 1</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Connecting lines & decorative elements -->
-                <div class="orbit-ring ring-1"></div>
-                <div class="orbit-ring ring-2"></div>
+            <div class="nav-links">
+                <a href="#marketplace" class="hover-underline">Marketplace</a>
+                <a href="#knowledge" class="hover-underline">Codex</a>
+                <a href="#financials" class="hover-underline">Financials</a>
             </div>
-        </header>
+            
+            <div class="nav-actions">
+                <a href="#community" class="btn btn-outline glow-gold">LGC Credentials</a>
+                <a href="#marketplace" class="btn btn-primary glow-emerald">Access System</a>
+            </div>
+        </div>
+    </nav>
 
-        <section id="marketplace" class="features-section">
-            <h2 class="section-title text-center">Core Pillars of <span class="gradient-text">Legacy</span></h2>
-            <div class="features-grid">
-                
-                <div class="glass-card feature-card">
-                    <div class="feature-icon">🌐</div>
-                    <h3>Marketplace Platform</h3>
-                    <p>A dynamic, decentralized hub connecting minority-owned businesses with resources, partners, and high-value economic opportunities.</p>
+    <main>
+        <section class="hero-section">
+            <div class="hero-bg-image" style="background-image: url('assets/hero_bg_1775671221950.png');"></div>
+            <div class="hero-vignette"></div>
+            
+            <div class="hero-content">
+                <div class="auth-badge">
+                    <span class="pulse-dot"></span> Official LGC LLC Secure System
                 </div>
-
-                <div id="knowledge" class="glass-card feature-card">
-                    <div class="feature-icon">🧠</div>
-                    <h3>Sovereign Knowledge</h3>
-                    <p>Unlock proprietary blueprints, curated insights, and a resilient database designed to ensure your intellectual and economic independence.</p>
+                <h1 class="hero-title reveal-text">
+                    The Sovereign <br>
+                    <span class="text-gradient-emerald">Knowledge Interface</span>
+                </h1>
+                <p class="hero-subtitle reveal-text delay-1">
+                    Operated by LGC LLC. A premier marketplace and intelligence hub designed to bridge the economic gap, accelerating minority-owned private enterprise into multi-generational legacies.
+                </p>
+                <div class="hero-buttons reveal-text delay-2">
+                    <a href="#marketplace" class="btn btn-primary btn-lg glow-emerald">Enter Marketplace</a>
+                    <a href="#knowledge" class="btn btn-glass btn-lg">Explore The Codex</a>
                 </div>
-
-                <div id="financials" class="glass-card feature-card">
-                    <div class="feature-icon">📈</div>
-                    <h3>Financial Navigation</h3>
-                    <p>Advanced diagnostic tools and projection algorithms that demystify cash flow, helping you map the path to generational wealth.</p>
+            </div>
+            
+            <div class="hero-visual reveal-scale delay-3">
+                <div class="floating-dashboard-wrapper">
+                    <!-- Dashboard Mockup Image -->
+                    <img src="assets/dashboard_mockup_1775671237217.png" alt="LGC Codex Dashboard" class="main-dashboard-img pop-out-effect">
+                    <div class="floating-element el-1"><img src="assets/media__1775671960446.png" alt="Media Icon" class="media-icon"></div>
                 </div>
-
             </div>
         </section>
 
-        <section id="app-preview" class="app-preview-section">
-             <div class="split-layout">
-                 <div class="preview-text">
-                     <h2>Bridge the <span class="gradient-text">Economic Gap</span></h2>
-                     <p>Our platform isn’t just a tool; it’s an ecosystem. By centralizing strategic financial features, Legacy Grove Codex enables businesses to scale sustainably and confidently.</p>
-                     
-                     <ul class="benefit-list">
-                         <li>
-                            <span class="check-icon">✓</span> 
-                            <div>
-                                <h4>Unified Business Identity</h4>
-                                <p>Manage your entire portfolio from a single sovereign dashboard.</p>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="check-icon">✓</span> 
-                            <div>
-                                <h4>Data-Driven Mentorship</h4>
-                                <p>Leverage the codex to match with the resources you actually need.</p>
-                            </div>
-                        </li>
-                     </ul>
-                 </div>
-                 <div class="preview-visual">
-                    <div class="glass-card complex-mockup">
-                        <div class="module-card">
-                            <h4 class="module-title">Marketplace Activity</h4>
-                            <div class="activity-feed">
-                                <div class="activity-item">
-                                    <div class="avatar bg-blue"></div>
-                                    <div class="activity-info">
-                                        <div class="name">Contract Matched</div>
-                                        <div class="time">2 mins ago</div>
-                                    </div>
-                                </div>
-                                <div class="activity-item">
-                                    <div class="avatar bg-green"></div>
-                                    <div class="activity-info">
-                                        <div class="name">Knowledge Vault Updated</div>
-                                        <div class="time">1 hr ago</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        <!-- Credentials / Marquee banner -->
+        <div class="credentials-bar glass-effect">
+            <div class="marquee-track">
+                <span>VERIFIED: LGC LLC</span>
+                <span class="bullet">•</span>
+                <span>SECURE KNOWLEDGE PROTOCOL</span>
+                <span class="bullet">•</span>
+                <span>MINORITY BUSINESS ECOSYSTEM</span>
+                <span class="bullet">•</span>
+                <span>FINANCIAL NAVIGATION V2.0</span>
+                <span class="bullet">•</span>
+                <span>VERIFIED: LGC LLC</span>
+                <span class="bullet">•</span>
+                <span>SECURE KNOWLEDGE PROTOCOL</span>
+                <span class="bullet">•</span>
+                <span>MINORITY BUSINESS ECOSYSTEM</span>
+            </div>
+        </div>
+
+        <section id="marketplace" class="core-pillars">
+            <div class="section-header text-center">
+                <h2 class="section-title">The <span class="text-gradient-gold">Infrastructure</span> of Wealth</h2>
+                <p class="section-desc">LGC LLC provides top-tier operational hubs ensuring business sovereignty.</p>
+            </div>
+            
+            <div class="pillar-grid">
+                <!-- Card 1 -->
+                <div class="glass-card pillar-card">
+                    <div class="card-glow-bg emerald"></div>
+                    <div class="icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                     </div>
-                 </div>
-             </div>
+                    <h3>Decentralized Marketplace</h3>
+                    <p>A resilient environment mapping elite opportunities directly to your organizational profile.</p>
+                    <a href="#" class="card-link">Enter Hub &rarr;</a>
+                </div>
+
+                <!-- Card 2 -->
+                <div id="knowledge" class="glass-card pillar-card active">
+                    <div class="card-glow-bg gold"></div>
+                    <div class="icon-wrapper gold-tint">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                    </div>
+                    <h3>The Codex</h3>
+                    <p>A sophisticated database governed by LGC LLC, granting you total access to sovereign frameworks.</p>
+                    <a href="#" class="card-link">Unlock Vault &rarr;</a>
+                </div>
+
+                <!-- Card 3 -->
+                <div id="financials" class="glass-card pillar-card">
+                    <div class="card-glow-bg emerald"></div>
+                    <div class="icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+                    </div>
+                    <h3>Financial Navigation Tools</h3>
+                    <p>Proprietary algorithms allowing deep cash flow visualization and generational economic tracking.</p>
+                    <a href="#" class="card-link">View Projections &rarr;</a>
+                </div>
+            </div>
         </section>
-        
-        <section id="community" class="cta-section">
-            <div class="glass-card cta-card">
-                <h2>Ready to Build Your Legacy?</h2>
-                <p>Join the sovereign ecosystem and access the tools to redefine your financial future.</p>
-                <div class="cta-form">
-                    <input type="email" placeholder="Enter your email to get early access" class="premium-input" id="email-access">
-                    <button class="btn btn-primary glow-on-hover" onclick="alert('Access Claimed! Welcome to the Legacy Grove Codex.')">Claim Your Spot</button>
+
+        <section id="community" class="auth-section">
+            <div class="glass-container split-auth">
+                <div class="auth-info">
+                    <h2>Obtain Status with <br><span class="text-gradient-gold">LGC LLC</span></h2>
+                    <p>Official registration grants you access to closed-loop networks, sovereign data layers, and the marketplace.</p>
+                    <ul class="auth-list">
+                        <li><span class="icon-check">✓</span> Fully Monitored Secure Nodes</li>
+                        <li><span class="icon-check">✓</span> Enterprise Level Connections</li>
+                        <li><span class="icon-check">✓</span> Sovereign Governance Rights</li>
+                    </ul>
+                </div>
+                <div class="auth-form-wrapper">
+                    <div class="auth-box glass-card">
+                        <h3>Initiate Credentials</h3>
+                        <form class="credential-form" onsubmit="event.preventDefault(); alert('LGC LLC Authorization Processing Initiated.');">
+                            <div class="input-group">
+                                <label for="entityId">Entity Name / ID</label>
+                                <input type="text" id="entityId" placeholder="Your Business Name" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="authEmail">Secure Protocol Email</label>
+                                <input type="email" id="authEmail" placeholder="contact@secure.com" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary glow-emerald full-width">Request Authentication Node</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-brand">
+    <footer class="glass-effect mt-large">
+        <div class="footer-grid">
+            <div class="footer-col brand-col">
                 <div class="logo">
-                    <span class="logo-mark">LGC</span>
-                    <span class="logo-text">Legacy Grove Codex</span>
+                     <svg class="lgc-symbol-small" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <polygon points="50,5 88.97,27.5 88.97,72.5 50,95 11.03,72.5 11.03,27.5" fill="none" stroke="#10B981" stroke-width="4" stroke-linejoin="round"/>
+                        <circle cx="50" cy="50" r="14" fill="#FFD700" />
+                    </svg>
+                    <span class="brand-name">LGC LLC</span>
                 </div>
-                <p>A sovereign knowledge system designed to bridge the economic gap.</p>
+                <p class="footer-mission">Bridging the economic gap. Building the structural fortitude of marginalized business enterprises.</p>
+                <div class="credentials-badge">
+                    <strong>Entity:</strong> Legacy Grove Codex LLC <br>
+                    <strong>Status:</strong> Active / Verified <br>
+                    <strong>Architecture:</strong> Quantum-Ready Node Structure
+                </div>
             </div>
-            <div class="footer-links">
-                <div class="link-column">
-                    <h4>Platform</h4>
-                    <a href="#">Marketplace</a>
-                    <a href="#">Knowledge Vault</a>
-                    <a href="#">Financial Tools</a>
-                </div>
-                <div class="link-column">
-                    <h4>Company</h4>
-                    <a href="#">About Us</a>
-                    <a href="#">Vision 2026</a>
-                    <a href="#">Contact</a>
-                </div>
+            
+            <div class="footer-col">
+                <h4>System Architecture</h4>
+                <a href="#marketplace">Marketplace Framework</a>
+                <a href="#knowledge">Sovereign Codex</a>
+                <a href="#financials">Navigation Algorithms</a>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Corporate Information</h4>
+                <a href="#community">About LGC LLC</a>
+                <a href="#community">Credentials & Operations</a>
+                <a href="#community">Secure Contact Protocol</a>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Legacy Grove Codex. All Rights Reserved.</p>
+            <p>&copy; 2026 LGC LLC (Legacy Grove Codex). All Rights Reserved. Sovereign System Platform.</p>
         </div>
     </footer>
 </body>

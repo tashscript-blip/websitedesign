@@ -334,3 +334,301 @@ footer { padding: 5rem 5% 2rem; border-top: 1px solid var(--c-border-subtle); ba
     .hero-title { font-size: 3rem; }
     .credentials-bar { padding: 8px 0; }
 }
+
+/* ==========================================================================
+   Manifesto & Author's Note Section
+   ========================================================================== */
+.manifesto-section {
+    padding: 8rem 5% 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.manifesto-container {
+    padding: 4rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(217, 119, 6, 0.25);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 50px rgba(217, 119, 6, 0.05);
+}
+
+.manifesto-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+}
+
+.manifesto-header h2 {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.15;
+}
+
+.manifesto-header .section-desc {
+    font-size: 1.15rem;
+    line-height: 1.6;
+}
+
+.gold-badge {
+    color: var(--c-gold-bright) !important;
+    border: 1px solid rgba(217, 119, 6, 0.4) !important;
+    background: rgba(217, 119, 6, 0.05) !important;
+}
+
+.pulse-dot-gold {
+    width: 8px;
+    height: 8px;
+    background: var(--c-gold-bright);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--c-gold-bright);
+    animation: pulse-gold 2s infinite;
+}
+
+@keyframes pulse-gold {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.manifesto-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 5rem;
+    align-items: start;
+}
+
+/* 3D Book Cover styling */
+.book-cover-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: sticky;
+    top: 120px;
+}
+
+.book-wrapper {
+    position: relative;
+    width: 290px;
+    height: 400px;
+    perspective: 1000px;
+    margin-bottom: 2.5rem;
+}
+
+.book-glow {
+    position: absolute;
+    top: 5%; left: 5%;
+    width: 90%; height: 90%;
+    background: radial-gradient(circle, rgba(217, 119, 6, 0.25) 0%, transparent 75%);
+    filter: blur(40px);
+    z-index: 1;
+    pointer-events: none;
+    transition: var(--transition-smooth);
+}
+
+.book-wrapper:hover .book-glow {
+    background: radial-gradient(circle, rgba(217, 119, 6, 0.45) 0%, transparent 75%);
+    filter: blur(50px);
+}
+
+.book-3d {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transform: rotateY(-18deg) rotateX(6deg);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 2;
+    box-shadow: 18px 25px 35px rgba(0,0,0,0.65);
+    border-radius: 4px;
+}
+
+.book-wrapper:hover .book-3d {
+    transform: rotateY(-3deg) rotateX(3deg) scale(1.04);
+    box-shadow: 8px 12px 25px rgba(0,0,0,0.5);
+}
+
+.book-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0 6px 6px 0;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.book-spine {
+    position: absolute;
+    top: 0; left: 0;
+    width: 20px;
+    height: 100%;
+    background: linear-gradient(to right, #050505 0%, #2a2a2a 30%, #151515 65%, #050505 100%);
+    transform: rotateY(-90deg);
+    transform-origin: left;
+    box-shadow: inset 1px 0 3px rgba(255,255,255,0.15);
+}
+
+.book-meta h3 {
+    font-size: 1.7rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: var(--c-text);
+    margin-bottom: 0.75rem;
+    font-family: var(--font-head);
+    line-height: 1.2;
+}
+
+.book-subtitle {
+    font-size: 0.95rem;
+    color: var(--c-text-muted);
+    margin-bottom: 1.25rem;
+    max-width: 320px;
+    line-height: 1.5;
+}
+
+.book-author {
+    display: block;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--c-gold-bright);
+    margin-bottom: 1.75rem;
+    font-family: var(--font-head);
+    letter-spacing: 0.02em;
+}
+
+.book-badges {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.badge-item {
+    padding: 6px 14px;
+    border-radius: 100px;
+    background: rgba(217, 119, 6, 0.08);
+    border: 1px solid rgba(217, 119, 6, 0.25);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--c-gold-bright);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+/* Author's Note styling */
+.authors-note-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.note-header h3 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--c-text);
+}
+
+.divider-gold {
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(to right, var(--c-gold-bright), transparent);
+    margin-top: 0.5rem;
+}
+
+.note-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.note-paragraph {
+    font-size: 1.08rem;
+    line-height: 1.8;
+    color: #CBD5E1;
+    text-align: justify;
+}
+
+.note-paragraph.highlight-first::first-letter {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--c-gold-bright);
+    float: left;
+    line-height: 0.8;
+    margin-right: 12px;
+    margin-top: 4px;
+    font-family: var(--font-head);
+}
+
+.note-paragraph.closing-paragraph {
+    font-weight: 600;
+    color: var(--c-text);
+    border-left: 2px solid var(--c-gold-bright);
+    padding-left: 1.25rem;
+    margin-top: 1rem;
+}
+
+/* Gorgeous Blockquote Pull Quote */
+.pull-quote {
+    position: relative;
+    padding: 3rem;
+    margin: 2.5rem 0;
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--c-gold-bright) !important;
+    background: linear-gradient(135deg, rgba(217, 119, 6, 0.05) 0%, rgba(12, 18, 30, 0.8) 100%) !important;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.4), inset 0 0 1px rgba(255,255,255,0.1);
+}
+
+.quote-icon {
+    position: absolute;
+    top: -10px;
+    left: 25px;
+    font-size: 7rem;
+    color: rgba(217, 119, 6, 0.12);
+    font-family: Georgia, serif;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+}
+
+.quote-text {
+    font-size: 1.35rem;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--c-text);
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+    position: relative;
+    z-index: 2;
+    letter-spacing: -0.01em;
+}
+
+.quote-author {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--c-gold-bright);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    position: relative;
+    z-index: 2;
+}
+
+/* Mobile & Tablet Adjustments */
+@media (max-width: 1024px) {
+    .manifesto-container {
+        padding: 2.5rem 1.5rem;
+    }
+    .manifesto-header h2 {
+        font-size: 2.5rem;
+    }
+    .manifesto-grid {
+        grid-template-columns: 1fr;
+        gap: 3.5rem;
+    }
+    .book-cover-column {
+        position: static;
+        margin-bottom: 1rem;
+    }
+    .book-wrapper {
+        width: 260px;
+        height: 360px;
+    }
+}

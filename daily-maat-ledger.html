@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The Daily Ma'at Ledger — A companion workbook by Legacy Grove Codex LLC featuring interactive journaling prompts based on the 42 Laws of Ma'at.">
+    <title>The Daily Ma'at Ledger | LGC LLC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --c-bg-base: #040810;
+            --c-bg-surface: rgba(12, 18, 30, 0.6);
+            --c-bg-card: rgba(12, 18, 30, 0.85);
+            --c-border: rgba(16, 185, 129, 0.2);
+            --c-border-subtle: rgba(255, 255, 255, 0.05);
+            --c-border-gold: rgba(217, 119, 6, 0.25);
+            --c-emerald: #10B981;
+            --c-emerald-dim: rgba(16, 185, 129, 0.15);
+            --c-gold: #D97706;
+            --c-gold-bright: #FFD700;
+            --c-gold-dim: rgba(217, 119, 6, 0.15);
+            --c-text: #F8FAFC;
+            --c-text-muted: #94A3B8;
+            --c-text-warm: #CBD5E1;
+            --font-head: 'Space Grotesk', 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-serif: 'Cormorant Garamond', Georgia, serif;
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--c-bg-base);
+            color: var(--c-text);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ===== Ambient Background ===== */
+        .ambient-glow {
+            position: fixed; width: 60vw; height: 60vw;
+            border-radius: 50%; filter: blur(160px);
+            z-index: -1; pointer-events: none; opacity: 0.25;
+        }
+        .bg-left {
+            top: -10%; left: -20%;
+            background: radial-gradient(circle, var(--c-gold) 0%, transparent 60%);
+            animation: drift 20s infinite alternate;
+        }
+        .bg-right {
+            bottom: -20%; right: -10%;
+            background: radial-gradient(circle, var(--c-emerald) 0%, transparent 60%);
+            animation: drift 25s infinite alternate-reverse;
+        }
+        @keyframes drift {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-5%) scale(1.1); }
+        }
+
+        /* ===== Top Navigation ===== */
+        .top-bar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(4, 8, 16, 0.92); backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--c-border-subtle);
+            padding: 0.75rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: var(--transition-smooth);
+        }
+        .top-bar-left {
+            display: flex; align-items: center; gap: 1rem;
+        }
+        .top-bar-logo {
+            font-family: var(--font-head); font-weight: 700; font-size: 1.1rem;
+            color: var(--c-text);
+        }
+        .top-bar-logo span { color: var(--c-gold-bright); }
+        .top-bar-badge {
+            padding: 4px 12px; border-radius: 100px;
+            background: var(--c-gold-dim); border: 1px solid var(--c-border-gold);
+            font-size: 0.7rem; font-weight: 600; color: var(--c-gold-bright);
+            text-transform: uppercase; letter-spacing: 0.08em;
+        }
+        .top-bar-right {
+            display: flex; align-items: center; gap: 1.5rem;
+        }
+        .progress-indicator {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-size: 0.85rem; color: var(--c-text-muted);
+        }
+        .progress-bar-mini {
+            width: 120px; height: 4px; border-radius: 4px;
+            background: rgba(255,255,255,0.08); overflow: hidden;
+        }
+        .progress-bar-mini-fill {
+            height: 100%; border-radius: 4px;
+            background: linear-gradient(90deg, var(--c-gold), var(--c-gold-bright));
+            transition: width 0.6s ease;
+        }
+        .save-status {
+            font-size: 0.75rem; color: var(--c-emerald);
+            display: flex; align-items: center; gap: 4px;
+        }
+
+        /* ===== Hero / Cover Section ===== */
+        .ledger-hero {
+            min-height: 90vh; display: flex; align-items: center; justify-content: center;
+            padding: 8rem 2rem 4rem; text-align: center;
+            position: relative;
+        }
+        .hero-ornament {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 500px; height: 500px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(217, 119, 6, 0.08) 0%, transparent 70%);
+            filter: blur(60px); pointer-events: none;
+        }
+        .ledger-hero-content {
+            position: relative; z-index: 2; max-width: 800px;
+        }
+        .hero-eyra {
+            width: 80px; height: 80px; margin: 0 auto 2rem;
+            border: 2px solid var(--c-border-gold); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(217, 119, 6, 0.05);
+            animation: pulse-gold 3s infinite;
+        }
+        .hero-eyra svg { width: 36px; height: 36px; }
+        @keyframes pulse-gold {
+            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.3); }
+            50% { box-shadow: 0 0 30px 10px rgba(255, 215, 0, 0.05); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.3); }
+        }
+        .ledger-hero h1 {
+            font-family: var(--font-head); font-size: 4.5rem; font-weight: 800;
+            line-height: 1.05; margin-bottom: 1.5rem; letter-spacing: -0.03em;
+        }
+        .ledger-hero h1 .gold {
+            background: linear-gradient(135deg, #FDE68A, #D97706, #B8860B);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .ledger-hero .subtitle {
+            font-family: var(--font-serif); font-size: 1.5rem; font-style: italic;
+            color: var(--c-text-warm); margin-bottom: 1rem; line-height: 1.5;
+        }
+        .ledger-hero .byline {
+            font-size: 0.95rem; color: var(--c-text-muted); margin-bottom: 2.5rem;
+            letter-spacing: 0.05em; text-transform: uppercase; font-weight: 600;
+        }
+        .ledger-hero .byline span { color: var(--c-gold-bright); }
+        .hero-desc {
+            font-size: 1.1rem; color: var(--c-text-muted); max-width: 650px;
+            margin: 0 auto 3rem; line-height: 1.7;
+        }
+        .btn-begin {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 1rem 2.5rem; border-radius: 100px; border: none;
+            background: linear-gradient(135deg, #B8860B, #D97706, #FFD700);
+            color: #040810; font-family: var(--font-head); font-weight: 700;
+            font-size: 1rem; letter-spacing: 0.05em; text-transform: uppercase;
+            cursor: pointer; transition: var(--transition-smooth);
+            box-shadow: 0 4px 25px rgba(217, 119, 6, 0.4);
+        }
+        .btn-begin:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 35px rgba(217, 119, 6, 0.6);
+        }
+
+        /* ===== Week Navigation ===== */
+        .week-nav {
+            position: sticky; top: 56px; z-index: 100;
+            background: rgba(4, 8, 16, 0.95); backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--c-border-subtle);
+            padding: 1rem 2rem; display: none;
+        }
+        .week-nav.visible { display: block; }
+        .week-tabs {
+            display: flex; gap: 0.5rem; max-width: 1200px;
+            margin: 0 auto; overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .week-tabs::-webkit-scrollbar { display: none; }
+        .week-tab {
+            flex-shrink: 0; padding: 0.6rem 1.2rem; border-radius: 100px;
+            background: transparent; border: 1px solid var(--c-border-subtle);
+            color: var(--c-text-muted); font-family: var(--font-head);
+            font-size: 0.8rem; font-weight: 600; cursor: pointer;
+            transition: var(--transition-smooth); white-space: nowrap;
+            letter-spacing: 0.03em;
+        }
+        .week-tab:hover {
+            border-color: var(--c-border-gold); color: var(--c-gold-bright);
+            background: var(--c-gold-dim);
+        }
+        .week-tab.active {
+            background: linear-gradient(135deg, rgba(217, 119, 6, 0.15), rgba(217, 119, 6, 0.05));
+            border-color: rgba(217, 119, 6, 0.5); color: var(--c-gold-bright);
+        }
+        .week-tab .tab-progress {
+            display: inline-block; margin-left: 6px;
+            font-size: 0.7rem; color: var(--c-emerald); font-weight: 700;
+        }
+
+        /* ===== Main Content ===== */
+        .ledger-main {
+            max-width: 1000px; margin: 0 auto; padding: 0 2rem 6rem;
+        }
+
+        /* ===== Week Section ===== */
+        .week-section {
+            margin-bottom: 5rem; display: none;
+        }
+        .week-section.active { display: block; }
+        .week-header {
+            text-align: center; margin-bottom: 4rem; padding: 3rem 2rem;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, rgba(217, 119, 6, 0.06) 0%, rgba(12, 18, 30, 0.8) 100%);
+            border: 1px solid var(--c-border-gold);
+            position: relative; overflow: hidden;
+        }
+        .week-header::before {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at center, rgba(255, 215, 0, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .week-number {
+            font-family: var(--font-head); font-size: 0.8rem; font-weight: 700;
+            color: var(--c-gold-bright); text-transform: uppercase;
+            letter-spacing: 0.15em; margin-bottom: 0.75rem;
+        }
+        .week-title {
+            font-family: var(--font-head); font-size: 2.5rem; font-weight: 800;
+            margin-bottom: 1rem; letter-spacing: -0.02em; line-height: 1.15;
+        }
+        .week-desc {
+            font-family: var(--font-serif); font-size: 1.2rem; font-style: italic;
+            color: var(--c-text-warm); max-width: 600px; margin: 0 auto;
+            line-height: 1.6;
+        }
+        .week-progress-bar {
+            width: 200px; height: 4px; border-radius: 4px; margin: 1.5rem auto 0;
+            background: rgba(255,255,255,0.08); overflow: hidden;
+        }
+        .week-progress-fill {
+            height: 100%; border-radius: 4px;
+            background: linear-gradient(90deg, var(--c-gold), var(--c-emerald));
+            transition: width 0.6s ease; width: 0%;
+        }
+
+        /* ===== Law Card ===== */
+        .law-card {
+            background: var(--c-bg-card); backdrop-filter: blur(24px);
+            border: 1px solid var(--c-border-subtle); border-radius: var(--radius-lg);
+            padding: 3rem; margin-bottom: 2.5rem;
+            transition: var(--transition-smooth);
+            position: relative; overflow: hidden;
+        }
+        .law-card::before {
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 4px; height: 100%;
+            background: linear-gradient(to bottom, var(--c-gold-bright), transparent);
+            opacity: 0; transition: var(--transition-smooth);
+        }
+        .law-card:hover { border-color: var(--c-border-gold); }
+        .law-card:hover::before { opacity: 1; }
+        .law-card.completed {
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+        .law-card.completed::before {
+            background: linear-gradient(to bottom, var(--c-emerald), transparent);
+            opacity: 1;
+        }
+
+        .law-top {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+        .law-badge {
+            display: flex; align-items: center; gap: 8px;
+        }
+        .law-number {
+            font-family: var(--font-head); font-size: 2rem; font-weight: 800;
+            color: var(--c-gold-bright); line-height: 1;
+            opacity: 0.4;
+        }
+        .law-day {
+            padding: 4px 10px; border-radius: 100px;
+            background: var(--c-gold-dim); border: 1px solid var(--c-border-gold);
+            font-size: 0.65rem; font-weight: 700; color: var(--c-gold-bright);
+            text-transform: uppercase; letter-spacing: 0.1em;
+        }
+        .law-check {
+            width: 28px; height: 28px; border-radius: 50%;
+            border: 2px solid var(--c-border-subtle); background: transparent;
+            cursor: pointer; transition: var(--transition-smooth);
+            display: flex; align-items: center; justify-content: center;
+            color: transparent; font-size: 14px;
+        }
+        .law-check:hover { border-color: var(--c-emerald); }
+        .law-check.checked {
+            background: var(--c-emerald); border-color: var(--c-emerald);
+            color: #fff;
+        }
+
+        .law-declaration {
+            font-family: var(--font-serif); font-size: 1.75rem; font-weight: 600;
+            color: var(--c-text); line-height: 1.35; margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+        .law-kemetic {
+            font-family: var(--font-serif); font-size: 1.05rem; font-style: italic;
+            color: var(--c-gold-bright); margin-bottom: 1.5rem; opacity: 0.8;
+            padding-left: 1rem; border-left: 2px solid var(--c-border-gold);
+        }
+        .law-interpretation {
+            font-size: 1rem; color: var(--c-text-warm); line-height: 1.75;
+            margin-bottom: 2rem;
+        }
+
+        .prompts-header {
+            font-family: var(--font-head); font-size: 0.8rem; font-weight: 700;
+            color: var(--c-emerald); text-transform: uppercase;
+            letter-spacing: 0.12em; margin-bottom: 1.25rem;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .prompts-header::after {
+            content: ''; flex: 1; height: 1px;
+            background: linear-gradient(to right, var(--c-emerald-dim), transparent);
+        }
+
+        .prompt-item {
+            margin-bottom: 1.5rem;
+        }
+        .prompt-question {
+            font-size: 0.95rem; font-weight: 600; color: var(--c-text);
+            margin-bottom: 0.75rem; line-height: 1.5;
+        }
+        .prompt-question .prompt-num {
+            color: var(--c-gold-bright); margin-right: 4px;
+        }
+        .journal-textarea {
+            width: 100%; min-height: 120px; padding: 1rem;
+            border-radius: var(--radius-sm);
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--c-border-subtle);
+            color: var(--c-text); font-family: var(--font-body);
+            font-size: 0.95rem; line-height: 1.7; resize: vertical;
+            transition: var(--transition-smooth);
+        }
+        .journal-textarea::placeholder { color: rgba(148, 163, 184, 0.4); }
+        .journal-textarea:focus {
+            outline: none; border-color: var(--c-gold);
+            box-shadow: 0 0 20px rgba(217, 119, 6, 0.1);
+        }
+
+        /* ===== Footer ===== */
+        .ledger-footer {
+            text-align: center; padding: 4rem 2rem;
+            border-top: 1px solid var(--c-border-subtle);
+            background: rgba(4, 8, 16, 0.8);
+        }
+        .footer-brand {
+            font-family: var(--font-head); font-size: 1rem; font-weight: 700;
+            color: var(--c-text); margin-bottom: 0.5rem;
+        }
+        .footer-brand span { color: var(--c-gold-bright); }
+        .footer-tagline {
+            font-size: 0.85rem; color: var(--c-gold-bright); font-weight: 600;
+            letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem;
+        }
+        .footer-copy {
+            font-size: 0.8rem; color: var(--c-text-muted);
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .ledger-hero h1 { font-size: 2.8rem; }
+            .ledger-hero .subtitle { font-size: 1.2rem; }
+            .law-card { padding: 2rem 1.5rem; }
+            .law-declaration { font-size: 1.4rem; }
+            .week-title { font-size: 2rem; }
+            .top-bar { padding: 0.6rem 1rem; }
+            .top-bar-badge { display: none; }
+            .week-tab { padding: 0.5rem 1rem; font-size: 0.75rem; }
+        }
+
+        /* ===== Print Styles ===== */
+        @media print {
+            body { background: #fff; color: #111; }
+            .top-bar, .week-nav, .btn-begin, .ambient-glow { display: none !important; }
+            .law-card { border: 1px solid #ccc; background: #fff; page-break-inside: avoid; }
+            .journal-textarea { border: 1px solid #999; min-height: 200px; }
+        }
+
+        /* ===== Utility Animations ===== */
+        .fade-in {
+            opacity: 0; transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient-glow bg-left"></div>
+    <div class="ambient-glow bg-right"></div>
+
+    <!-- Top Bar -->
+    <div class="top-bar" id="topBar">
+        <div class="top-bar-left">
+            <div class="top-bar-logo"><span>LGC</span> LLC</div>
+            <div class="top-bar-badge">Tier 2 — The Alignment Bundle</div>
+        </div>
+        <div class="top-bar-right">
+            <div class="progress-indicator">
+                <span id="progressText">0 / 42</span>
+                <div class="progress-bar-mini">
+                    <div class="progress-bar-mini-fill" id="progressBarMini" style="width: 0%;"></div>
+                </div>
+            </div>
+            <div class="save-status" id="saveStatus">
+                <span>●</span> Auto-saved
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="ledger-hero" id="heroSection">
+        <div class="hero-ornament"></div>
+        <div class="ledger-hero-content fade-in">
+            <div class="hero-eyra">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3L2 12l10 9 10-9L12 3z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                </svg>
+            </div>
+            <h1>The Daily <span class="gold">Ma'at</span> Ledger</h1>
+            <p class="subtitle">A 42-Day Journey Through the Ancient Laws of Cosmic Truth, <br>Applied to Modern Sovereignty and Enterprise</p>
+            <p class="byline">A Companion Workbook by <span>TASH (Tash-Raheem Joyner)</span></p>
+            <p class="hero-desc">
+                In the Hall of Two Truths, the heart of the initiate was weighed against the Feather of Ma'at. 
+                This ledger invites you to conduct that weighing yourself — one law, one day, one honest reflection at a time.
+                Write your truth. Build your field. Align your monument.
+            </p>
+            <button class="btn-begin" id="btnBegin" onclick="beginJourney()">
+                Begin the 42-Day Alignment
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- Week Navigation -->
+    <nav class="week-nav" id="weekNav">
+        <div class="week-tabs" id="weekTabs"></div>
+    </nav>
+
+    <!-- Main Ledger Content -->
+    <main class="ledger-main" id="ledgerMain" style="display:none;"></main>
+
+    <!-- Footer -->
+    <footer class="ledger-footer">
+        <div class="footer-brand"><span>Legacy Grove Codex</span> LLC</div>
+        <div class="footer-tagline">Artistry &bull; Culture &bull; Sovereignty</div>
+        <p class="footer-copy">&copy; 2026 LEGACY GROVE CODEX LLC. All Rights Reserved. The Daily Ma'at Ledger — Tier 2: The Alignment Bundle.</p>
+    </footer>
+
+    <script>
+    // =========================================================================
+    // THE 42 LAWS OF MA'AT — Data Structure
+    // =========================================================================
+    const WEEKS = [
+        {
+            id: 1, theme: "Foundation of Truth",
+            desc: "The first pillar of the inner pyramid. Without truth, no structure can stand. This week, you examine the bedrock of your integrity — the silent contracts you keep with yourself and the world.",
+            laws: [
+                {
+                    num: 1, day: "Day 1",
+                    declaration: "I Have Not Committed Sin Against Myself",
+                    kemetic: "The first declaration of the initiate before Osiris — to have lived in alignment with one's highest nature.",
+                    interpretation: "Sin in the Kemetic sense is not disobedience to an external god, but a betrayal of your own divine blueprint. Every time you act beneath your potential, you sin against the architect within. In business: every shortcut that compromises your standard is a crack in your foundation.",
+                    prompts: [
+                        "Where in my life am I currently acting beneath my own standard? What is the cost of that compromise?",
+                        "If I were to live this day as the highest version of myself, what is the first thing I would do differently?",
+                        "What is one commitment I have made to myself that I have been breaking? How will I restore it today?"
+                    ]
+                },
+                {
+                    num: 2, day: "Day 2",
+                    declaration: "I Have Not Committed Robbery With Violence",
+                    kemetic: "A declaration of restraint — that one has not taken by force what was not freely given.",
+                    interpretation: "This law extends beyond the physical. To coerce, manipulate, or pressure others into compliance is a form of spiritual robbery. In entrepreneurship, this is the difference between persuasion and predation. A sovereign builder attracts; they never extract.",
+                    prompts: [
+                        "Have I ever used pressure, urgency, or emotional manipulation to get what I wanted in a deal or relationship? What was the outcome?",
+                        "Where do I need to shift from extraction to attraction in my business model or personal dealings?",
+                        "What does it mean to me to 'earn' something versus 'take' something? How do I embody that difference?"
+                    ]
+                },
+                {
+                    num: 3, day: "Day 3",
+                    declaration: "I Have Not Stolen",
+                    kemetic: "Before the assessor Fenti — the declaration that one has not taken what belongs to another.",
+                    interpretation: "Theft is not only material. We steal time when we are not present. We steal credit when we claim ideas that are not ours. We steal peace when we impose chaos on others. The sovereign entrepreneur builds wealth — they never divert it from another's field.",
+                    prompts: [
+                        "Is there any area of my life where I am taking more than I am giving? How can I restore that balance?",
+                        "Have I ever taken credit for work, ideas, or energy that belonged to someone else? How do I make amends?",
+                        "What does 'abundance without theft' look like in my business practice?"
+                    ]
+                },
+                {
+                    num: 4, day: "Day 4",
+                    declaration: "I Have Not Slain the Innocent",
+                    kemetic: "A declaration of the sanctity of life — that one has not destroyed what was blameless.",
+                    interpretation: "We slay innocence when we crush someone's dream with cynicism, when we destroy trust with betrayal, when we kill potential with neglect. Every person who works with or for you carries an inner flame. This law commands: do not extinguish what you did not light.",
+                    prompts: [
+                        "Have I ever discouraged someone's vision, dream, or potential — even subtly? What drove that behavior?",
+                        "Who in my circle is carrying a fragile flame of ambition that I have the power to nurture rather than diminish?",
+                        "How do I honor the innocence of new ideas, new partnerships, and new beginnings in my enterprise?"
+                    ]
+                },
+                {
+                    num: 5, day: "Day 5",
+                    declaration: "I Have Not Stolen the Food of the Gods",
+                    kemetic: "Before the assessor Am-khaibit — one has not consumed offerings meant for the divine.",
+                    interpretation: "The 'food of the gods' is sacred energy — time, inspiration, creative force. When you waste your gifts on distractions, when you consume entertainment instead of creating, you steal from the divine within you. Your talent is an offering to the cosmos. Do not waste it.",
+                    prompts: [
+                        "What sacred gifts (time, talent, energy) am I currently wasting on things that do not serve my highest mission?",
+                        "If my creativity and focus were 'offerings,' what altar am I currently placing them on? Is it worthy?",
+                        "How will I protect my creative energy today as if it were sacred?"
+                    ]
+                },
+                {
+                    num: 6, day: "Day 6",
+                    declaration: "I Have Not Told Lies",
+                    kemetic: "Before the assessor Neha-hau — the declaration of truthful speech.",
+                    interpretation: "Lies are architecture built on sand. Every false word is a brick in a wall that will collapse. This applies to marketing, to promises, to the stories you tell yourself about your own progress. Ma'at demands radical honesty — not cruelty, but clarity.",
+                    prompts: [
+                        "What is one lie — even a small one — that I am currently telling myself about my business, my finances, or my relationships?",
+                        "Where do I need to speak a truth that I have been avoiding? What am I afraid will happen if I do?",
+                        "How does radical honesty serve my long-term legacy more powerfully than comfortable deception?"
+                    ]
+                },
+                {
+                    num: 7, day: "Day 7 — Reflection",
+                    declaration: "I Have Not Closed My Ears to Truth",
+                    kemetic: "The willingness to hear what is real, even when it is painful.",
+                    interpretation: "This is the capstone of Week One. It is not enough to speak truth — you must also be willing to receive it. From mentors, from the market, from your own body and spirit. The pyramid cannot be built by those who refuse to see the ground beneath them.",
+                    prompts: [
+                        "What truth have others tried to tell me that I have been refusing to hear? Why do I resist it?",
+                        "Reflect on this first week: what pattern has emerged in your writing? What does it reveal about where you need to grow?",
+                        "Write a letter to your future self — six weeks from now, having completed this ledger. What do you hope to have become?"
+                    ]
+                }
+            ]
+        },
+        {
+            id: 2, theme: "Emotional Architecture",
+            desc: "The second tier of the pyramid. The Kemetic initiates knew that the Ib — the heart — was the seat of intelligence. This week, you examine the emotional structures that either elevate or collapse your inner monument.",
+            laws: [
+                {
+                    num: 8, day: "Day 8",
+                    declaration: "I Have Not Made Anyone Cry",
+                    kemetic: "Before the assessor Set-qesu — the declaration of compassion and emotional restraint.",
+                    interpretation: "Power without compassion is tyranny. Whether you lead a team of one or one hundred, the weight of your words and actions lands on others. This law does not demand softness — it demands awareness. Know the impact of your force.",
+                    prompts: [
+                        "Have I recently caused someone emotional pain — through my words, my neglect, or my indifference? What was the real reason?",
+                        "How do I balance the firmness required in business with genuine compassion for the people I impact?",
+                        "What would it look like to lead with both strength and tenderness today?"
+                    ]
+                },
+                {
+                    num: 9, day: "Day 9",
+                    declaration: "I Have Not Felt Sorrow Without Reason",
+                    kemetic: "A declaration of emotional discipline — that grief has not consumed without cause.",
+                    interpretation: "Unexamined sadness is a leak in your reservoir. Ma'at does not forbid grief — grief is sacred. But it asks: is your sorrow rooted in reality, or in stories you are telling yourself? The entrepreneur who builds while grieving fantasy wounds wastes cement on cracks that were never there.",
+                    prompts: [
+                        "What sorrow or heaviness am I carrying right now? Is it rooted in a real event, or in a fear of something that has not yet happened?",
+                        "How has unexamined sadness affected my productivity, creativity, or relationships this week?",
+                        "What practice can I adopt to distinguish real grief from emotional habit?"
+                    ]
+                },
+                {
+                    num: 10, day: "Day 10",
+                    declaration: "I Have Not Been Angry Without Reason",
+                    kemetic: "Before the assessor Uatch-rekhit — the declaration of justified emotion.",
+                    interpretation: "Anger is sacred fire. Misdirected, it destroys. Channeled, it forges steel. Ma'at does not ask you to be passive — it asks you to be precise. Know why you are angry. Name the injustice. Then transmute the fire into fuel.",
+                    prompts: [
+                        "What am I truly angry about right now? Is it a real injustice, or wounded pride?",
+                        "How do I typically express anger — and does that expression build or destroy?",
+                        "If I could transmute my anger into one productive action today, what would that action be?"
+                    ]
+                },
+                {
+                    num: 11, day: "Day 11",
+                    declaration: "I Have Not Polluted Myself",
+                    kemetic: "Before the assessor Usekh-nemmt — the declaration of self-purification.",
+                    interpretation: "Pollution is not just physical. We pollute ourselves with toxic media, toxic relationships, toxic internal narratives. Every input is either nourishment or contamination. What are you feeding your Ib? What enters your eyes, ears, and mind shapes the monument you are building.",
+                    prompts: [
+                        "What am I consuming — media, food, conversations — that is polluting my mental clarity and spiritual health?",
+                        "What is one source of contamination I can remove from my daily routine starting today?",
+                        "Describe the 'clean environment' you need — physically, digitally, and emotionally — to do your highest work."
+                    ]
+                },
+                {
+                    num: 12, day: "Day 12",
+                    declaration: "I Have Not Terrorized Anyone",
+                    kemetic: "Before the assessor Her-f-ha-f — the declaration of peaceful presence.",
+                    interpretation: "Leadership through fear is the architecture of collapse. If people follow you because they are afraid, you have not built loyalty — you have built a prison. The sovereign builder creates environments where people choose to contribute, not where they are compelled to comply.",
+                    prompts: [
+                        "Have I ever used fear, intimidation, or emotional pressure as a leadership tool? What were the real consequences?",
+                        "What does it mean to be powerful without being frightening?",
+                        "How do I want people to feel in my presence — and does my behavior consistently produce that feeling?"
+                    ]
+                },
+                {
+                    num: 13, day: "Day 13",
+                    declaration: "I Have Not Acted Hastily or Without Thought",
+                    kemetic: "Before the assessor Ta-retiu — the declaration of deliberate action.",
+                    interpretation: "Impulsivity is the enemy of Ma'at. The pyramid was not built in a rush — every stone was measured, every angle calculated. In business, reactive decisions are almost always expensive. This law commands the discipline of the pause: think before you build.",
+                    prompts: [
+                        "What is the most recent decision I made in haste? What would I have done differently with more time and thought?",
+                        "Where in my enterprise do I need to slow down and think more deliberately before acting?",
+                        "Design a personal 'pause protocol' — a practice you can use before making any significant decision."
+                    ]
+                },
+                {
+                    num: 14, day: "Day 14 — Reflection",
+                    declaration: "I Have Not Overstepped My Boundaries",
+                    kemetic: "The awareness of one's proper domain — not reaching beyond what is rightfully yours to govern.",
+                    interpretation: "This is the capstone of Week Two. Boundaries are not limitations — they are the walls that give shape to your chamber. Know what is yours to control and what is not. Release what is not your burden. Protect what is your sacred charge.",
+                    prompts: [
+                        "Where have I recently overstepped — trying to control outcomes, people, or situations that are not mine to govern?",
+                        "Reflect on this week's emotional architecture: what pattern reveals itself? Where is your heart strong, and where does it leak?",
+                        "What boundaries do I need to set — or reinforce — to protect my inner peace and my enterprise?"
+                    ]
+                }
+            ]
+        },
+        {
+            id: 3, theme: "Justice & Right Action",
+            desc: "The third tier of the pyramid. Ma'at is the goddess of cosmic justice, and this week you confront the most difficult question of all: Am I just? Not merely in the eyes of the law, but in the chambers of my own conscience.",
+            laws: [
+                {
+                    num: 15, day: "Day 15",
+                    declaration: "I Am Not Deceitful",
+                    kemetic: "Before the assessor Ahi — the declaration of transparent dealings.",
+                    interpretation: "Deceit is the counterfeit of strategy. A true strategist operates with such clarity that their moves are bold, not hidden. In enterprise, deception may win a quarter — but it will lose the decade. The field you are building must be one that others can trust with their futures.",
+                    prompts: [
+                        "Where in my business or personal dealings am I operating with less than full transparency? Why?",
+                        "What is the difference between strategic discretion and deception? Where is my line?",
+                        "If every transaction I make this week were fully visible to my ancestors, would they be proud?"
+                    ]
+                },
+                {
+                    num: 16, day: "Day 16",
+                    declaration: "I Have Not Stolen Anyone's Land",
+                    kemetic: "Before the assessor Ruruti — the declaration of respect for another's domain.",
+                    interpretation: "Land is legacy. In the modern context, this means: do not build your enterprise on someone else's intellectual property, client relationships, or creative territory without honor. Respect the field that others have cultivated. Build your own grove.",
+                    prompts: [
+                        "Have I ever benefited from someone else's work, territory, or relationships without proper acknowledgment or compensation?",
+                        "What is the 'land' I am building for myself? How do I define and protect my own sovereign territory?",
+                        "How do I honor the fields of my collaborators and competitors alike?"
+                    ]
+                },
+                {
+                    num: 17, day: "Day 17",
+                    declaration: "I Have Not Falsely Accused Anyone",
+                    kemetic: "Before the assessor Khemi — the declaration of just speech about others.",
+                    interpretation: "Words are spells. When you accuse falsely — whether in gossip, in legal filings, or in your own mind — you cast a shadow over both the accused and yourself. Ma'at demands that every accusation be rooted in evidence, not emotion.",
+                    prompts: [
+                        "Have I recently judged someone based on assumption rather than evidence? What was driving that judgment?",
+                        "Where do I need to extend the benefit of the doubt — in business, in community, in my inner circle?",
+                        "How does false accusation (even internal) poison the waters of my enterprise?"
+                    ]
+                },
+                {
+                    num: 18, day: "Day 18",
+                    declaration: "I Have Not Behaved With Violence",
+                    kemetic: "Before the assessor Neb-Maat — the declaration of measured force.",
+                    interpretation: "Violence is not only physical. Verbal violence, economic violence, emotional violence — all shatter the alignment of Ma'at. A sovereign builder uses force only in defense, and even then with precision. The monument is built with calibration, not brute impact.",
+                    prompts: [
+                        "In what ways have I used disproportionate force — in conversation, in negotiation, in reaction — recently?",
+                        "What triggers my 'violent' responses? How can I build a buffer between the trigger and my reaction?",
+                        "Describe what 'measured force' looks like in your leadership and daily interactions."
+                    ]
+                },
+                {
+                    num: 19, day: "Day 19",
+                    declaration: "I Have Not Caused Disruption of Peace",
+                    kemetic: "Before the assessor Neb-abui — the declaration of harmonious presence.",
+                    interpretation: "Some people enter a room and the atmosphere rises. Others enter and the temperature drops. Which one are you? This law asks you to become a source of coherence, not chaos. Your enterprise should radiate stability, not scatter anxiety.",
+                    prompts: [
+                        "Am I a source of peace or disruption in my primary environments — home, workspace, community?",
+                        "What habits, behaviors, or unresolved tensions am I carrying that create chaos around me?",
+                        "How can I intentionally cultivate an atmosphere of peace and focus in my enterprise today?"
+                    ]
+                },
+                {
+                    num: 20, day: "Day 20",
+                    declaration: "I Have Not Disobeyed the Law",
+                    kemetic: "Before the assessor Tenemiu — the declaration of civic and cosmic obedience.",
+                    interpretation: "This operates on two levels: the laws of the land, and the laws of the cosmos. In business, compliance is not optional — it is the minimum. But beyond that, there are universal laws (reciprocity, consequence, energy exchange) that govern the field. Obey both.",
+                    prompts: [
+                        "Am I fully compliant with every legal, financial, and regulatory obligation in my business? Where are my blind spots?",
+                        "What cosmic or universal laws (reciprocity, cause and effect) have I been ignoring in my personal conduct?",
+                        "How does obedience to higher law create freedom rather than restriction?"
+                    ]
+                },
+                {
+                    num: 21, day: "Day 21 — Reflection",
+                    declaration: "I Have Not Worked Evil",
+                    kemetic: "The final declaration of the third week — a holistic review of one's impact on the world.",
+                    interpretation: "This is the capstone of Week Three. 'Evil' in the Kemetic sense is that which moves against Ma'at — against truth, against balance, against the natural order. Review your impact: not just your intentions, but your actual effects on the people and systems around you.",
+                    prompts: [
+                        "Looking honestly at the past three weeks: where has my impact been positive, and where has it caused harm — even unintentionally?",
+                        "What does 'working evil' mean in the context of modern business? Where have I seen it, and how do I avoid it?",
+                        "Write a declaration of your own: 'I commit to building a field that...' Complete this sentence with your deepest intention."
+                    ]
+                }
+            ]
+        },
+        {
+            id: 4, theme: "Sacred Stewardship",
+            desc: "The fourth tier. The ancient builders understood that nothing belongs to us — we are custodians of energy, resources, and relationships entrusted to us by the cosmos. This week, you examine what you have been given and how faithfully you tend it.",
+            laws: [
+                {
+                    num: 22, day: "Day 22",
+                    declaration: "I Have Not Exaggerated My Words",
+                    kemetic: "Before the assessor Ari-em-ab-f — the declaration of honest measure in speech.",
+                    interpretation: "Inflation is a disease — not just in economics, but in communication. When you exaggerate your results, your capability, or your suffering, you distort the field. Understatement is the architecture of the truly powerful. Let your work speak louder than your words.",
+                    prompts: [
+                        "Where have I inflated my accomplishments, capabilities, or grievances recently? What was I trying to protect or gain?",
+                        "How does exaggeration erode trust — both with others and with myself?",
+                        "What would it feel like to communicate with radical precision today — saying exactly what is true, nothing more?"
+                    ]
+                },
+                {
+                    num: 23, day: "Day 23",
+                    declaration: "I Have Not Used Evil Thoughts, Words, or Deeds",
+                    kemetic: "Before the assessor Neb-hrau — the declaration of purity in the triad of thought, speech, and action.",
+                    interpretation: "The ancient architects understood the cascade: thought becomes word, word becomes deed, deed becomes habit, habit becomes character, character becomes destiny. Guard the first gate — your thoughts — and every gate after will hold.",
+                    prompts: [
+                        "Track your thoughts for the past hour: were they constructive, neutral, or destructive? What pattern do you see?",
+                        "Is there a recurring negative thought loop that influences your words and actions? Name it.",
+                        "Design a 'thought audit' practice: how will you catch and redirect destructive thoughts before they become words?"
+                    ]
+                },
+                {
+                    num: 24, day: "Day 24",
+                    declaration: "I Have Not Polluted the Water",
+                    kemetic: "Before the assessor Nefer-Tem — the declaration of environmental stewardship.",
+                    interpretation: "Water is life, information, flow. In the modern context, this law extends to the information you put into the world, the emotional energy you contribute to shared spaces, and your physical stewardship of the planet. Every entrepreneur is a custodian of the ecosystem they operate within.",
+                    prompts: [
+                        "What 'waters' am I responsible for — communities, platforms, teams, family dynamics — and am I keeping them clean?",
+                        "What information or energy am I putting into the world that might be 'polluting' others' clarity or peace?",
+                        "How can my enterprise actively contribute to cleaner, healthier ecosystems — physical, digital, and emotional?"
+                    ]
+                },
+                {
+                    num: 25, day: "Day 25",
+                    declaration: "I Have Not Spoken Angrily or Arrogantly",
+                    kemetic: "Before the assessor Ser-Kheru — the declaration of humble speech.",
+                    interpretation: "Arrogance is the counterfeit of confidence. The truly confident need not announce their power — it is felt. In every meeting, every email, every public statement, the tone of your communication either builds alliance or breeds resentment. Speak from strength, not from ego.",
+                    prompts: [
+                        "Recall a recent conversation where my tone was more arrogant or angry than necessary. What was I really feeling underneath?",
+                        "How do I distinguish between confidence and arrogance in my own communication?",
+                        "Write a version of something you recently said in anger, reframed with humble strength."
+                    ]
+                },
+                {
+                    num: 26, day: "Day 26",
+                    declaration: "I Have Not Cursed Anyone in Thought, Word, or Deed",
+                    kemetic: "Before the assessor Basti — the declaration of benevolent intent.",
+                    interpretation: "To curse is to direct destructive energy toward another. This includes resentment, envy, and the secret wish for another's failure. The field you are building cannot hold both blessings and curses — one will cancel the other. Choose carefully where you aim your inner fire.",
+                    prompts: [
+                        "Is there anyone I am currently resenting, envying, or secretly wishing failure upon? Be radically honest.",
+                        "What would it feel like to genuinely wish success for someone I perceive as a rival?",
+                        "How does carrying curses (resentment, envy) diminish my own creative power and enterprise?"
+                    ]
+                },
+                {
+                    num: 27, day: "Day 27",
+                    declaration: "I Have Not Placed Myself on a Pedestal",
+                    kemetic: "Before the assessor An-hetep-f — the declaration of humility before the cosmos.",
+                    interpretation: "The capstone of the pyramid is not the largest stone — it is the most refined. Greatness in the Kemetic tradition is not about elevation above others, but about alignment with the cosmic order. The sovereign entrepreneur serves their mission, not their ego.",
+                    prompts: [
+                        "Where have I prioritized my ego over my mission? What did it cost me?",
+                        "What does true humility look like in a leader who is also ambitious and visionary?",
+                        "How do I stay connected to the mission when success tempts me toward self-glorification?"
+                    ]
+                },
+                {
+                    num: 28, day: "Day 28 — Reflection",
+                    declaration: "I Have Not Destroyed Property of the Divine",
+                    kemetic: "The capstone declaration of Week Four — the acknowledgment that everything we steward belongs to a force greater than ourselves.",
+                    interpretation: "Your body, your business, your relationships, your creative gifts — all are divine property entrusted to your care. You are the custodian, not the owner. How faithfully have you tended what was given to you?",
+                    prompts: [
+                        "What has the cosmos entrusted to me — what gifts, resources, relationships — and how faithfully am I tending them?",
+                        "Reflect on this week's theme of stewardship: where am I a faithful custodian, and where have I been negligent?",
+                        "If you could restore one thing you have neglected or damaged through poor stewardship, what would it be? How will you begin?"
+                    ]
+                }
+            ]
+        },
+        {
+            id: 5, theme: "Discipline of Speech",
+            desc: "The fifth tier. The Kemetic sages knew that Heka — the power of the spoken word — was the force that shaped reality itself. This week, you examine the most dangerous tool you possess: your voice.",
+            laws: [
+                {
+                    num: 29, day: "Day 29",
+                    declaration: "I Have Not Swindled Offerings",
+                    kemetic: "Before the assessor Tutu-f — the declaration of honoring sacred exchanges.",
+                    interpretation: "An offering is any exchange made in good faith. When someone invests in your product, your service, or your vision, they are making an offering. To deliver less than promised — in quality, in attention, in care — is to swindle the sacred. Honor every transaction as a covenant.",
+                    prompts: [
+                        "Am I delivering the full value of what I promise — to customers, partners, and collaborators?",
+                        "Where have I 'swindled' someone's trust, time, or investment by underdelivering? How do I make it right?",
+                        "How do I build a business where every exchange feels sacred to both parties?"
+                    ]
+                },
+                {
+                    num: 30, day: "Day 30",
+                    declaration: "I Have Not Been an Eavesdropper",
+                    kemetic: "Before the assessor Maa-anuf — the declaration of honorable listening.",
+                    interpretation: "Eavesdropping is the gathering of information without consent. In the modern world, this extends to surveillance capitalism, gossip networks, and the temptation to know what is not yours to know. A sovereign builder protects the privacy of their field and respects the privacy of others.",
+                    prompts: [
+                        "Do I seek information about others that is not freely offered to me? What drives that impulse?",
+                        "How do I define the boundary between healthy awareness and invasive curiosity in my business dealings?",
+                        "What information about my own enterprise do I protect, and why? Do I extend that same courtesy to others?"
+                    ]
+                },
+                {
+                    num: 31, day: "Day 31",
+                    declaration: "I Have Not Cursed the Divine",
+                    kemetic: "Before the assessor Hetch-abehu — the declaration of reverence for the sacred source.",
+                    interpretation: "To curse the divine is to reject the source of your own power. When you complain about your circumstances, resent your challenges, or rage against the universe, you are cursing the forge that is shaping you. Every difficulty is an initiation. Bless the fire that refines you.",
+                    prompts: [
+                        "What current challenge am I resenting that might actually be an initiation — a necessary forging of my character?",
+                        "How do I typically respond when life does not go my way? Is that response worthy of the builder I want to become?",
+                        "Write a blessing for your hardest current challenge. What is it teaching you?"
+                    ]
+                },
+                {
+                    num: 32, day: "Day 32",
+                    declaration: "I Have Not Acted With Insolence",
+                    kemetic: "Before the assessor Neb-heru — the declaration of respectful engagement.",
+                    interpretation: "Insolence is disrespect disguised as confidence. It is the dismissal of others' wisdom, experience, or authority without cause. The sovereign entrepreneur learns from everyone — from the elder and from the apprentice. Arrogance closes doors that humility opens.",
+                    prompts: [
+                        "Have I recently dismissed someone's input, advice, or perspective without giving it genuine consideration? Why?",
+                        "What is the difference between healthy self-assurance and insolent dismissiveness?",
+                        "Who in my life deserves more respect than I have been showing them? How will I correct this?"
+                    ]
+                },
+                {
+                    num: 33, day: "Day 33",
+                    declaration: "I Have Not Taken Food From a Child",
+                    kemetic: "Before the assessor Kenemi — the declaration of protecting the vulnerable.",
+                    interpretation: "This is among the most visceral of the 42 declarations. A child represents the future, the innocent, the dependent. In enterprise, this extends to junior employees, new businesses, emerging creators. The powerful must protect and nourish the next generation, never exploit them.",
+                    prompts: [
+                        "Am I nurturing or exploiting the people who depend on me — employees, mentees, family members?",
+                        "How does my enterprise contribute to the next generation's prosperity rather than drain it?",
+                        "What is one tangible act of generational stewardship I can perform this week?"
+                    ]
+                },
+                {
+                    num: 34, day: "Day 34",
+                    declaration: "I Have Not Stolen From the Deceased",
+                    kemetic: "Before the assessor Aan-af — the declaration of ancestral honor.",
+                    interpretation: "This law strikes at the heart of the LGC mission. The deceased are our ancestors — and their intellectual, spiritual, and cultural property is sacred. To profit from ancestral wisdom without acknowledgment is to rob the tomb. Honor the lineage. Name the source. Build the grove.",
+                    prompts: [
+                        "What ancestral wisdom, cultural traditions, or inherited knowledge am I building upon? Am I honoring those sources?",
+                        "How do I publicly and privately acknowledge the ancestors and predecessors whose work makes mine possible?",
+                        "What does it mean to 'build a grove' rather than simply 'take from the forest'?"
+                    ]
+                },
+                {
+                    num: 35, day: "Day 35 — Reflection",
+                    declaration: "I Have Not Spoken Scornfully",
+                    kemetic: "The capstone of Week Five — the final accounting of the power of speech.",
+                    interpretation: "Scorn is the verbal expression of contempt — the belief that someone or something is beneath you. It is the opposite of Ma'at. This week, reflect on every word you have spoken and written. Were they instruments of construction, or demolition?",
+                    prompts: [
+                        "Reflect on your speech patterns this week: how many of your words were constructive, and how many were dismissive or contemptuous?",
+                        "What would it take for every word you speak this week to be an instrument of building rather than breaking?",
+                        "Write a 'speech covenant' — a personal commitment about how you will use the power of Heka (the word) going forward."
+                    ]
+                }
+            ]
+        },
+        {
+            id: 6, theme: "Sovereign Alignment",
+            desc: "The capstone tier. The Akh — the transfigured spirit — emerges only when every lower chamber is in perfect order. This final week brings you to the summit of the inner pyramid. Here, you align every dimension of your being with the cosmic order of Ma'at.",
+            laws: [
+                {
+                    num: 36, day: "Day 36",
+                    declaration: "I Have Not Carried Away Food",
+                    kemetic: "Before the assessor Ari-em-ab-f — the declaration of sharing abundance.",
+                    interpretation: "To carry away food while others are hungry is to hoard. In the modern field, this is the entrepreneur who accumulates without circulating, who profits without reinvesting in community. True wealth is a river, not a reservoir. Keep it flowing.",
+                    prompts: [
+                        "Am I hoarding resources — financial, informational, relational — that I could be sharing with my community?",
+                        "How does generosity strengthen rather than weaken my enterprise? Give a specific example from your experience.",
+                        "What is one act of strategic generosity I can commit to this week that feeds my community while sustaining my mission?"
+                    ]
+                },
+                {
+                    num: 37, day: "Day 37",
+                    declaration: "I Have Not Cursed Anyone",
+                    kemetic: "Before the assessor Uamenti — the final declaration of benevolence in all directions.",
+                    interpretation: "As you approach the summit, this law asks for total reconciliation. Release every grudge, every resentment, every silent condemnation. The capstone can only be placed when the heart is lighter than the feather. Forgive — not for their sake, but for the integrity of your monument.",
+                    prompts: [
+                        "Who have I not yet forgiven? What is the cost of carrying that weight to the summit of my pyramid?",
+                        "Write a statement of release for someone who has wronged you. You do not need to send it. Simply release it.",
+                        "How does forgiveness serve my sovereignty rather than compromise it?"
+                    ]
+                },
+                {
+                    num: 38, day: "Day 38",
+                    declaration: "I Have Not Committed Adultery of the Heart",
+                    kemetic: "Before the assessor An-a-f — the declaration of undivided devotion.",
+                    interpretation: "This law transcends romantic fidelity. It is about devotion to your mission. Are you fully committed to the field you are building, or are you perpetually distracted by the next shiny opportunity? The pyramid was built by those who stayed. Commit fully. Dig deep. Build one monument.",
+                    prompts: [
+                        "Am I fully committed to my primary mission, or am I splitting my devotion among too many projects and opportunities?",
+                        "What would radical, singular focus look like for me this month? What would I need to release?",
+                        "What is the one mission, the one monument, that I am willing to devote the next chapter of my life to building?"
+                    ]
+                },
+                {
+                    num: 39, day: "Day 39",
+                    declaration: "I Have Not Been Exclusively Angry",
+                    kemetic: "Before the assessor Utu-rekhit — the declaration that emotion has not consumed the whole self.",
+                    interpretation: "To be 'exclusively' any one emotion is to be out of balance. Ma'at is equilibrium. The sovereign entrepreneur feels anger but is not consumed by it, feels joy but is not lost in it, feels grief but is not paralyzed by it. Mastery is integration, not suppression.",
+                    prompts: [
+                        "Which emotion has dominated my inner landscape recently? Is it serving my growth, or distorting my judgment?",
+                        "How do I practice emotional integration — feeling everything fully while being consumed by nothing?",
+                        "Describe the emotionally balanced leader you are becoming. What does their inner world look like?"
+                    ]
+                },
+                {
+                    num: 40, day: "Day 40",
+                    declaration: "I Have Honored the Sacred",
+                    kemetic: "Before the assessor Maa-em-kerh — the declaration of reverence for what is holy.",
+                    interpretation: "What do you hold sacred? Your word? Your family? Your craft? Your ancestors? This law asks you to name it — and then to examine whether your daily actions truly honor it, or whether the sacred has been crowded out by the urgent.",
+                    prompts: [
+                        "What do I hold most sacred? List three things. Then honestly assess: do my daily actions reflect that sacredness?",
+                        "Where has the urgent crowded out the sacred in my life? How do I reclaim that space?",
+                        "Design a daily ritual — even 5 minutes — that honors what is most sacred to you."
+                    ]
+                },
+                {
+                    num: 41, day: "Day 41",
+                    declaration: "I Have Walked in the Way of Ma'at",
+                    kemetic: "The penultimate declaration — the affirmation that one has lived according to cosmic truth.",
+                    interpretation: "To walk the way of Ma'at is to live in alignment: your thoughts match your words, your words match your deeds, your deeds match your purpose. This is the architecture of integrity. As you near the completion of this ledger, ask: am I walking the way?",
+                    prompts: [
+                        "Looking back over these 41 days: where are my thoughts, words, and deeds in alignment? Where are they still fractured?",
+                        "What does 'walking in the way of Ma'at' look like in my specific life circumstances — as an entrepreneur, a family member, a community member?",
+                        "Write your personal 'Way of Ma'at' — a short manifesto of the principles by which you will live and build going forward."
+                    ]
+                },
+                {
+                    num: 42, day: "Day 42 — The Weighing",
+                    declaration: "My Heart Is Lighter Than the Feather",
+                    kemetic: "The final declaration. In the Hall of Two Truths, the heart of the initiate is placed on the scale against the Feather of Ma'at. If the heart is lighter — free of guilt, regret, and untruth — the soul is transfigured into the Akh.",
+                    interpretation: "You have arrived at the summit. Forty-two days of honest reflection, of building the inner chambers of your pyramid stone by stone. The question Ma'at asks now is the only question that ever mattered: Is your heart clean? Not perfect — clean. Free of the weight you were never meant to carry. Light enough to rise.",
+                    prompts: [
+                        "If your heart were weighed against the Feather of Ma'at today, what would it hold? What burdens remain? What has been released?",
+                        "Write a letter from your future self — the Akh, the transfigured spirit — to the person who began this ledger 42 days ago. What has changed?",
+                        "Declare your sovereign intention: Who are you now? What field are you building? What monument will you complete? Write it as a covenant with yourself, your ancestors, and the generations who follow."
+                    ]
+                }
+            ]
+        }
+    ];
+
+    // =========================================================================
+    // State Management
+    // =========================================================================
+    const STORAGE_KEY = 'lgc_maat_ledger_v1';
+
+    function loadState() {
+        try {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            return saved ? JSON.parse(saved) : { entries: {}, completed: {} };
+        } catch { return { entries: {}, completed: {} }; }
+    }
+
+    function saveState(state) {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            flashSaveStatus();
+        } catch(e) { console.warn('Save failed:', e); }
+    }
+
+    function flashSaveStatus() {
+        const el = document.getElementById('saveStatus');
+        el.innerHTML = '<span style="color:#10B981">●</span> Saved';
+        setTimeout(() => { el.innerHTML = '<span style="color:#10B981">●</span> Auto-saved'; }, 1500);
+    }
+
+    let state = loadState();
+    let debounceTimer = null;
+
+    function handleTextInput(lawNum, promptIdx, value) {
+        const key = `law_${lawNum}_prompt_${promptIdx}`;
+        state.entries[key] = value;
+        if (debounceTimer) clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => saveState(state), 800);
+    }
+
+    function toggleComplete(lawNum) {
+        const key = `law_${lawNum}`;
+        state.completed[key] = !state.completed[key];
+        saveState(state);
+        renderProgress();
+        renderWeekTabs();
+
+        const card = document.getElementById(`card-${lawNum}`);
+        const btn = document.getElementById(`check-${lawNum}`);
+        if (state.completed[key]) {
+            card.classList.add('completed');
+            btn.classList.add('checked');
+            btn.innerHTML = '✓';
+        } else {
+            card.classList.remove('completed');
+            btn.classList.remove('checked');
+            btn.innerHTML = '';
+        }
+    }
+
+    // =========================================================================
+    // Rendering
+    // =========================================================================
+    function renderProgress() {
+        const total = 42;
+        let done = 0;
+        for (let i = 1; i <= total; i++) {
+            if (state.completed[`law_${i}`]) done++;
+        }
+        const pct = Math.round((done / total) * 100);
+        document.getElementById('progressText').textContent = `${done} / ${total}`;
+        document.getElementById('progressBarMini').style.width = `${pct}%`;
+    }
+
+    function getWeekProgress(weekIdx) {
+        const week = WEEKS[weekIdx];
+        let done = 0;
+        week.laws.forEach(law => {
+            if (state.completed[`law_${law.num}`]) done++;
+        });
+        return { done, total: week.laws.length };
+    }
+
+    function renderWeekTabs() {
+        const container = document.getElementById('weekTabs');
+        container.innerHTML = '';
+        WEEKS.forEach((week, idx) => {
+            const prog = getWeekProgress(idx);
+            const tab = document.createElement('button');
+            tab.className = `week-tab ${idx === activeWeek ? 'active' : ''}`;
+            tab.innerHTML = `Week ${week.id}: ${week.theme}${prog.done > 0 ? `<span class="tab-progress">${prog.done}/${prog.total}</span>` : ''}`;
+            tab.onclick = () => switchWeek(idx);
+            container.appendChild(tab);
+        });
+    }
+
+    let activeWeek = 0;
+
+    function switchWeek(idx) {
+        activeWeek = idx;
+        document.querySelectorAll('.week-section').forEach((s, i) => {
+            s.classList.toggle('active', i === idx);
+        });
+        renderWeekTabs();
+        window.scrollTo({ top: document.getElementById('ledgerMain').offsetTop - 120, behavior: 'smooth' });
+    }
+
+    function buildLedger() {
+        const main = document.getElementById('ledgerMain');
+        main.innerHTML = '';
+
+        WEEKS.forEach((week, wIdx) => {
+            const section = document.createElement('section');
+            section.className = `week-section ${wIdx === 0 ? 'active' : ''}`;
+            section.id = `week-${week.id}`;
+
+            // Week header
+            const prog = getWeekProgress(wIdx);
+            section.innerHTML = `
+                <div class="week-header">
+                    <div class="week-number">Week ${week.id} of 6</div>
+                    <h2 class="week-title">${week.theme}</h2>
+                    <p class="week-desc">${week.desc}</p>
+                    <div class="week-progress-bar">
+                        <div class="week-progress-fill" id="wpf-${week.id}" style="width: ${(prog.done / prog.total * 100)}%"></div>
+                    </div>
+                </div>
+            `;
+
+            // Law cards
+            week.laws.forEach((law, lIdx) => {
+                const isCompleted = state.completed[`law_${law.num}`];
+                const card = document.createElement('div');
+                card.className = `law-card ${isCompleted ? 'completed' : ''} fade-in`;
+                card.id = `card-${law.num}`;
+                card.style.animationDelay = `${lIdx * 0.08}s`;
+
+                let promptsHTML = '';
+                law.prompts.forEach((p, pIdx) => {
+                    const savedVal = state.entries[`law_${law.num}_prompt_${pIdx}`] || '';
+                    promptsHTML += `
+                        <div class="prompt-item">
+                            <p class="prompt-question"><span class="prompt-num">${pIdx + 1}.</span> ${p}</p>
+                            <textarea class="journal-textarea" 
+                                placeholder="Write your reflection here..." 
+                                oninput="handleTextInput(${law.num}, ${pIdx}, this.value)"
+                            >${savedVal}</textarea>
+                        </div>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="law-top">
+                        <div class="law-badge">
+                            <span class="law-number">${String(law.num).padStart(2, '0')}</span>
+                            <span class="law-day">${law.day}</span>
+                        </div>
+                        <button class="law-check ${isCompleted ? 'checked' : ''}" id="check-${law.num}" onclick="toggleComplete(${law.num})" title="Mark as complete">
+                            ${isCompleted ? '✓' : ''}
+                        </button>
+                    </div>
+                    <h3 class="law-declaration">"${law.declaration}"</h3>
+                    <p class="law-kemetic">${law.kemetic}</p>
+                    <p class="law-interpretation">${law.interpretation}</p>
+                    <div class="prompts-header">Journal Prompts</div>
+                    ${promptsHTML}
+                `;
+
+                section.appendChild(card);
+            });
+
+            main.appendChild(section);
+        });
+    }
+
+    // =========================================================================
+    // Navigation
+    // =========================================================================
+    function beginJourney() {
+        document.getElementById('heroSection').style.display = 'none';
+        document.getElementById('ledgerMain').style.display = 'block';
+        document.getElementById('weekNav').classList.add('visible');
+        buildLedger();
+        renderProgress();
+        renderWeekTabs();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Auto-start if returning user
+    document.addEventListener('DOMContentLoaded', () => {
+        const hasEntries = Object.keys(state.entries).length > 0 || Object.keys(state.completed).length > 0;
+        if (hasEntries) {
+            beginJourney();
+        }
+        renderProgress();
+    });
+    </script>
+</body>
+</html>

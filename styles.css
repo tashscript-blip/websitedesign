@@ -632,3 +632,617 @@ footer { padding: 5rem 5% 2rem; border-top: 1px solid var(--c-border-subtle); ba
         height: 360px;
     }
 }
+
+/* ==================== THE CODEX PORTAL STYLES ==================== */
+.portal-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.portal-main {
+    flex: 1;
+    margin-top: 100px;
+    padding: 2rem 0;
+}
+
+.portal-container {
+    width: 95%;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+/* Sidebar Dashboard Navigation */
+.portal-sidebar {
+    border-radius: var(--radius-md);
+    padding: 1.75rem;
+    border: 1px solid var(--c-border);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: sticky;
+    top: 100px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--c-border-subtle);
+}
+
+.profile-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--c-gold), var(--c-gold-bright));
+    color: var(--c-bg-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-family: var(--font-head);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.profile-info h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--c-text);
+}
+
+.profile-status {
+    font-size: 0.8rem;
+    color: var(--c-emerald);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.portal-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.tab-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--c-text-muted);
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: var(--font-body);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-align: left;
+    transition: var(--transition-smooth);
+}
+
+.tab-btn svg {
+    transition: var(--transition-smooth);
+    opacity: 0.6;
+}
+
+.tab-btn:hover {
+    color: var(--c-text);
+    background: rgba(255, 255, 255, 0.03);
+    border-color: var(--c-border-subtle);
+}
+
+.tab-btn.active {
+    color: var(--c-text);
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(12, 18, 30, 0.8) 100%);
+    border-color: var(--c-border);
+}
+
+.tab-btn.active svg {
+    color: var(--c-emerald);
+    opacity: 1;
+}
+
+/* Alignment score meter */
+.alignment-meter-container {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--c-border-subtle);
+}
+
+.meter-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--c-text-muted);
+    margin-bottom: 0.75rem;
+}
+
+.meter-header span:last-child {
+    color: var(--c-gold-bright);
+}
+
+.meter-bar-bg {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 100px;
+    overflow: hidden;
+}
+
+.meter-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--c-emerald), var(--c-gold-bright));
+    border-radius: 100px;
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Content modules */
+.portal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.module-panel {
+    display: none;
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+.module-panel.active-panel {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.module-header {
+    margin-bottom: 2rem;
+}
+
+.module-subtitle {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--c-gold-bright);
+    font-weight: 700;
+    font-family: var(--font-head);
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.module-header h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    color: var(--c-text);
+}
+
+.module-header p {
+    color: var(--c-text-muted);
+    font-size: 1.05rem;
+    max-width: 800px;
+}
+
+/* Sovereignty Matrix Cards Grid */
+.matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.matrix-card {
+    display: flex;
+    gap: 1.25rem;
+    padding: 2rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    border: 1px solid var(--c-border-subtle);
+    transition: var(--transition-smooth);
+}
+
+.matrix-card:hover {
+    border-color: var(--c-border);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.05);
+}
+
+/* Hide real input checkbox */
+.matrix-checkbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Custom Visual Checkbox Dot */
+.checkbox-visual {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    border: 2px solid var(--c-text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 3px;
+    transition: var(--transition-smooth);
+}
+
+.matrix-card:hover .checkbox-visual {
+    border-color: var(--c-emerald);
+}
+
+.check-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background: var(--c-emerald);
+    opacity: 0;
+    transform: scale(0.5);
+    transition: var(--transition-smooth);
+}
+
+.matrix-checkbox:checked + .checkbox-visual {
+    border-color: var(--c-emerald);
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.matrix-checkbox:checked + .checkbox-visual .check-dot {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 8px var(--c-emerald);
+}
+
+.matrix-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.matrix-badge {
+    align-self: flex-start;
+    padding: 3px 8px;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.05);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--c-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.matrix-checkbox:checked ~ .matrix-card-content h3 {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.matrix-card-content h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--c-text);
+    transition: var(--transition-smooth);
+}
+
+.matrix-card-content p {
+    font-size: 0.9rem;
+    color: var(--c-text-muted);
+    line-height: 1.5;
+}
+
+/* Ma'at Laws Explorer Card */
+.maat-explorer-card {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--c-border);
+    padding: 3rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.maat-selector-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--c-border-subtle);
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+}
+
+.arrow-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--c-border-subtle);
+    color: var(--c-text);
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+}
+
+.arrow-btn:hover {
+    background: var(--c-emerald-dim);
+    border-color: var(--c-emerald);
+}
+
+.maat-number-display {
+    text-align: center;
+}
+
+.law-num-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--c-gold-bright);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.maat-number-display h3 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--c-text);
+}
+
+.law-card-body {
+    position: relative;
+    z-index: 1;
+}
+
+.law-hieroglyph-glow {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.08) 0%, transparent 70%);
+    top: -50px;
+    right: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.law-card-body h4 {
+    font-size: 2.2rem;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--c-text);
+    line-height: 1.3;
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--c-gold-bright);
+    padding-left: 1.5rem;
+}
+
+.law-interpretation-title {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--c-emerald);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.law-interpretation-text {
+    font-size: 1.15rem;
+    color: #CBD5E1;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+}
+
+.journal-input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.journal-input-section label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--c-text);
+}
+
+.journal-input-section textarea {
+    width: 100%;
+    height: 120px;
+    background: rgba(4, 8, 16, 0.4);
+    border: 1px solid var(--c-border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+    color: var(--c-text);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
+    resize: none;
+    transition: var(--transition-smooth);
+}
+
+.journal-input-section textarea:focus {
+    outline: none;
+    border-color: var(--c-emerald);
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.1);
+}
+
+.journal-status {
+    font-size: 0.8rem;
+    color: var(--c-text-muted);
+}
+
+/* Masterclass Playlist module */
+.audio-playlist {
+    border-radius: var(--radius-md);
+    border: 1px solid var(--c-border-subtle);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.audio-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    border-bottom: 1px solid var(--c-border-subtle);
+    transition: var(--transition-smooth);
+}
+
+.audio-item:last-child {
+    border-bottom: none;
+}
+
+.audio-item:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.audio-item.active-audio {
+    background: linear-gradient(90deg, rgba(16, 185, 129, 0.05) 0%, rgba(12, 18, 30, 0.8) 100%);
+}
+
+.play-state-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--c-border-subtle);
+    color: var(--c-emerald);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: var(--transition-smooth);
+}
+
+.audio-item.active-audio .play-state-icon {
+    border-color: var(--c-emerald);
+    background: var(--c-emerald-dim);
+    color: var(--c-emerald);
+}
+
+.audio-details {
+    flex: 1;
+}
+
+.audio-details h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--c-text);
+    margin-bottom: 0.25rem;
+}
+
+.audio-details p {
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+}
+
+.audio-duration {
+    font-size: 0.9rem;
+    color: var(--c-text-muted);
+    font-family: var(--font-head);
+}
+
+/* Audio Player animation bars */
+.bars-animation {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 14px;
+}
+
+.bars-animation span {
+    width: 3px;
+    background-color: var(--c-emerald);
+    border-radius: 20px;
+    animation: bounceAudio 0.8s ease-in-out infinite alternate;
+}
+
+.bars-animation span:nth-child(1) { height: 60%; animation-delay: 0.1s; }
+.bars-animation span:nth-child(2) { height: 100%; animation-delay: 0.3s; }
+.bars-animation span:nth-child(3) { height: 40%; animation-delay: 0.5s; }
+
+@keyframes bounceAudio {
+    from { height: 20%; }
+    to { height: 100%; }
+}
+
+/* Player Mini HUD */
+.player-hud {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 2.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--c-border);
+    background: linear-gradient(135deg, rgba(12, 18, 30, 0.9) 0%, rgba(4, 8, 16, 0.95) 100%) !important;
+}
+
+.now-playing-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--c-emerald);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.hud-info h4 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--c-text);
+}
+
+.hud-btn {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: var(--c-emerald);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+    transition: var(--transition-smooth);
+}
+
+.hud-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.6);
+}
+
+/* Responsiveness for Codex Portal */
+@media (max-width: 1024px) {
+    .portal-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .portal-sidebar {
+        position: static;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .matrix-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .maat-explorer-card {
+        padding: 1.5rem;
+    }
+    
+    .law-card-body h4 {
+        font-size: 1.6rem;
+    }
+}
+

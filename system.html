@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Legacy Grove Codex LLC - Portal Dashboard, Sovereignty Matrix, and Ma'at Principles Explorer.">
+    <title>Portal Dashboard | LGC LLC</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script src="script.js" defer></script>
+</head>
+<body class="dark-theme portal-page">
+    <div id="particles-js"></div>
+    <div class="ambient-glow bg-left"></div>
+    <div class="ambient-glow bg-right"></div>
+
+    <nav class="navbar glass-effect">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html" style="text-decoration: none; display: flex; align-items: center; gap: 1rem;">
+                    <div class="lgc-symbol-wrapper">
+                        <svg class="lgc-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#FFD700" />
+                                    <stop offset="100%" stop-color="#B8860B" />
+                                </linearGradient>
+                                <linearGradient id="emerald-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#059669" />
+                                    <stop offset="100%" stop-color="#10B981" />
+                                </linearGradient>
+                            </defs>
+                            <polygon points="50,5 88.97,27.5 88.97,72.5 50,95 11.03,72.5 11.03,27.5" fill="none" stroke="url(#emerald-grad)" stroke-width="4" stroke-linejoin="round"/>
+                            <circle cx="50" cy="50" r="14" fill="url(#gold-grad)" opacity="0.8">
+                                <animate attributeName="r" values="14;16;14" dur="3s" repeatCount="indefinite" />
+                            </circle>
+                            <path d="M50 25 L50 40 M35 60 L45 50 M65 60 L55 50" stroke="url(#gold-grad)" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="brand-text">
+                        <span class="brand-name">Legacy Grove</span>
+                        <span class="brand-legal">LGC LLC</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="nav-links">
+                <a href="index.html" class="hover-underline">Home</a>
+                <a href="book.html" class="hover-underline">The Book</a>
+                <a href="systems.html" class="hover-underline active">Systems</a>
+                <a href="contact.html" class="hover-underline">Contact</a>
+            </div>
+
+            <div class="nav-actions">
+                <a href="contact.html" class="btn btn-primary glow-emerald">Secure Access</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="portal-main">
+        <div class="portal-container">
+            <!-- Sidebar Dashboard Navigation -->
+            <aside class="portal-sidebar glass-panel">
+                <div class="user-profile">
+                    <div class="profile-avatar">TR</div>
+                    <div class="profile-info">
+                        <h4>Tash-Raheem Joyner</h4>
+                        <span class="profile-status"><span class="pulse-dot"></span> Principal Architect</span>
+                    </div>
+                </div>
+
+                <div class="portal-tabs">
+                    <button class="tab-btn active" data-target="matrix-module">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                        Sovereignty Matrix
+                    </button>
+                    <button class="tab-btn" data-target="maat-module">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        Ma'at Principles
+                    </button>
+                    <button class="tab-btn" data-target="audio-module">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                        Masterclass Audio
+                    </button>
+                </div>
+
+                <div class="alignment-meter-container">
+                    <div class="meter-header">
+                        <span>Sovereignty Alignment</span>
+                        <span id="alignment-score">94%</span>
+                    </div>
+                    <div class="meter-bar-bg">
+                        <div class="meter-bar-fill" id="alignment-fill" style="width: 94%;"></div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content Panels -->
+            <section class="portal-content">
+                <!-- Module 1: Sovereignty Matrix -->
+                <div class="module-panel active-panel glass-panel" id="matrix-module" style="padding: 2.5rem; border-radius: var(--radius-lg);">
+                    <div class="module-header">
+                        <span class="module-subtitle">Operational Framework</span>
+                        <h2>Sovereignty Matrix Protocol</h2>
+                        <p>Systematic verification checklist for institutional independence, asset protection, and digital vault integrity.</p>
+                    </div>
+
+                    <div class="matrix-grid">
+                        <label class="matrix-card glass-card">
+                            <input type="checkbox" class="matrix-checkbox" checked>
+                            <span class="checkbox-visual"><span class="check-dot"></span></span>
+                            <div class="matrix-card-content">
+                                <span class="matrix-badge">Phase I</span>
+                                <h3>Entity Structure & Filings</h3>
+                                <p>Ensure state registrations, EIN filings, and organizational resolutions are fully validated.</p>
+                            </div>
+                        </label>
+
+                        <label class="matrix-card glass-card">
+                            <input type="checkbox" class="matrix-checkbox" checked>
+                            <span class="checkbox-visual"><span class="check-dot"></span></span>
+                            <div class="matrix-card-content">
+                                <span class="matrix-badge">Phase II</span>
+                                <h3>Digital Vault Configuration</h3>
+                                <p>Initialize secure repositories, cryptographic backups, and offline document archives.</p>
+                            </div>
+                        </label>
+
+                        <label class="matrix-card glass-card">
+                            <input type="checkbox" class="matrix-checkbox">
+                            <span class="checkbox-visual"><span class="check-dot"></span></span>
+                            <div class="matrix-card-content">
+                                <span class="matrix-badge">Phase III</span>
+                                <h3>Asset & IP Encapsulation</h3>
+                                <p>Secure copyright assertions, publication registries, and proprietary protocol specifications.</p>
+                            </div>
+                        </label>
+
+                        <label class="matrix-card glass-card">
+                            <input type="checkbox" class="matrix-checkbox">
+                            <span class="checkbox-visual"><span class="check-dot"></span></span>
+                            <div class="matrix-card-content">
+                                <span class="matrix-badge">Phase IV</span>
+                                <h3>Sovereign Succession Protocols</h3>
+                                <p>Deploy digital estate workbooks and automated transmission pathways for beneficiaries.</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Module 2: Ma'at Principles -->
+                <div class="module-panel glass-panel" id="maat-module" style="padding: 2.5rem; border-radius: var(--radius-lg);">
+                    <div class="module-header">
+                        <span class="module-subtitle">Ethical Foundation</span>
+                        <h2>The Laws of Ma'at Explorer</h2>
+                        <p>Reflect upon ancient philosophical codes governing truth, balance, order, and harmonious architecture.</p>
+                    </div>
+
+                    <div class="maat-explorer-card glass-card">
+                        <div class="law-hieroglyph-glow"></div>
+                        <div class="maat-selector-header">
+                            <button class="arrow-btn" id="prev-law">&#8592;</button>
+                            <div class="maat-number-display">
+                                <span class="law-num-title">Principle Code</span>
+                                <h3 id="law-number">01 / 42</h3>
+                            </div>
+                            <button class="arrow-btn" id="next-law">&#8594;</button>
+                        </div>
+                        <div class="law-card-body">
+                            <h4 id="law-title">"I have not committed sin. I have not robbed with violence."</h4>
+                            <div class="law-interpretation-title">Sovereign Interpretation</div>
+                            <p class="law-interpretation-text" id="law-desc">Integrity in creation mandates that all systems, contracts, and digital works are forged through authentic value generation rather than extraction.</p>
+                            
+                            <div class="journal-input-section">
+                                <label for="law-reflection">Architectural Journal Reflection</label>
+                                <textarea id="law-reflection" placeholder="Log your personal synthesis for this principle..."></textarea>
+                                <span class="journal-status" id="journal-status">Autosaved to local vault session.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 3: Masterclass Audio -->
+                <div class="module-panel glass-panel" id="audio-module" style="padding: 2.5rem; border-radius: var(--radius-lg);">
+                    <div class="module-header">
+                        <span class="module-subtitle">Acoustic Engineering</span>
+                        <h2>Masterclass Audio Suite</h2>
+                        <p>High-fidelity system architecture lectures and production arrangement breakdowns.</p>
+                    </div>
+
+                    <div class="audio-playlist glass-card">
+                        <div class="audio-item active-audio" data-track="1" data-title="System Architecture & Sovereign Foundations" data-duration="14:25">
+                            <div class="play-state-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                            </div>
+                            <div class="audio-details">
+                                <h3>01. System Architecture & Sovereign Foundations</h3>
+                                <p>Legacy Grove Codex LLC • Principal Briefing</p>
+                            </div>
+                            <div class="audio-duration">14:25</div>
+                        </div>
+                        <div class="audio-item" data-track="2" data-title="Audio Tracking, Dynamics & White Noise Elimination" data-duration="22:10">
+                            <div class="play-state-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                            </div>
+                            <div class="audio-details">
+                                <h3>02. Audio Tracking, Dynamics & Noise Elimination</h3>
+                                <p>Studio Engineering Masterclass</p>
+                            </div>
+                            <div class="audio-duration">22:10</div>
+                        </div>
+                        <div class="audio-item" data-track="3" data-title="Digital Vault Workbooks & Commercial Publication" data-duration="18:45">
+                            <div class="play-state-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                            </div>
+                            <div class="audio-details">
+                                <h3>03. Digital Vault Workbooks & Commercial Release</h3>
+                                <p>Gumroad & Distribution Strategy</p>
+                            </div>
+                            <div class="audio-duration">18:45</div>
+                        </div>
+                    </div>
+
+                    <div class="player-hud glass-card">
+                        <div>
+                            <span class="now-playing-label">Now Playing</span>
+                            <h4 id="current-track-name" style="color: var(--c-text); font-size: 1.1rem; font-weight: 700; margin-top: 2px;">System Architecture & Sovereign Foundations</h4>
+                        </div>
+                        <div class="bars-animation">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer id="credentials" class="site-footer glass-effect" style="margin-top: 4rem;">
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <h4>LGC LLC Credentials</h4>
+                <div style="font-size: 0.85rem; color: var(--c-text-muted); line-height: 1.8;">
+                    <strong>Entity:</strong> <span style="color: var(--c-text);">LEGACY GROVE CODEX LLC</span><br>
+                    <strong>Employer ID Number (EIN):</strong> <br><span style="color: var(--c-text);">41-2653211</span><br>
+                    <strong>New York State DOS ID:</strong> <br><span style="color: var(--c-text);">7761343</span><br>
+                    <strong>Unique Entity Identifier (UEI):</strong> <br><span style="color: var(--c-text);">D43ZB3D7QTW1</span><br>
+                    <strong>Filer Email:</strong> <br><a href="mailto:traheem75th@gmail.com" style="color: var(--c-emerald); text-decoration: none;">traheem75th@gmail.com</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Corporate Locations</h4>
+                <div style="font-size: 0.85rem; color: var(--c-text-muted); line-height: 1.8;">
+                    <strong>Principal Office:</strong><br>
+                    <span style="color: var(--c-text);">64 Sunken Garden Loop, Suite 3023<br>New York, NY 10035</span><br><br>
+                    <strong>Mailing Address:</strong><br>
+                    <span style="color: var(--c-text);">64 Sunken Garden Loop, Suite 3023<br>New York, NY 10035</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 LEGACY GROVE CODEX LLC. All Rights Reserved. Sovereign System Platform.</p>
+        </div>
+    </footer>
+</body>
+</html>

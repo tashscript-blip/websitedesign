@@ -183,6 +183,38 @@
       border-radius: 2px;
     }
 
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    /* ----- LANGUAGE SWITCHER ----- */
+    .lang-select {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 50px;
+      color: #E8EDF2;
+      padding: 0.4rem 2.2rem 0.4rem 1.2rem;
+      font-size: 0.7rem;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239AA6B2'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.8rem center;
+      background-size: 10px 6px;
+      transition: border-color 0.3s;
+    }
+    .lang-select:hover {
+      border-color: #FFD700;
+    }
+    .lang-select option {
+      background: #0A0C10;
+      color: #E8EDF2;
+    }
+
     .nav-actions .btn {
       display: inline-block;
       padding: 0.5rem 1.5rem;
@@ -539,7 +571,8 @@
         font-size: 0.7rem;
       }
       .nav-actions {
-        text-align: center;
+        justify-content: center;
+        flex-wrap: wrap;
       }
       .government-section {
         grid-template-columns: 1fr;
@@ -578,6 +611,10 @@
         padding: 0.6rem 1.2rem;
         font-size: 0.7rem;
       }
+      .lang-select {
+        font-size: 0.6rem;
+        padding: 0.3rem 1.8rem 0.3rem 0.8rem;
+      }
     }
   </style>
 </head>
@@ -615,31 +652,39 @@
         </a>
 
         <div class="nav-links">
-          <a href="index.html" class="active">Home</a>
-          <a href="tash.html">TASH</a>
-          <a href="book.html">Book</a>
-          <a href="codex-portal.html">Codex Portal</a>
-          <a href="systems.html">Systems</a>
-          <a href="community.html">Community</a>
+          <a href="index.html" class="active" data-i18n="nav_home">Home</a>
+          <a href="tash.html" data-i18n="nav_tash">TASH</a>
+          <a href="book.html" data-i18n="nav_book">Book</a>
+          <a href="codex-portal.html" data-i18n="nav_portal">Codex Portal</a>
+          <a href="systems.html" data-i18n="nav_systems">Systems</a>
+          <a href="community.html" data-i18n="nav_community">Community</a>
         </div>
 
         <div class="nav-actions">
-          <a href="codex-portal.html" class="btn">Secure Access</a>
+          <!-- LANGUAGE SWITCHER -->
+          <select id="language-switcher" class="lang-select">
+            <option value="en">EN</option>
+            <option value="es">ES</option>
+            <option value="fr">FR</option>
+            <option value="ar">AR</option>
+            <option value="de">DE</option>
+          </select>
+          <a href="codex-portal.html" class="btn" data-i18n="nav_secure">Secure Access</a>
         </div>
       </nav>
 
       <!-- ===== HERO ===== -->
       <section class="hero">
-        <div class="hero-badge">✦ Sovereign Systems Platform</div>
-        <h1 class="hero-title">
+        <div class="hero-badge" data-i18n="hero_badge">✦ Sovereign Systems Platform</div>
+        <h1 class="hero-title" data-i18n="hero_title">
           Legacy Grove <br /><span class="gold">Codex</span>
         </h1>
-        <p class="hero-subtitle" id="typing-text">
-          <span id="typed-output"></span><span class="cursor" style="display:inline-block;width:2px;height:1.2em;background:#FFD700;margin-left:2px;vertical-align:text-bottom;animation:blink 0.8s step-end infinite;"></span>
+        <p class="hero-subtitle" data-i18n="hero_subtitle">
+          Engineered Intelligence · Sovereign Systems · Bridging mathematical abstraction and operational reality.
         </p>
         <div class="hero-cta">
-          <a href="tash.html" class="btn-primary gold">Explore TASH</a>
-          <a href="codex-portal.html" class="btn-outline">Enter Codex Portal</a>
+          <a href="tash.html" class="btn-primary gold" data-i18n="cta_explore">Explore TASH</a>
+          <a href="codex-portal.html" class="btn-outline" data-i18n="cta_enter">Enter Codex Portal</a>
         </div>
       </section>
 
@@ -652,8 +697,8 @@
 
       <!-- ===== PHILOSOPHY ===== -->
       <div class="philosophy-card">
-        <h2>Core <span class="gold">Philosophy</span></h2>
-        <p>
+        <h2 data-i18n="philosophy_title">Core <span class="gold">Philosophy</span></h2>
+        <p data-i18n="philosophy_text">
           We build open‑source frameworks that bridge the gap between
           mathematical abstraction and operational reality. Our systems are
           designed to evolve, adapt, and protect the data they govern.
@@ -663,52 +708,52 @@
       <!-- ===== GOVERNMENT ===== -->
       <div class="government-section">
         <div class="government-content">
-          <h3><span>🇺🇸</span> FedRAMP &amp; Government‑Ready Solutions</h3>
-          <p>
+          <h3 data-i18n="gov_title"><span>🇺🇸</span> FedRAMP &amp; Government‑Ready Solutions</h3>
+          <p data-i18n="gov_text">
             Legacy Grove Codex LLC is registered and compliant for federal procurement.
             Our systems are engineered to meet the highest standards of data sovereignty,
             security, and operational transparency required by U.S. government contracts.
           </p>
           <ul class="government-badge-list">
-            <li><span class="check">✓</span> UEI: <strong style="color:#E8EDF2;">D43ZB3D7QTW1</strong></li>
-            <li><span class="check">✓</span> SAM.gov Registered</li>
-            <li><span class="check">✓</span> FedRAMP‑aligned Security</li>
+            <li><span class="check">✓</span> <span data-i18n="gov_badge1">UEI: D43ZB3D7QTW1</span></li>
+            <li><span class="check">✓</span> <span data-i18n="gov_badge2">SAM.gov Registered</span></li>
+            <li><span class="check">✓</span> <span data-i18n="gov_badge3">FedRAMP‑aligned Security</span></li>
           </ul>
         </div>
         <div class="government-cta">
-          <a href="tash.html" class="btn">Explore TASH for Government →</a>
-          <span class="badge-uei">UEI D43ZB3D7QTW1</span>
+          <a href="tash.html" class="btn" data-i18n="gov_cta">Explore TASH for Government →</a>
+          <span class="badge-uei" data-i18n="gov_uei">UEI D43ZB3D7QTW1</span>
         </div>
       </div>
 
       <!-- ===== ECOSYSTEM ===== -->
-      <h3 style="font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:600;margin-bottom:1rem;text-align:center;">
+      <h3 style="font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:600;margin-bottom:1rem;text-align:center;" data-i18n="eco_title">
         Explore Our <span style="color:#FFD700;">Ecosystem</span>
       </h3>
 
       <div class="ecosystem">
         <a href="tash.html" class="ecosystem-card">
           <span class="icon">🧠</span>
-          <h4>TASH</h4>
-          <p>Tactical Artificial System Hierarchy</p>
+          <h4 data-i18n="eco_tash">TASH</h4>
+          <p data-i18n="eco_tash_desc">Tactical Artificial System Hierarchy</p>
           <span class="arrow">→</span>
         </a>
         <a href="book.html" class="ecosystem-card">
           <span class="icon">📖</span>
-          <h4>The Codex Book</h4>
-          <p>Digital Vault Blueprint &amp; Framework</p>
+          <h4 data-i18n="eco_book">The Codex Book</h4>
+          <p data-i18n="eco_book_desc">Digital Vault Blueprint &amp; Framework</p>
           <span class="arrow">→</span>
         </a>
         <a href="codex-portal.html" class="ecosystem-card">
           <span class="icon">🔐</span>
-          <h4>Codex Portal</h4>
-          <p>Sovereign Identity &amp; Compliance</p>
+          <h4 data-i18n="eco_portal">Codex Portal</h4>
+          <p data-i18n="eco_portal_desc">Sovereign Identity &amp; Compliance</p>
           <span class="arrow">→</span>
         </a>
         <a href="community.html" class="ecosystem-card">
           <span class="icon">🌐</span>
-          <h4>Community Hub</h4>
-          <p>Network Nodes &amp; Alliance Circles</p>
+          <h4 data-i18n="eco_community">Community Hub</h4>
+          <p data-i18n="eco_community_desc">Network Nodes &amp; Alliance Circles</p>
           <span class="arrow">→</span>
         </a>
       </div>
@@ -716,8 +761,10 @@
       <!-- ===== FOOTER ===== -->
       <footer class="footer">
         <p>
-          &copy; 2026 Legacy Grove Codex LLC &bull; <span>UEI D43ZB3D7QTW1</span> &bull; <span>EIN 41‑2653211</span>
-          <span class="address">555 Hutchinson River Parkway, Bronx, NY 10465</span>
+          <span data-i18n="footer_copyright">© 2026 Legacy Grove Codex LLC</span> &bull;
+          <span data-i18n="footer_uei">UEI D43ZB3D7QTW1</span> &bull;
+          <span data-i18n="footer_ein">EIN 41‑2653211</span>
+          <span class="address" data-i18n="footer_address">555 Hutchinson River Parkway, Bronx, NY 10465</span>
         </p>
       </footer>
 
@@ -725,11 +772,101 @@
   </div>
 
   <!-- ================================================================ -->
-  <!-- SCRIPTS: Cinematic Gate + Typing Effect                          -->
+  <!-- SCRIPTS                                                         -->
   <!-- ================================================================ -->
+
+  <!-- Load translations first -->
+  <script src="translations.js"></script>
+
+  <!-- Translation Engine -->
   <script>
     // ================================================================
-    // 1. CINEMATIC GATE – Canvas Animation
+    // TRANSLATION ENGINE
+    // ================================================================
+
+    (function() {
+      'use strict';
+
+      function getUserLanguage() {
+        const saved = localStorage.getItem('lgc_language');
+        if (saved && translations[saved]) {
+          return saved;
+        }
+        const browserLang = navigator.language || navigator.userLanguage;
+        const langCode = browserLang.split('-')[0];
+        if (translations[langCode]) {
+          return langCode;
+        }
+        return 'en';
+      }
+
+      function applyTranslations(lang) {
+        const t = translations[lang];
+        if (!t) return;
+
+        const elements = document.querySelectorAll('[data-i18n]');
+        elements.forEach(function(el) {
+          const key = el.getAttribute('data-i18n');
+          if (t[key] !== undefined) {
+            if (t[key].includes('<')) {
+              el.innerHTML = t[key];
+            } else {
+              el.textContent = t[key];
+            }
+          }
+        });
+
+        const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
+        placeholders.forEach(function(el) {
+          const key = el.getAttribute('data-i18n-placeholder');
+          if (t[key] !== undefined) {
+            el.placeholder = t[key];
+          }
+        });
+
+        const switcher = document.getElementById('language-switcher');
+        if (switcher) {
+          switcher.value = lang;
+        }
+
+        localStorage.setItem('lgc_language', lang);
+
+        // Dispatch event for other scripts
+        document.dispatchEvent(new CustomEvent('languageChanged', { detail: { language: lang } }));
+      }
+
+      function initLanguageSwitcher() {
+        const switcher = document.getElementById('language-switcher');
+        if (!switcher) return;
+
+        const currentLang = getUserLanguage();
+        switcher.value = currentLang;
+
+        switcher.addEventListener('change', function() {
+          const lang = this.value;
+          if (translations[lang]) {
+            applyTranslations(lang);
+          }
+        });
+      }
+
+      // Apply translations immediately
+      const lang = getUserLanguage();
+      applyTranslations(lang);
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initLanguageSwitcher);
+      } else {
+        initLanguageSwitcher();
+      }
+
+    })();
+  </script>
+
+  <!-- Cinematic Gate Script -->
+  <script>
+    // ================================================================
+    // CINEMATIC GATE – Canvas Animation
     // ================================================================
     (function cinematicGate() {
       const canvas = document.getElementById('gate-canvas');
@@ -738,8 +875,8 @@
 
       let W, H;
       let particles = [];
-      let gateProgress = 0; // 0 = closed, 1 = fully open
-      let phase = 0; // 0 = building, 1 = opening, 2 = burst, 3 = fading
+      let gateProgress = 0;
+      let phase = 0;
       let burstParticles = [];
       let startTime = performance.now();
       let animFrame;
@@ -751,7 +888,6 @@
       window.addEventListener('resize', resize);
       resize();
 
-      // --- Helper: Starfield (background) ---
       const stars = [];
       for (let i = 0; i < 200; i++) {
         stars.push({
@@ -763,22 +899,17 @@
         });
       }
 
-      // --- Gate Geometry (3D-like pyramid) ---
       function drawGate(p) {
-        // p: 0 = closed, 1 = open
         const cx = W / 2;
         const cy = H / 2 - 20;
-
-        // Base dimensions
         const baseW = Math.min(W, H) * 0.45;
         const baseH = baseW * 1.6;
-        const spread = p * baseW * 1.2; // how far the halves spread
+        const spread = p * baseW * 1.2;
 
-        // Left half
         const lx = cx - spread / 2;
         const rx = cx + spread / 2;
 
-        // === GLOW RING ===
+        // Glow ring
         const ringRadius = baseW * 0.55 * (1 + p * 0.1);
         const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, ringRadius);
         grad.addColorStop(0, `rgba(255,215,0,${0.03 + p * 0.04})`);
@@ -789,7 +920,7 @@
         ctx.arc(cx, cy, ringRadius, 0, Math.PI * 2);
         ctx.fill();
 
-        // === GLOW LINES ===
+        // Glow lines
         for (let i = 0; i < 12; i++) {
           const angle = (i / 12) * Math.PI * 2 + p * 0.3;
           const r1 = ringRadius * 0.3;
@@ -802,14 +933,13 @@
           ctx.stroke();
         }
 
-        // === LEFT PYRAMID HALF ===
+        // Left pyramid half
         const lTopX = lx;
         const lTopY = cy - baseH * 0.5;
         const lBotX = lx;
         const lBotY = cy + baseH * 0.5;
         const lOuterX = cx - baseW * 0.5 - spread / 2;
 
-        // Left half gradient
         const lGrad = ctx.createLinearGradient(lOuterX, cy, cx, cy);
         lGrad.addColorStop(0, `rgba(255,215,0,${0.05 + p * 0.02})`);
         lGrad.addColorStop(0.5, `rgba(16,185,129,${0.02 + p * 0.01})`);
@@ -826,7 +956,6 @@
         ctx.lineWidth = 1.5;
         ctx.stroke();
 
-        // Inner lines (left)
         for (let i = 1; i < 8; i++) {
           const t = i / 8;
           const y = lTopY + t * (lBotY - lTopY);
@@ -840,7 +969,7 @@
           ctx.stroke();
         }
 
-        // === RIGHT PYRAMID HALF ===
+        // Right pyramid half
         const rTopX = rx;
         const rTopY = cy - baseH * 0.5;
         const rBotX = rx;
@@ -863,7 +992,6 @@
         ctx.lineWidth = 1.5;
         ctx.stroke();
 
-        // Inner lines (right)
         for (let i = 1; i < 8; i++) {
           const t = i / 8;
           const y = rTopY + t * (rBotY - rTopY);
@@ -877,7 +1005,7 @@
           ctx.stroke();
         }
 
-        // === EYE / GEM (center) ===
+        // Eye / Gem
         const eyeSize = 14 + p * 6;
         const eyeGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, eyeSize * 3);
         eyeGlow.addColorStop(0, `rgba(255,215,0,${0.3 + p * 0.2})`);
@@ -899,16 +1027,12 @@
         ctx.stroke();
         ctx.shadowBlur = 0;
 
-        // Inner core
         ctx.beginPath();
         ctx.arc(cx, cy, eyeSize * 0.4, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(255,255,255,${0.15 + p * 0.1})`;
         ctx.fill();
-
-        return { cx, cy, baseW, baseH, spread };
       }
 
-      // --- Burst particles ---
       function createBurst(count, cx, cy, speed) {
         for (let i = 0; i < count; i++) {
           const angle = Math.random() * Math.PI * 2;
@@ -926,7 +1050,6 @@
         }
       }
 
-      // --- Update burst particles ---
       function updateBurst() {
         for (let i = burstParticles.length - 1; i >= 0; i--) {
           const p = burstParticles[i];
@@ -941,7 +1064,6 @@
         }
       }
 
-      // --- Draw burst ---
       function drawBurst() {
         for (const p of burstParticles) {
           ctx.globalAlpha = p.life;
@@ -953,37 +1075,32 @@
         ctx.globalAlpha = 1;
       }
 
-      // --- Main loop ---
       function animate(time) {
         const dt = (time - startTime) / 1000;
         startTime = time;
 
-        // Phase control
         if (phase === 0 && dt > 0.3) {
-          phase = 1; // start opening
+          phase = 1;
         }
         if (phase === 1) {
           gateProgress += dt * 0.6;
           if (gateProgress >= 1) {
             gateProgress = 1;
-            phase = 2; // burst
-            const g = drawGate(1);
+            phase = 2;
+            const g = { cx: W / 2, cy: H / 2 - 20 };
             createBurst(300, g.cx, g.cy, 6);
             createBurst(150, g.cx - 100, g.cy - 80, 4);
             createBurst(150, g.cx + 100, g.cy + 80, 4);
-            // Reveal main content after a short delay
             setTimeout(() => {
               mainContent.classList.add('reveal');
             }, 400);
             setTimeout(() => {
-              phase = 3; // fade
+              phase = 3;
             }, 1200);
           }
         }
         if (phase === 2) {
-          // Burst particles naturally die
           updateBurst();
-          // After burst particles are mostly gone, move to fade
           if (burstParticles.length < 20 && phase === 2) {
             setTimeout(() => {
               phase = 3;
@@ -991,27 +1108,18 @@
           }
         }
         if (phase === 3) {
-          // Fade out the canvas
           canvas.style.transition = 'opacity 1.2s ease';
           canvas.style.opacity = '0';
-          // Remove canvas after fade
           setTimeout(() => {
             canvas.style.display = 'none';
-            // Start typing effect after gate is gone
-            startTyping();
           }, 1400);
-          // Stop the animation loop after fade
           if (animFrame) {
             cancelAnimationFrame(animFrame);
-            // Keep drawing the final state but fade out
           }
-          // We'll let the CSS transition handle the fade
         }
 
-        // --- DRAW ---
         ctx.clearRect(0, 0, W, H);
 
-        // Stars
         for (const star of stars) {
           star.a += star.speed;
           const alpha = 0.2 + Math.sin(star.a) * 0.15 + 0.15;
@@ -1021,17 +1129,14 @@
           ctx.fill();
         }
 
-        // Draw gate (if not fully faded)
         if (phase < 3 || canvas.style.opacity !== '0') {
           drawGate(gateProgress);
         }
 
-        // Draw burst particles
         if (phase >= 2) {
           drawBurst();
         }
 
-        // Draw "Opening Vault" text
         if (phase < 3) {
           const text = phase === 0 ? 'INITIALIZING' :
             phase === 1 ? 'OPENING VAULT' :
@@ -1043,7 +1148,6 @@
           ctx.fillStyle = `rgba(255,215,0,${alpha * 0.3})`;
           ctx.fillText(text, W / 2, H - 60);
 
-          // Small progress dots
           const dotCount = 20;
           const dotWidth = 3;
           const dotGap = 6;
@@ -1064,19 +1168,15 @@
           }
         }
 
-        // Continue loop if not faded
         if (phase < 3 || canvas.style.opacity !== '0') {
           animFrame = requestAnimationFrame(animate);
         }
       }
 
-      // Start animation
       animFrame = requestAnimationFrame(animate);
 
-      // Handle window resize during animation
       window.addEventListener('resize', () => {
         resize();
-        // Rebuild stars
         stars.length = 0;
         for (let i = 0; i < 200; i++) {
           stars.push({
@@ -1090,50 +1190,6 @@
       });
 
     })();
-
-
-    // ================================================================
-    // 2. TYPING EFFECT
-    // ================================================================
-    let typingStarted = false;
-
-    function startTyping() {
-      if (typingStarted) return;
-      typingStarted = true;
-      const text = "Engineered Intelligence · Sovereign Systems · Bridging mathematical abstraction and operational reality.";
-      const output = document.getElementById('typed-output');
-      if (!output) return;
-      let index = 0;
-      output.textContent = '';
-
-      function type() {
-        if (index < text.length) {
-          output.textContent += text.charAt(index);
-          index++;
-          setTimeout(type, 25 + Math.random() * 20);
-        }
-      }
-      setTimeout(type, 300);
-    }
-
-    // Fallback: if something goes wrong with the gate, start typing after 5 seconds
-    setTimeout(() => {
-      if (!typingStarted) {
-        startTyping();
-        document.getElementById('main-content').classList.add('reveal');
-      }
-    }, 6000);
-
-    // Also start typing when main content is revealed (as a backup)
-    document.addEventListener('DOMContentLoaded', function() {
-      // If the gate is already gone, start typing
-      setTimeout(() => {
-        const canvas = document.getElementById('gate-canvas');
-        if (canvas && canvas.style.display === 'none') {
-          startTyping();
-        }
-      }, 3000);
-    });
   </script>
 
 </body>

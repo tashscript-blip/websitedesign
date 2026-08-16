@@ -10,12 +10,7 @@
 
   <style>
     /* ----- RESET ----- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: #080A0E;
       color: #E8EDF2;
@@ -25,7 +20,7 @@
       width: 100vw;
     }
 
-    /* ----- GATE OVERLAY (Canvas) ----- */
+    /* ----- GATE OVERLAY ----- */
     #gate-canvas {
       position: fixed;
       top: 0;
@@ -38,7 +33,7 @@
       pointer-events: none;
     }
 
-    /* ----- MAIN CONTENT (Hidden until gate opens) ----- */
+    /* ----- MAIN CONTENT ----- */
     #main-content {
       position: relative;
       z-index: 1;
@@ -47,27 +42,15 @@
       overflow-y: auto;
       overflow-x: hidden;
       opacity: 0;
-      transition: opacity 1.2s ease 2.5s;
+      transition: opacity 1s ease 1.8s;
       background: #080A0E;
     }
+    #main-content.reveal { opacity: 1; }
 
-    #main-content.reveal {
-      opacity: 1;
-    }
+    #main-content::-webkit-scrollbar { width: 6px; }
+    #main-content::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
+    #main-content::-webkit-scrollbar-thumb { background: #FFD700; border-radius: 3px; }
 
-    /* ----- SCROLLBAR ----- */
-    #main-content::-webkit-scrollbar {
-      width: 6px;
-    }
-    #main-content::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.02);
-    }
-    #main-content::-webkit-scrollbar-thumb {
-      background: #FFD700;
-      border-radius: 3px;
-    }
-
-    /* ----- AMBIENT GLOWS (in main content) ----- */
     .ambient-glow {
       position: fixed;
       border-radius: 50%;
@@ -76,22 +59,9 @@
       z-index: 0;
       pointer-events: none;
     }
-    .glow-emerald {
-      width: 600px;
-      height: 600px;
-      background: #10B981;
-      bottom: -200px;
-      left: -200px;
-    }
-    .glow-gold {
-      width: 600px;
-      height: 600px;
-      background: #FFD700;
-      top: -200px;
-      right: -200px;
-    }
+    .glow-emerald { width: 600px; height: 600px; background: #10B981; bottom: -200px; left: -200px; }
+    .glow-gold { width: 600px; height: 600px; background: #FFD700; top: -200px; right: -200px; }
 
-    /* ----- CONTAINER ----- */
     .container {
       position: relative;
       z-index: 1;
@@ -103,11 +73,11 @@
       flex-direction: column;
     }
 
-    /* ----- NAVIGATION ----- */
+    /* ----- NAVIGATION (unchanged) ----- */
     .navbar {
-      background: rgba(8, 10, 14, 0.7);
+      background: rgba(8,10,14,0.7);
       backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255,255,255,0.05);
       border-radius: 1.5rem;
       padding: 0.7rem 2rem;
       margin-bottom: 2.5rem;
@@ -116,83 +86,24 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 1rem;
-      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
     }
+    .logo { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; }
+    .logo-symbol { width: 40px; height: 40px; flex-shrink: 0; }
+    .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+    .brand-name { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1rem; color: #E8EDF2; letter-spacing: 0.5px; }
+    .brand-legal { font-size: 0.6rem; color: #9AA6B2; letter-spacing: 2px; text-transform: uppercase; }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      text-decoration: none;
-    }
+    .nav-links { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
+    .nav-links a { color: #9AA6B2; text-decoration: none; font-size: 0.8rem; font-weight: 500; transition: color 0.3s; letter-spacing: 0.5px; position: relative; }
+    .nav-links a:hover { color: #FFD700; }
+    .nav-links a.active { color: #FFD700; }
+    .nav-links a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: #FFD700; border-radius: 2px; }
 
-    .logo-symbol {
-      width: 40px;
-      height: 40px;
-      flex-shrink: 0;
-    }
-
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
-    }
-    .brand-name {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 800;
-      font-size: 1rem;
-      color: #E8EDF2;
-      letter-spacing: 0.5px;
-    }
-    .brand-legal {
-      font-size: 0.6rem;
-      color: #9AA6B2;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .nav-links a {
-      color: #9AA6B2;
-      text-decoration: none;
-      font-size: 0.8rem;
-      font-weight: 500;
-      transition: color 0.3s;
-      letter-spacing: 0.5px;
-      position: relative;
-    }
-    .nav-links a:hover {
-      color: #FFD700;
-    }
-    .nav-links a.active {
-      color: #FFD700;
-    }
-    .nav-links a.active::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: #FFD700;
-      border-radius: 2px;
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-
-    /* ----- LANGUAGE SWITCHER ----- */
+    .nav-actions { display: flex; align-items: center; gap: 0.8rem; }
     .lang-select {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
       border-radius: 50px;
       color: #E8EDF2;
       padding: 0.4rem 2.2rem 0.4rem 1.2rem;
@@ -207,13 +118,8 @@
       background-size: 10px 6px;
       transition: border-color 0.3s;
     }
-    .lang-select:hover {
-      border-color: #FFD700;
-    }
-    .lang-select option {
-      background: #0A0C10;
-      color: #E8EDF2;
-    }
+    .lang-select:hover { border-color: #FFD700; }
+    .lang-select option { background: #0A0C10; color: #E8EDF2; }
 
     .nav-actions .btn {
       display: inline-block;
@@ -225,26 +131,14 @@
       letter-spacing: 1px;
       text-decoration: none;
       transition: all 0.3s;
-      border: 1px solid rgba(16, 185, 129, 0.3);
+      border: 1px solid rgba(16,185,129,0.3);
       color: #10B981;
-      background: rgba(16, 185, 129, 0.06);
+      background: rgba(16,185,129,0.06);
     }
-    .nav-actions .btn:hover {
-      background: #10B981;
-      color: #080A0E;
-      box-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
-    }
+    .nav-actions .btn:hover { background: #10B981; color: #080A0E; box-shadow: 0 0 30px rgba(16,185,129,0.2); }
 
     /* ----- HERO ----- */
-    .hero {
-      text-align: center;
-      padding: 2rem 1rem 3rem 1rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
+    .hero { text-align: center; padding: 2rem 1rem 3rem 1rem; flex: 1; display: flex; flex-direction: column; justify-content: center; }
     .hero-badge {
       display: inline-block;
       padding: 0.3rem 1.5rem;
@@ -253,23 +147,14 @@
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
-      background: rgba(255, 215, 0, 0.06);
+      background: rgba(255,215,0,0.06);
       color: #FFD700;
-      border: 1px solid rgba(255, 215, 0, 0.12);
+      border: 1px solid rgba(255,215,0,0.12);
       margin-bottom: 1.5rem;
       align-self: center;
       animation: pulse 3s ease-in-out infinite;
     }
-
-    @keyframes pulse {
-      0%,
-      100% {
-        opacity: 1;
-      }
-      50% {
-        opacity: 0.5;
-      }
-    }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
 
     .hero-title {
       font-family: 'Outfit', sans-serif;
@@ -287,16 +172,7 @@
       background-clip: text;
       animation: shimmer 4s ease-in-out infinite;
     }
-
-    @keyframes shimmer {
-      0%,
-      100% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-    }
+    @keyframes shimmer { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 
     .hero-subtitle {
       font-size: clamp(1.1rem, 1.8vw, 1.5rem);
@@ -308,13 +184,7 @@
       min-height: 2.5rem;
     }
 
-    .hero-cta {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
+    .hero-cta { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
     .btn-primary {
       display: inline-block;
       padding: 0.9rem 2.5rem;
@@ -331,12 +201,9 @@
     .btn-primary.gold {
       background: linear-gradient(135deg, #FFD700, #B8860B);
       color: #080A0E;
-      box-shadow: 0 0 40px rgba(255, 215, 0, 0.15);
+      box-shadow: 0 0 40px rgba(255,215,0,0.15);
     }
-    .btn-primary.gold:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 0 60px rgba(255, 215, 0, 0.3);
-    }
+    .btn-primary.gold:hover { transform: translateY(-3px); box-shadow: 0 0 60px rgba(255,215,0,0.3); }
     .btn-outline {
       display: inline-block;
       padding: 0.9rem 2.5rem;
@@ -347,68 +214,33 @@
       letter-spacing: 1.5px;
       text-decoration: none;
       transition: all 0.3s;
-      border: 1px solid rgba(255, 215, 0, 0.25);
+      border: 1px solid rgba(255,215,0,0.25);
       color: #FFD700;
       background: transparent;
     }
-    .btn-outline:hover {
-      background: rgba(255, 215, 0, 0.06);
-      transform: translateY(-3px);
-      box-shadow: 0 0 40px rgba(255, 215, 0, 0.08);
-    }
+    .btn-outline:hover { background: rgba(255,215,0,0.06); transform: translateY(-3px); box-shadow: 0 0 40px rgba(255,215,0,0.08); }
 
-    /* ----- DIVIDER ----- */
-    .divider {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1.5rem;
-      margin: 2rem 0 3rem 0;
-      opacity: 0.2;
-    }
-    .divider-line {
-      height: 1px;
-      flex: 1;
-      background: linear-gradient(90deg, transparent, #FFD700, transparent);
-      max-width: 200px;
-    }
-    .divider-icon {
-      color: #FFD700;
-      font-size: 1.2rem;
-    }
+    .divider { display: flex; justify-content: center; align-items: center; gap: 1.5rem; margin: 2rem 0 3rem 0; opacity: 0.2; }
+    .divider-line { height: 1px; flex: 1; background: linear-gradient(90deg, transparent, #FFD700, transparent); max-width: 200px; }
+    .divider-icon { color: #FFD700; font-size: 1.2rem; }
 
-    /* ----- PHILOSOPHY ----- */
     .philosophy-card {
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255,255,255,0.02);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255,255,255,0.04);
       border-radius: 2rem;
       padding: 2.5rem 3rem;
       margin-bottom: 2rem;
       text-align: center;
-      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.3);
     }
-    .philosophy-card h2 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 700;
-      margin-bottom: 0.8rem;
-    }
-    .philosophy-card h2 .gold {
-      color: #FFD700;
-    }
-    .philosophy-card p {
-      color: #9AA6B2;
-      font-size: 1.05rem;
-      max-width: 750px;
-      margin: 0 auto;
-      line-height: 1.8;
-    }
+    .philosophy-card h2 { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 700; margin-bottom: 0.8rem; }
+    .philosophy-card h2 .gold { color: #FFD700; }
+    .philosophy-card p { color: #9AA6B2; font-size: 1.05rem; max-width: 750px; margin: 0 auto; line-height: 1.8; }
 
-    /* ----- GOVERNMENT ----- */
     .government-section {
-      background: rgba(255, 215, 0, 0.02);
-      border: 1px solid rgba(255, 215, 0, 0.06);
+      background: rgba(255,215,0,0.02);
+      border: 1px solid rgba(255,215,0,0.06);
       border-radius: 2rem;
       padding: 2rem 2.5rem;
       margin-bottom: 2rem;
@@ -417,225 +249,67 @@
       gap: 2rem;
       align-items: center;
     }
-    .government-section h3 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: #FFD700;
-      margin-bottom: 0.3rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .government-section p {
-      color: #9AA6B2;
-      font-size: 0.9rem;
-      line-height: 1.7;
-      margin-bottom: 0.8rem;
-    }
-    .government-badge-list {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-    }
-    .government-badge-list li {
-      background: rgba(255, 255, 255, 0.03);
-      padding: 0.2rem 1rem;
-      border-radius: 50px;
-      font-size: 0.7rem;
-      color: #9AA6B2;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-    .government-badge-list li .check {
-      color: #10B981;
-      font-weight: 700;
-    }
-    .government-cta {
-      text-align: right;
-    }
-    .government-cta .btn {
-      display: inline-block;
-      padding: 0.6rem 1.8rem;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      text-decoration: none;
-      transition: all 0.3s;
-      border: 1px solid rgba(255, 215, 0, 0.25);
-      color: #FFD700;
-      background: rgba(255, 215, 0, 0.04);
-    }
-    .government-cta .btn:hover {
-      background: #FFD700;
-      color: #080A0E;
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.15);
-    }
-    .government-cta .badge-uei {
-      display: block;
-      font-size: 0.6rem;
-      color: #4A5568;
-      margin-top: 0.4rem;
-      letter-spacing: 1px;
-    }
+    .government-section h3 { font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: #FFD700; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.5rem; }
+    .government-section p { color: #9AA6B2; font-size: 0.9rem; line-height: 1.7; margin-bottom: 0.8rem; }
+    .government-badge-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .government-badge-list li { background: rgba(255,255,255,0.03); padding: 0.2rem 1rem; border-radius: 50px; font-size: 0.7rem; color: #9AA6B2; border: 1px solid rgba(255,255,255,0.04); display: flex; align-items: center; gap: 0.3rem; }
+    .government-badge-list li .check { color: #10B981; font-weight: 700; }
+    .government-cta { text-align: right; }
+    .government-cta .btn { display: inline-block; padding: 0.6rem 1.8rem; border-radius: 50px; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; transition: all 0.3s; border: 1px solid rgba(255,215,0,0.25); color: #FFD700; background: rgba(255,215,0,0.04); }
+    .government-cta .btn:hover { background: #FFD700; color: #080A0E; box-shadow: 0 0 30px rgba(255,215,0,0.15); }
+    .government-cta .badge-uei { display: block; font-size: 0.6rem; color: #4A5568; margin-top: 0.4rem; letter-spacing: 1px; }
 
-    /* ----- ECOSYSTEM ----- */
-    .ecosystem {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1rem;
-    }
-    .ecosystem-card {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      border-radius: 1.5rem;
-      padding: 1.5rem 1.5rem;
-      text-align: center;
-      transition: all 0.4s;
-      text-decoration: none;
-      color: inherit;
-    }
-    .ecosystem-card:hover {
-      border-color: rgba(255, 215, 0, 0.15);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-    }
-    .ecosystem-card .icon {
-      font-size: 2rem;
-      display: block;
-      margin-bottom: 0.6rem;
-    }
-    .ecosystem-card h4 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.2rem;
-    }
-    .ecosystem-card p {
-      font-size: 0.75rem;
-      color: #9AA6B2;
-      line-height: 1.4;
-    }
-    .ecosystem-card .arrow {
-      display: inline-block;
-      margin-top: 0.6rem;
-      color: #FFD700;
-      font-size: 0.8rem;
-      transition: transform 0.3s;
-    }
-    .ecosystem-card:hover .arrow {
-      transform: translateX(4px);
-    }
+    .ecosystem { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
+    .ecosystem-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 1.5rem; padding: 1.5rem 1.5rem; text-align: center; transition: all 0.4s; text-decoration: none; color: inherit; }
+    .ecosystem-card:hover { border-color: rgba(255,215,0,0.15); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+    .ecosystem-card .icon { font-size: 2rem; display: block; margin-bottom: 0.6rem; }
+    .ecosystem-card h4 { font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 600; margin-bottom: 0.2rem; }
+    .ecosystem-card p { font-size: 0.75rem; color: #9AA6B2; line-height: 1.4; }
+    .ecosystem-card .arrow { display: inline-block; margin-top: 0.6rem; color: #FFD700; font-size: 0.8rem; transition: transform 0.3s; }
+    .ecosystem-card:hover .arrow { transform: translateX(4px); }
 
-    /* ----- FOOTER ----- */
-    .footer {
-      margin-top: 3rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.03);
-      text-align: center;
-      font-size: 0.7rem;
-      color: #4A5568;
-    }
-    .footer span {
-      color: #9AA6B2;
-    }
-    .footer .address {
-      display: block;
-      color: #4A5568;
-      margin-top: 0.2rem;
-      font-size: 0.65rem;
-    }
+    .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; font-size: 0.7rem; color: #4A5568; }
+    .footer span { color: #9AA6B2; }
+    .footer .address { display: block; color: #4A5568; margin-top: 0.2rem; font-size: 0.65rem; }
 
-    /* ----- RESPONSIVE ----- */
     @media (max-width: 768px) {
-      .container {
-        padding: 1rem;
-      }
-      .navbar {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 0.8rem 1.2rem;
-        gap: 0.6rem;
-      }
-      .nav-links {
-        justify-content: center;
-        gap: 0.6rem;
-      }
-      .nav-links a {
-        font-size: 0.7rem;
-      }
-      .nav-actions {
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-      .government-section {
-        grid-template-columns: 1fr;
-        text-align: center;
-        padding: 1.5rem;
-      }
-      .government-cta {
-        text-align: center;
-      }
-      .government-badge-list {
-        justify-content: center;
-      }
-      .philosophy-card {
-        padding: 1.5rem;
-      }
-      .hero {
-        padding: 1rem 0.5rem 2rem 0.5rem;
-      }
-      .ecosystem {
-        grid-template-columns: 1fr 1fr;
-      }
+      .container { padding: 1rem; }
+      .navbar { flex-direction: column; align-items: stretch; padding: 0.8rem 1.2rem; gap: 0.6rem; }
+      .nav-links { justify-content: center; gap: 0.6rem; }
+      .nav-links a { font-size: 0.7rem; }
+      .nav-actions { justify-content: center; flex-wrap: wrap; }
+      .government-section { grid-template-columns: 1fr; text-align: center; padding: 1.5rem; }
+      .government-cta { text-align: center; }
+      .government-badge-list { justify-content: center; }
+      .philosophy-card { padding: 1.5rem; }
+      .hero { padding: 1rem 0.5rem 2rem 0.5rem; }
+      .ecosystem { grid-template-columns: 1fr 1fr; }
     }
-
     @media (max-width: 480px) {
-      .container {
-        padding: 0.6rem;
-      }
-      .nav-links a {
-        font-size: 0.6rem;
-      }
-      .ecosystem {
-        grid-template-columns: 1fr;
-      }
-      .btn-primary,
-      .btn-outline {
-        padding: 0.6rem 1.2rem;
-        font-size: 0.7rem;
-      }
-      .lang-select {
-        font-size: 0.6rem;
-        padding: 0.3rem 1.8rem 0.3rem 0.8rem;
-      }
+      .container { padding: 0.6rem; }
+      .nav-links a { font-size: 0.6rem; }
+      .ecosystem { grid-template-columns: 1fr; }
+      .btn-primary, .btn-outline { padding: 0.6rem 1.2rem; font-size: 0.7rem; }
+      .lang-select { font-size: 0.6rem; padding: 0.3rem 1.8rem 0.3rem 0.8rem; }
     }
   </style>
 </head>
 <body>
 
   <!-- ================================================================ -->
-  <!-- CINEMATIC GATE – CANVAS OVERLAY                                 -->
+  <!-- ANCIENT GATE – CANVAS OVERLAY                                   -->
   <!-- ================================================================ -->
   <canvas id="gate-canvas"></canvas>
 
   <!-- ================================================================ -->
-  <!-- MAIN CONTENT (Hidden until gate opens)                         -->
+  <!-- MAIN CONTENT                                                    -->
   <!-- ================================================================ -->
   <div id="main-content">
-
     <div class="ambient-glow glow-emerald"></div>
     <div class="ambient-glow glow-gold"></div>
 
     <div class="container">
-
-      <!-- ===== NAVIGATION ===== -->
+      <!-- NAVIGATION -->
       <nav class="navbar">
         <a href="index.html" class="logo">
           <svg class="logo-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -650,7 +324,6 @@
             <span class="brand-legal">LGC LLC</span>
           </div>
         </a>
-
         <div class="nav-links">
           <a href="index.html" class="active" data-i18n="nav_home">Home</a>
           <a href="tash.html" data-i18n="nav_tash">TASH</a>
@@ -659,9 +332,7 @@
           <a href="systems.html" data-i18n="nav_systems">Systems</a>
           <a href="community.html" data-i18n="nav_community">Community</a>
         </div>
-
         <div class="nav-actions">
-          <!-- LANGUAGE SWITCHER -->
           <select id="language-switcher" class="lang-select">
             <option value="en">EN</option>
             <option value="es">ES</option>
@@ -673,47 +344,30 @@
         </div>
       </nav>
 
-      <!-- ===== HERO ===== -->
+      <!-- HERO -->
       <section class="hero">
         <div class="hero-badge" data-i18n="hero_badge">✦ Sovereign Systems Platform</div>
-        <h1 class="hero-title" data-i18n="hero_title">
-          Legacy Grove <br /><span class="gold">Codex</span>
-        </h1>
-        <p class="hero-subtitle" data-i18n="hero_subtitle">
-          Engineered Intelligence · Sovereign Systems · Bridging mathematical abstraction and operational reality.
-        </p>
+        <h1 class="hero-title" data-i18n="hero_title">Legacy Grove <br /><span class="gold">Codex</span></h1>
+        <p class="hero-subtitle" data-i18n="hero_subtitle">Engineered Intelligence · Sovereign Systems · Bridging mathematical abstraction and operational reality.</p>
         <div class="hero-cta">
           <a href="tash.html" class="btn-primary gold" data-i18n="cta_explore">Explore TASH</a>
           <a href="codex-portal.html" class="btn-outline" data-i18n="cta_enter">Enter Codex Portal</a>
         </div>
       </section>
 
-      <!-- ===== DIVIDER ===== -->
-      <div class="divider">
-        <span class="divider-line"></span>
-        <span class="divider-icon">◆</span>
-        <span class="divider-line"></span>
-      </div>
+      <div class="divider"><span class="divider-line"></span><span class="divider-icon">◆</span><span class="divider-line"></span></div>
 
-      <!-- ===== PHILOSOPHY ===== -->
+      <!-- PHILOSOPHY -->
       <div class="philosophy-card">
         <h2 data-i18n="philosophy_title">Core <span class="gold">Philosophy</span></h2>
-        <p data-i18n="philosophy_text">
-          We build open‑source frameworks that bridge the gap between
-          mathematical abstraction and operational reality. Our systems are
-          designed to evolve, adapt, and protect the data they govern.
-        </p>
+        <p data-i18n="philosophy_text">We build open‑source frameworks that bridge the gap between mathematical abstraction and operational reality. Our systems are designed to evolve, adapt, and protect the data they govern.</p>
       </div>
 
-      <!-- ===== GOVERNMENT ===== -->
+      <!-- GOVERNMENT -->
       <div class="government-section">
         <div class="government-content">
           <h3 data-i18n="gov_title"><span>🇺🇸</span> FedRAMP &amp; Government‑Ready Solutions</h3>
-          <p data-i18n="gov_text">
-            Legacy Grove Codex LLC is registered and compliant for federal procurement.
-            Our systems are engineered to meet the highest standards of data sovereignty,
-            security, and operational transparency required by U.S. government contracts.
-          </p>
+          <p data-i18n="gov_text">Legacy Grove Codex LLC is registered and compliant for federal procurement. Our systems are engineered to meet the highest standards of data sovereignty, security, and operational transparency required by U.S. government contracts.</p>
           <ul class="government-badge-list">
             <li><span class="check">✓</span> <span data-i18n="gov_badge1">UEI: D43ZB3D7QTW1</span></li>
             <li><span class="check">✓</span> <span data-i18n="gov_badge2">SAM.gov Registered</span></li>
@@ -726,160 +380,75 @@
         </div>
       </div>
 
-      <!-- ===== ECOSYSTEM ===== -->
-      <h3 style="font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:600;margin-bottom:1rem;text-align:center;" data-i18n="eco_title">
-        Explore Our <span style="color:#FFD700;">Ecosystem</span>
-      </h3>
-
+      <!-- ECOSYSTEM -->
+      <h3 style="font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:600;margin-bottom:1rem;text-align:center;" data-i18n="eco_title">Explore Our <span style="color:#FFD700;">Ecosystem</span></h3>
       <div class="ecosystem">
-        <a href="tash.html" class="ecosystem-card">
-          <span class="icon">🧠</span>
-          <h4 data-i18n="eco_tash">TASH</h4>
-          <p data-i18n="eco_tash_desc">Tactical Artificial System Hierarchy</p>
-          <span class="arrow">→</span>
-        </a>
-        <a href="book.html" class="ecosystem-card">
-          <span class="icon">📖</span>
-          <h4 data-i18n="eco_book">The Codex Book</h4>
-          <p data-i18n="eco_book_desc">Digital Vault Blueprint &amp; Framework</p>
-          <span class="arrow">→</span>
-        </a>
-        <a href="codex-portal.html" class="ecosystem-card">
-          <span class="icon">🔐</span>
-          <h4 data-i18n="eco_portal">Codex Portal</h4>
-          <p data-i18n="eco_portal_desc">Sovereign Identity &amp; Compliance</p>
-          <span class="arrow">→</span>
-        </a>
-        <a href="community.html" class="ecosystem-card">
-          <span class="icon">🌐</span>
-          <h4 data-i18n="eco_community">Community Hub</h4>
-          <p data-i18n="eco_community_desc">Network Nodes &amp; Alliance Circles</p>
-          <span class="arrow">→</span>
-        </a>
+        <a href="tash.html" class="ecosystem-card"><span class="icon">🧠</span><h4 data-i18n="eco_tash">TASH</h4><p data-i18n="eco_tash_desc">Tactical Artificial System Hierarchy</p><span class="arrow">→</span></a>
+        <a href="book.html" class="ecosystem-card"><span class="icon">📖</span><h4 data-i18n="eco_book">The Codex Book</h4><p data-i18n="eco_book_desc">Digital Vault Blueprint &amp; Framework</p><span class="arrow">→</span></a>
+        <a href="codex-portal.html" class="ecosystem-card"><span class="icon">🔐</span><h4 data-i18n="eco_portal">Codex Portal</h4><p data-i18n="eco_portal_desc">Sovereign Identity &amp; Compliance</p><span class="arrow">→</span></a>
+        <a href="community.html" class="ecosystem-card"><span class="icon">🌐</span><h4 data-i18n="eco_community">Community Hub</h4><p data-i18n="eco_community_desc">Network Nodes &amp; Alliance Circles</p><span class="arrow">→</span></a>
       </div>
 
-      <!-- ===== FOOTER ===== -->
       <footer class="footer">
-        <p>
-          <span data-i18n="footer_copyright">© 2026 Legacy Grove Codex LLC</span> &bull;
-          <span data-i18n="footer_uei">UEI D43ZB3D7QTW1</span> &bull;
-          <span data-i18n="footer_ein">EIN 41‑2653211</span>
-          <span class="address" data-i18n="footer_address">555 Hutchinson River Parkway, Bronx, NY 10465</span>
-        </p>
+        <p><span data-i18n="footer_copyright">© 2026 Legacy Grove Codex LLC</span> &bull; <span data-i18n="footer_uei">UEI D43ZB3D7QTW1</span> &bull; <span data-i18n="footer_ein">EIN 41‑2653211</span>
+        <span class="address" data-i18n="footer_address">555 Hutchinson River Parkway, Bronx, NY 10465</span></p>
       </footer>
-
     </div>
   </div>
 
   <!-- ================================================================ -->
   <!-- SCRIPTS                                                         -->
   <!-- ================================================================ -->
-
-  <!-- Load translations first -->
   <script src="translations.js"></script>
-
-  <!-- Translation Engine -->
   <script>
-    // ================================================================
-    // TRANSLATION ENGINE
-    // ================================================================
-
+    // TRANSLATION ENGINE (minimal)
     (function() {
-      'use strict';
-
       function getUserLanguage() {
         const saved = localStorage.getItem('lgc_language');
-        if (saved && translations[saved]) {
-          return saved;
-        }
-        const browserLang = navigator.language || navigator.userLanguage;
-        const langCode = browserLang.split('-')[0];
-        if (translations[langCode]) {
-          return langCode;
-        }
-        return 'en';
+        if (saved && translations[saved]) return saved;
+        const lang = (navigator.language || 'en').split('-')[0];
+        return translations[lang] ? lang : 'en';
       }
-
       function applyTranslations(lang) {
-        const t = translations[lang];
-        if (!t) return;
-
-        const elements = document.querySelectorAll('[data-i18n]');
-        elements.forEach(function(el) {
+        const t = translations[lang]; if (!t) return;
+        document.querySelectorAll('[data-i18n]').forEach(el => {
           const key = el.getAttribute('data-i18n');
           if (t[key] !== undefined) {
-            if (t[key].includes('<')) {
-              el.innerHTML = t[key];
-            } else {
-              el.textContent = t[key];
-            }
+            el.innerHTML = t[key].includes('<') ? t[key] : t[key];
           }
         });
-
-        const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
-        placeholders.forEach(function(el) {
-          const key = el.getAttribute('data-i18n-placeholder');
-          if (t[key] !== undefined) {
-            el.placeholder = t[key];
-          }
-        });
-
         const switcher = document.getElementById('language-switcher');
-        if (switcher) {
-          switcher.value = lang;
-        }
-
+        if (switcher) switcher.value = lang;
         localStorage.setItem('lgc_language', lang);
-
-        // Dispatch event for other scripts
-        document.dispatchEvent(new CustomEvent('languageChanged', { detail: { language: lang } }));
       }
-
-      function initLanguageSwitcher() {
-        const switcher = document.getElementById('language-switcher');
-        if (!switcher) return;
-
-        const currentLang = getUserLanguage();
-        switcher.value = currentLang;
-
-        switcher.addEventListener('change', function() {
-          const lang = this.value;
-          if (translations[lang]) {
-            applyTranslations(lang);
-          }
-        });
-      }
-
-      // Apply translations immediately
       const lang = getUserLanguage();
       applyTranslations(lang);
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initLanguageSwitcher);
-      } else {
-        initLanguageSwitcher();
-      }
-
+      document.addEventListener('DOMContentLoaded', function() {
+        const switcher = document.getElementById('language-switcher');
+        if (switcher) {
+          switcher.value = getUserLanguage();
+          switcher.addEventListener('change', function() {
+            if (translations[this.value]) applyTranslations(this.value);
+          });
+        }
+      });
     })();
   </script>
 
-  <!-- Cinematic Gate Script -->
+  <!-- ================================================================ -->
+  <!-- ANCIENT GATE – FAST + MYSTICAL                                 -->
+  <!-- ================================================================ -->
   <script>
-    // ================================================================
-    // CINEMATIC GATE – Canvas Animation
-    // ================================================================
-    (function cinematicGate() {
+    (function() {
       const canvas = document.getElementById('gate-canvas');
       const ctx = canvas.getContext('2d');
       const mainContent = document.getElementById('main-content');
 
-      let W, H;
-      let particles = [];
-      let gateProgress = 0;
-      let phase = 0;
+      let W, H, startTime = performance.now(), animFrame;
+      let gateProgress = 0; // 0 = closed, 1 = fully open
+      let phase = 0; // 0=init, 1=opening, 2=burst, 3=fade
       let burstParticles = [];
-      let startTime = performance.now();
-      let animFrame;
+      let runeParticles = [];
 
       function resize() {
         W = canvas.width = window.innerWidth;
@@ -888,6 +457,10 @@
       window.addEventListener('resize', resize);
       resize();
 
+      // Ancient symbols (Eye of Horus, Ankh, Djed, Was, Shen)
+      const ancientSymbols = ['𓂀', '𓋹', '𓊽', '𓋴', '𓈖', '𓃥', '𓅃', '𓆣', '𓁹', '𓂋'];
+
+      // Starfield
       const stars = [];
       for (let i = 0; i < 200; i++) {
         stars.push({
@@ -899,50 +472,95 @@
         });
       }
 
-      function drawGate(p) {
+      // Rune particles (float around the gate)
+      for (let i = 0; i < 30; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const radius = 0.3 + Math.random() * 0.5;
+        runeParticles.push({
+          symbol: ancientSymbols[Math.floor(Math.random() * ancientSymbols.length)],
+          angle: angle,
+          radius: radius,
+          speed: 0.002 + Math.random() * 0.004,
+          size: 12 + Math.random() * 10,
+          opacity: 0.1 + Math.random() * 0.2,
+          wobble: Math.random() * Math.PI * 2
+        });
+      }
+
+      function drawAncientGate(p) {
         const cx = W / 2;
-        const cy = H / 2 - 20;
-        const baseW = Math.min(W, H) * 0.45;
-        const baseH = baseW * 1.6;
-        const spread = p * baseW * 1.2;
+        const cy = H / 2 - 10;
+        const baseW = Math.min(W, H) * 0.40;
+        const baseH = baseW * 1.5;
+        const spread = p * baseW * 1.0;
 
         const lx = cx - spread / 2;
         const rx = cx + spread / 2;
 
-        // Glow ring
-        const ringRadius = baseW * 0.55 * (1 + p * 0.1);
+        // === ANCIENT STONE TEXTURE (subtle) ===
+        for (let i = 0; i < 20; i++) {
+          const x = cx + (Math.random() - 0.5) * baseW * 1.2;
+          const y = cy + (Math.random() - 0.5) * baseH * 1.2;
+          const size = 2 + Math.random() * 8;
+          ctx.fillStyle = `rgba(255,215,0,${0.01 + Math.random() * 0.02})`;
+          ctx.fillRect(x, y, size, size);
+        }
+
+        // === OUTER BORDER (ancient temple arch) ===
+        ctx.strokeStyle = `rgba(255,215,0,${0.08 + p * 0.04})`;
+        ctx.lineWidth = 2;
+        ctx.strokeRect(cx - baseW * 0.6, cy - baseH * 0.6, baseW * 1.2, baseH * 1.2);
+
+        // === RUNIC BORDER (top and bottom) ===
+        const runeCount = 16;
+        for (let i = 0; i < runeCount; i++) {
+          const t = i / runeCount;
+          const x = cx - baseW * 0.55 + t * baseW * 1.1;
+          const y1 = cy - baseH * 0.55;
+          const y2 = cy + baseH * 0.55;
+          const sym = ancientSymbols[i % ancientSymbols.length];
+          ctx.font = `${10 + p * 4}px 'Segoe UI', 'Arial Unicode MS', sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = `rgba(255,215,0,${0.05 + p * 0.04})`;
+          ctx.fillText(sym, x, y1 - 8);
+          ctx.fillText(sym, x, y2 + 8);
+        }
+
+        // === GLOW RING (sacred circle) ===
+        const ringRadius = baseW * 0.52 * (1 + p * 0.05);
         const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, ringRadius);
-        grad.addColorStop(0, `rgba(255,215,0,${0.03 + p * 0.04})`);
-        grad.addColorStop(0.5, `rgba(255,215,0,${0.02 + p * 0.02})`);
+        grad.addColorStop(0, `rgba(255,215,0,${0.02 + p * 0.03})`);
+        grad.addColorStop(0.5, `rgba(255,215,0,${0.01 + p * 0.02})`);
         grad.addColorStop(1, 'rgba(255,215,0,0)');
         ctx.fillStyle = grad;
         ctx.beginPath();
         ctx.arc(cx, cy, ringRadius, 0, Math.PI * 2);
         ctx.fill();
 
-        // Glow lines
-        for (let i = 0; i < 12; i++) {
-          const angle = (i / 12) * Math.PI * 2 + p * 0.3;
-          const r1 = ringRadius * 0.3;
-          const r2 = ringRadius * (0.9 + Math.sin(p * 10 + i) * 0.05);
+        // === RADIAL ENERGY LINES (like ancient ray carvings) ===
+        for (let i = 0; i < 24; i++) {
+          const angle = (i / 24) * Math.PI * 2 + p * 0.2;
+          const r1 = ringRadius * 0.35;
+          const r2 = ringRadius * (0.85 + Math.sin(p * 8 + i * 0.5) * 0.05);
           ctx.beginPath();
           ctx.moveTo(cx + Math.cos(angle) * r1, cy + Math.sin(angle) * r1);
           ctx.lineTo(cx + Math.cos(angle) * r2, cy + Math.sin(angle) * r2);
-          ctx.strokeStyle = `rgba(255,215,0,${0.04 + p * 0.04})`;
-          ctx.lineWidth = 1;
+          ctx.strokeStyle = `rgba(255,215,0,${0.03 + p * 0.03})`;
+          ctx.lineWidth = 0.8;
           ctx.stroke();
         }
 
-        // Left pyramid half
+        // === LEFT PYRAMID HALF (ancient stone slab) ===
         const lTopX = lx;
-        const lTopY = cy - baseH * 0.5;
+        const lTopY = cy - baseH * 0.45;
         const lBotX = lx;
-        const lBotY = cy + baseH * 0.5;
-        const lOuterX = cx - baseW * 0.5 - spread / 2;
+        const lBotY = cy + baseH * 0.45;
+        const lOuterX = cx - baseW * 0.45 - spread / 2;
 
         const lGrad = ctx.createLinearGradient(lOuterX, cy, cx, cy);
-        lGrad.addColorStop(0, `rgba(255,215,0,${0.05 + p * 0.02})`);
-        lGrad.addColorStop(0.5, `rgba(16,185,129,${0.02 + p * 0.01})`);
+        lGrad.addColorStop(0, `rgba(180,140,80,${0.04 + p * 0.02})`);
+        lGrad.addColorStop(0.5, `rgba(255,215,0,${0.02 + p * 0.01})`);
         lGrad.addColorStop(1, 'rgba(255,215,0,0)');
 
         ctx.beginPath();
@@ -952,33 +570,34 @@
         ctx.closePath();
         ctx.fillStyle = lGrad;
         ctx.fill();
-        ctx.strokeStyle = `rgba(255,215,0,${0.15 + p * 0.1})`;
+        ctx.strokeStyle = `rgba(255,215,0,${0.12 + p * 0.08})`;
         ctx.lineWidth = 1.5;
         ctx.stroke();
 
-        for (let i = 1; i < 8; i++) {
-          const t = i / 8;
+        // Inner lines (ancient carvings)
+        for (let i = 1; i < 10; i++) {
+          const t = i / 10;
           const y = lTopY + t * (lBotY - lTopY);
-          const xLeft = lOuterX + t * (lBotY - lTopY) * 0.5;
-          const xRight = lTopX + t * (lBotY - lTopY) * 0.1;
+          const xLeft = lOuterX + t * (lBotY - lTopY) * 0.4;
+          const xRight = lTopX + t * (lBotY - lTopY) * 0.08;
           ctx.beginPath();
           ctx.moveTo(xLeft, y);
           ctx.lineTo(xRight, y);
-          ctx.strokeStyle = `rgba(255,215,0,${0.05 + p * 0.05})`;
+          ctx.strokeStyle = `rgba(255,215,0,${0.04 + p * 0.03})`;
           ctx.lineWidth = 0.5;
           ctx.stroke();
         }
 
-        // Right pyramid half
+        // === RIGHT PYRAMID HALF ===
         const rTopX = rx;
-        const rTopY = cy - baseH * 0.5;
+        const rTopY = cy - baseH * 0.45;
         const rBotX = rx;
-        const rBotY = cy + baseH * 0.5;
-        const rOuterX = cx + baseW * 0.5 + spread / 2;
+        const rBotY = cy + baseH * 0.45;
+        const rOuterX = cx + baseW * 0.45 + spread / 2;
 
         const rGrad = ctx.createLinearGradient(rOuterX, cy, cx, cy);
-        rGrad.addColorStop(0, `rgba(255,215,0,${0.05 + p * 0.02})`);
-        rGrad.addColorStop(0.5, `rgba(16,185,129,${0.02 + p * 0.01})`);
+        rGrad.addColorStop(0, `rgba(180,140,80,${0.04 + p * 0.02})`);
+        rGrad.addColorStop(0.5, `rgba(255,215,0,${0.02 + p * 0.01})`);
         rGrad.addColorStop(1, 'rgba(255,215,0,0)');
 
         ctx.beginPath();
@@ -988,51 +607,83 @@
         ctx.closePath();
         ctx.fillStyle = rGrad;
         ctx.fill();
-        ctx.strokeStyle = `rgba(255,215,0,${0.15 + p * 0.1})`;
+        ctx.strokeStyle = `rgba(255,215,0,${0.12 + p * 0.08})`;
         ctx.lineWidth = 1.5;
         ctx.stroke();
 
-        for (let i = 1; i < 8; i++) {
-          const t = i / 8;
+        for (let i = 1; i < 10; i++) {
+          const t = i / 10;
           const y = rTopY + t * (rBotY - rTopY);
-          const xLeft = rTopX + t * (rBotY - rTopY) * 0.1;
-          const xRight = rOuterX - t * (rBotY - rTopY) * 0.5;
+          const xLeft = rTopX + t * (rBotY - rTopY) * 0.08;
+          const xRight = rOuterX - t * (rBotY - rTopY) * 0.4;
           ctx.beginPath();
           ctx.moveTo(xLeft, y);
           ctx.lineTo(xRight, y);
-          ctx.strokeStyle = `rgba(255,215,0,${0.05 + p * 0.05})`;
+          ctx.strokeStyle = `rgba(255,215,0,${0.04 + p * 0.03})`;
           ctx.lineWidth = 0.5;
           ctx.stroke();
         }
 
-        // Eye / Gem
-        const eyeSize = 14 + p * 6;
-        const eyeGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, eyeSize * 3);
-        eyeGlow.addColorStop(0, `rgba(255,215,0,${0.3 + p * 0.2})`);
-        eyeGlow.addColorStop(0.3, `rgba(255,215,0,${0.1 + p * 0.05})`);
+        // === EYE OF HORUS / ALL-SEEING EYE (center) ===
+        const eyeSize = 18 + p * 8;
+        const eyeGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, eyeSize * 4);
+        eyeGlow.addColorStop(0, `rgba(255,215,0,${0.25 + p * 0.15})`);
+        eyeGlow.addColorStop(0.3, `rgba(255,215,0,${0.08 + p * 0.04})`);
         eyeGlow.addColorStop(1, 'rgba(255,215,0,0)');
         ctx.fillStyle = eyeGlow;
         ctx.beginPath();
-        ctx.arc(cx, cy, eyeSize * 3, 0, Math.PI * 2);
+        ctx.arc(cx, cy, eyeSize * 4, 0, Math.PI * 2);
         ctx.fill();
 
-        ctx.shadowColor = 'rgba(255,215,0,0.3)';
-        ctx.shadowBlur = 30;
+        // Eye shape (almond)
+        ctx.shadowColor = 'rgba(255,215,0,0.4)';
+        ctx.shadowBlur = 40;
         ctx.beginPath();
-        ctx.arc(cx, cy, eyeSize, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,215,0,${0.2 + p * 0.15})`;
+        ctx.ellipse(cx, cy, eyeSize * 1.1, eyeSize * 0.6, 0, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,215,0,${0.15 + p * 0.1})`;
         ctx.fill();
-        ctx.strokeStyle = `rgba(255,215,0,${0.3 + p * 0.2})`;
+        ctx.strokeStyle = `rgba(255,215,0,${0.3 + p * 0.15})`;
         ctx.lineWidth = 2;
         ctx.stroke();
+
+        // Inner pupil
+        ctx.shadowBlur = 60;
+        ctx.beginPath();
+        ctx.arc(cx, cy, eyeSize * 0.35, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,215,0,${0.5 + p * 0.2})`;
+        ctx.fill();
         ctx.shadowBlur = 0;
 
+        // Eye of Horus markings (teardrop and eyebrow)
+        ctx.strokeStyle = `rgba(255,215,0,${0.15 + p * 0.1})`;
+        ctx.lineWidth = 1.5;
+        // Teardrop (left)
         ctx.beginPath();
-        ctx.arc(cx, cy, eyeSize * 0.4, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,255,255,${0.15 + p * 0.1})`;
-        ctx.fill();
+        ctx.moveTo(cx - eyeSize * 0.9, cy + eyeSize * 0.1);
+        ctx.quadraticCurveTo(cx - eyeSize * 0.6, cy + eyeSize * 1.0, cx - eyeSize * 0.3, cy + eyeSize * 0.2);
+        ctx.stroke();
+        // Eyebrow (right)
+        ctx.beginPath();
+        ctx.moveTo(cx + eyeSize * 0.9, cy - eyeSize * 0.6);
+        ctx.quadraticCurveTo(cx + eyeSize * 0.5, cy - eyeSize * 1.0, cx - eyeSize * 0.1, cy - eyeSize * 0.7);
+        ctx.stroke();
+
+        // === FLOATING RUNES (around the eye) ===
+        for (let i = 0; i < 8; i++) {
+          const angle = (i / 8) * Math.PI * 2 + p * 0.5;
+          const r = eyeSize * 1.9 + Math.sin(p * 6 + i) * 4;
+          const sym = ancientSymbols[i % ancientSymbols.length];
+          ctx.font = `${12 + p * 4}px 'Segoe UI', 'Arial Unicode MS', sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = `rgba(255,215,0,${0.06 + p * 0.04})`;
+          ctx.fillText(sym, cx + Math.cos(angle) * r, cy + Math.sin(angle) * r);
+        }
+
+        return { cx, cy, baseW, baseH, spread };
       }
 
+      // === BURST PARTICLES (gold + emerald) ===
       function createBurst(count, cx, cy, speed) {
         for (let i = 0; i < count; i++) {
           const angle = Math.random() * Math.PI * 2;
@@ -1043,9 +694,25 @@
             vx: Math.cos(angle) * spd,
             vy: Math.sin(angle) * spd,
             life: 1,
-            decay: 0.002 + Math.random() * 0.005,
-            size: 1 + Math.random() * 3,
+            decay: 0.003 + Math.random() * 0.006,
+            size: 2 + Math.random() * 4,
             color: Math.random() > 0.6 ? '#10B981' : '#FFD700'
+          });
+        }
+        // Add some ancient symbol burst
+        for (let i = 0; i < 15; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const spd = speed * (0.2 + Math.random() * 0.5);
+          burstParticles.push({
+            x: cx + (Math.random() - 0.5) * 20,
+            y: cy + (Math.random() - 0.5) * 20,
+            vx: Math.cos(angle) * spd,
+            vy: Math.sin(angle) * spd,
+            life: 1,
+            decay: 0.002 + Math.random() * 0.004,
+            size: 16 + Math.random() * 12,
+            color: '#FFD700',
+            symbol: ancientSymbols[Math.floor(Math.random() * ancientSymbols.length)]
           });
         }
       }
@@ -1058,68 +725,74 @@
           p.vx *= 0.99;
           p.vy *= 0.99;
           p.life -= p.decay;
-          if (p.life <= 0) {
-            burstParticles.splice(i, 1);
-          }
+          if (p.life <= 0) burstParticles.splice(i, 1);
         }
       }
 
       function drawBurst() {
         for (const p of burstParticles) {
           ctx.globalAlpha = p.life;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
-          ctx.fillStyle = p.color;
-          ctx.fill();
+          if (p.symbol) {
+            ctx.font = `${p.size * p.life}px 'Segoe UI', 'Arial Unicode MS', sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = p.color;
+            ctx.fillText(p.symbol, p.x, p.y);
+          } else {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size * p.life * 0.8, 0, Math.PI * 2);
+            ctx.fillStyle = p.color;
+            ctx.fill();
+          }
         }
         ctx.globalAlpha = 1;
       }
 
+      // === ANIMATION LOOP ===
       function animate(time) {
         const dt = (time - startTime) / 1000;
         startTime = time;
 
-        if (phase === 0 && dt > 0.3) {
+        // Phase control (FAST: opens in ~1.2 seconds)
+        if (phase === 0 && dt > 0.2) {
           phase = 1;
         }
         if (phase === 1) {
-          gateProgress += dt * 0.6;
+          gateProgress += dt * 0.85; // Faster: 0.6 → 0.85
           if (gateProgress >= 1) {
             gateProgress = 1;
             phase = 2;
-            const g = { cx: W / 2, cy: H / 2 - 20 };
-            createBurst(300, g.cx, g.cy, 6);
-            createBurst(150, g.cx - 100, g.cy - 80, 4);
-            createBurst(150, g.cx + 100, g.cy + 80, 4);
+            const g = drawAncientGate(1);
+            createBurst(350, g.cx, g.cy, 7);
+            createBurst(180, g.cx - 80, g.cy - 60, 5);
+            createBurst(180, g.cx + 80, g.cy + 60, 5);
             setTimeout(() => {
               mainContent.classList.add('reveal');
-            }, 400);
+            }, 300);
             setTimeout(() => {
               phase = 3;
-            }, 1200);
+            }, 800);
           }
         }
         if (phase === 2) {
           updateBurst();
           if (burstParticles.length < 20 && phase === 2) {
-            setTimeout(() => {
-              phase = 3;
-            }, 300);
+            setTimeout(() => { phase = 3; }, 200);
           }
         }
         if (phase === 3) {
-          canvas.style.transition = 'opacity 1.2s ease';
+          canvas.style.transition = 'opacity 0.8s ease';
           canvas.style.opacity = '0';
           setTimeout(() => {
             canvas.style.display = 'none';
-          }, 1400);
-          if (animFrame) {
-            cancelAnimationFrame(animFrame);
-          }
+          }, 1000);
+          if (animFrame) cancelAnimationFrame(animFrame);
         }
 
+        // === DRAW ===
         ctx.clearRect(0, 0, W, H);
 
+        // Stars
         for (const star of stars) {
           star.a += star.speed;
           const alpha = 0.2 + Math.sin(star.a) * 0.15 + 0.15;
@@ -1130,41 +803,45 @@
         }
 
         if (phase < 3 || canvas.style.opacity !== '0') {
-          drawGate(gateProgress);
+          drawAncientGate(gateProgress);
         }
 
-        if (phase >= 2) {
-          drawBurst();
-        }
+        if (phase >= 2) drawBurst();
 
+        // === TEXT: INITIALIZING → OPENING → ACCESS GRANTED ===
         if (phase < 3) {
-          const text = phase === 0 ? 'INITIALIZING' :
-            phase === 1 ? 'OPENING VAULT' :
-            phase === 2 ? '◈ ACCESS GRANTED ◈' : '';
-          ctx.font = '600 12px Inter, sans-serif';
+          const text = phase === 0 ? '⚡ INITIALIZING' :
+                       phase === 1 ? '𓂀 OPENING VAULT' :
+                       phase === 2 ? '◈ ACCESS GRANTED ◈' : '';
+          ctx.font = '600 13px Inter, sans-serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'bottom';
-          const alpha = phase === 0 ? 0.6 : phase === 1 ? 0.8 : 1;
-          ctx.fillStyle = `rgba(255,215,0,${alpha * 0.3})`;
-          ctx.fillText(text, W / 2, H - 60);
+          const alpha = phase === 0 ? 0.5 : phase === 1 ? 0.7 : 1;
+          ctx.fillStyle = `rgba(255,215,0,${alpha * 0.35})`;
+          ctx.fillText(text, W / 2, H - 50);
 
-          const dotCount = 20;
-          const dotWidth = 3;
-          const dotGap = 6;
-          const totalWidth = dotCount * (dotWidth + dotGap) - dotGap;
+          // Progress dots (ancient style)
+          const dotCount = 16;
+          const dotSize = 4;
+          const dotGap = 8;
+          const totalWidth = dotCount * (dotSize + dotGap) - dotGap;
           const startX = (W - totalWidth) / 2;
           const dotsFilled = Math.floor(gateProgress * dotCount);
           for (let i = 0; i < dotCount; i++) {
-            const x = startX + i * (dotWidth + dotGap);
-            const y = H - 40;
+            const x = startX + i * (dotSize + dotGap);
+            const y = H - 30;
             ctx.beginPath();
-            ctx.arc(x, y, dotWidth / 2, 0, Math.PI * 2);
+            ctx.arc(x, y, dotSize / 2, 0, Math.PI * 2);
             if (i < dotsFilled) {
-              ctx.fillStyle = `rgba(255,215,0,${0.6 + Math.sin(time / 200 + i) * 0.2})`;
+              ctx.fillStyle = `rgba(255,215,0,${0.7 + Math.sin(time / 150 + i * 0.5) * 0.2})`;
             } else {
-              ctx.fillStyle = 'rgba(255,255,255,0.08)';
+              ctx.fillStyle = 'rgba(255,255,255,0.06)';
             }
             ctx.fill();
+            // Ancient dot border
+            ctx.strokeStyle = `rgba(255,215,0,${i < dotsFilled ? 0.1 : 0.03})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
           }
         }
 
@@ -1188,7 +865,6 @@
           });
         }
       });
-
     })();
   </script>
 

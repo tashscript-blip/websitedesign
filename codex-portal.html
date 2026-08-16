@@ -25,7 +25,7 @@
     <div class="ambient-glow bg-left"></div>
     <div class="ambient-glow bg-right"></div>
 
-    <!-- Navigation Header -->
+    <!-- Navigation Header (UPDATED: added TASH link) -->
     <header class="navbar scrolled">
         <div class="nav-container">
             <div class="logo">
@@ -42,6 +42,7 @@
             </div>
             <div class="nav-links">
                 <a href="index.html" class="hover-underline">Return to Hub</a>
+                <a href="tash.html" class="hover-underline">TASH</a>   <!-- 👈 NEW -->
                 <a href="index.html#codex-vault" class="hover-underline">Product Suites</a>
                 <a href="index.html#credentials" class="hover-underline">Verify Entity</a>
             </div>
@@ -98,18 +99,18 @@
             <!-- Dashboard Content Panels -->
             <section class="portal-content">
                 
-                <!-- MODULE 1: SOVEREIGNTY MATRIX -->
+                <!-- MODULE 1: SOVEREIGNTY MATRIX (UPDATED: added Step 5 for Federal Contracting) -->
                 <div id="sovereignty-module" class="module-panel active-panel">
                     <div class="module-header">
                         <span class="module-subtitle">Pillar I: Operations & Compliance</span>
                         <h2>Corporate Sovereignty Matrix</h2>
-                        <p>Complete these federal, state, and private alignment checkpoints to formalize your corporate vessel and protect its assets.</p>
+                        <p>Complete these federal, state, and private alignment checkpoints to formalize your corporate vessel and protect its assets. <strong style="color: var(--c-gold-bright);">Government contracting ready?</strong> Check step 5.</p>
                     </div>
 
                     <div class="matrix-grid">
                         <!-- Step 1 -->
                         <label class="matrix-card glass-card">
-                            <input type="checkbox" class="matrix-checkbox" data-score="25">
+                            <input type="checkbox" class="matrix-checkbox" data-score="20">
                             <div class="checkbox-visual">
                                 <div class="check-dot"></div>
                             </div>
@@ -122,7 +123,7 @@
 
                         <!-- Step 2 -->
                         <label class="matrix-card glass-card">
-                            <input type="checkbox" class="matrix-checkbox" data-score="25">
+                            <input type="checkbox" class="matrix-checkbox" data-score="20">
                             <div class="checkbox-visual">
                                 <div class="check-dot"></div>
                             </div>
@@ -135,7 +136,7 @@
 
                         <!-- Step 3 -->
                         <label class="matrix-card glass-card">
-                            <input type="checkbox" class="matrix-checkbox" data-score="25">
+                            <input type="checkbox" class="matrix-checkbox" data-score="20">
                             <div class="checkbox-visual">
                                 <div class="check-dot"></div>
                             </div>
@@ -148,7 +149,7 @@
 
                         <!-- Step 4 -->
                         <label class="matrix-card glass-card">
-                            <input type="checkbox" class="matrix-checkbox" data-score="25">
+                            <input type="checkbox" class="matrix-checkbox" data-score="20">
                             <div class="checkbox-visual">
                                 <div class="check-dot"></div>
                             </div>
@@ -158,10 +159,27 @@
                                 <p>Formally record board appointments, CEO and Secretary roles, and specify financial accounts protocol.</p>
                             </div>
                         </label>
+
+                        <!-- ===== NEW STEP 5: FEDERAL CONTRACTING READY ===== -->
+                        <label class="matrix-card glass-card" style="border-color: rgba(255, 215, 0, 0.5);">
+                            <input type="checkbox" class="matrix-checkbox" data-score="20" id="federal-check">
+                            <div class="checkbox-visual">
+                                <div class="check-dot"></div>
+                            </div>
+                            <div class="matrix-card-content">
+                                <div class="matrix-badge" style="background: var(--c-gold-bright); color: #000;">Federal Ready</div>
+                                <h3>Activate Government Contracting</h3>
+                                <p>
+                                    <strong>UEI: D43ZB3D7QTW1</strong> – Legacy Grove Codex LLC is registered in SAM.gov and aligned with 
+                                    FedRAMP &amp; NIST 800‑53 controls. We are positioned to respond to RFPs and sole‑source opportunities.
+                                    <br><a href="tash.html" style="color: var(--c-gold-bright); text-decoration: underline;">Explore TASH for Defense →</a>
+                                </p>
+                            </div>
+                        </label>
                     </div>
                 </div>
 
-                <!-- MODULE 2: MA'AT LAWS EXPLORER -->
+                <!-- MODULE 2: MA'AT LAWS EXPLORER (unchanged) -->
                 <div id="maat-module" class="module-panel">
                     <div class="module-header">
                         <span class="module-subtitle">Pillar II: Spiritual Science</span>
@@ -197,7 +215,7 @@
                     </div>
                 </div>
 
-                <!-- MODULE 3: MASTERCLASS AUDIO PREVIEW -->
+                <!-- MODULE 3: MASTERCLASS AUDIO PREVIEW (unchanged) -->
                 <div id="masterclass-module" class="module-panel">
                     <div class="module-header">
                         <span class="module-subtitle">Pillar III: Enterprise & Mastery</span>
@@ -270,7 +288,7 @@
         </div>
     </footer>
 
-    <!-- Portal Script logic -->
+    <!-- Portal Script logic (updated to handle 5 steps = 100%) -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Tab switching logic
@@ -288,7 +306,7 @@
                 });
             });
 
-            // Corporate Sovereignty Matrix - Score Calculation
+            // Corporate Sovereignty Matrix - Score Calculation (5 steps * 20% = 100%)
             const checkboxes = document.querySelectorAll('.matrix-checkbox');
             const scoreDisplay = document.getElementById('meter-score');
             const fillBar = document.getElementById('meter-fill');
@@ -300,6 +318,8 @@
                         score += parseInt(box.getAttribute('data-score'));
                     }
                 });
+                // Cap at 100
+                if (score > 100) score = 100;
                 scoreDisplay.textContent = score + '%';
                 fillBar.style.width = score + '%';
                 localStorage.setItem('lgc_sovereignty_score', score);

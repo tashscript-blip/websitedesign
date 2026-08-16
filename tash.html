@@ -1,76 +1,774 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TASH | Tactical Artificial System Hierarchy</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TASH – Tactical Artificial System Hierarchy. A self-writing, infinite-scaling framework for defense, intelligence, and sovereign systems." />
+  <title>TASH | Tactical Artificial System Hierarchy</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ----- RESET & BASE ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #080A0E;
+      color: #E8EDF2;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ----- AMBIENT BACKGROUND ----- */
+    .bg-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        linear-gradient(rgba(16, 185, 129, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16, 185, 129, 0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .bg-glow {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(150px);
+      opacity: 0.08;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .bg-glow.gold {
+      width: 700px;
+      height: 700px;
+      background: #FFD700;
+      top: -200px;
+      right: -200px;
+    }
+    .bg-glow.emerald {
+      width: 600px;
+      height: 600px;
+      background: #10B981;
+      bottom: -150px;
+      left: -150px;
+    }
+
+    /* ----- MAIN CONTAINER ----- */
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem 3rem 2rem;
+    }
+
+    /* ----- NAVIGATION (Glass) ----- */
+    .navbar {
+      background: rgba(8, 10, 14, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 1.5rem;
+      padding: 0.7rem 2rem;
+      margin-bottom: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      text-decoration: none;
+    }
+
+    .logo-symbol {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+    .brand-name {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: #E8EDF2;
+      letter-spacing: 0.5px;
+    }
+    .brand-legal {
+      font-size: 0.6rem;
+      color: #9AA6B2;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: #9AA6B2;
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: color 0.3s;
+      letter-spacing: 0.5px;
+      position: relative;
+    }
+    .nav-links a:hover {
+      color: #FFD700;
+    }
+    .nav-links a.active {
+      color: #FFD700;
+    }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #FFD700;
+      border-radius: 2px;
+    }
+
+    .nav-actions .btn {
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #10B981;
+      background: rgba(16, 185, 129, 0.06);
+    }
+    .nav-actions .btn:hover {
+      background: #10B981;
+      color: #080A0E;
+      box-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
+    }
+
+    /* ----- HERO SECTION (Command Brief) ----- */
+    .hero {
+      padding: 2rem 0 3rem 0;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.06);
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 0.2rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: rgba(255, 215, 0, 0.06);
+      color: #FFD700;
+      border: 1px solid rgba(255, 215, 0, 0.12);
+      margin-bottom: 1rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 0.5rem;
+    }
+    .hero-title .gold {
+      background: linear-gradient(135deg, #FFD700, #B8860B);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-title .sub {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #9AA6B2;
+      letter-spacing: 1px;
+      display: block;
+      margin-top: 0.2rem;
+      -webkit-text-fill-color: #9AA6B2;
+    }
+
+    .hero-description {
+      font-size: 1.05rem;
+      color: #9AA6B2;
+      line-height: 1.8;
+      max-width: 600px;
+      margin-top: 0.5rem;
+    }
+
+    .hero-meta {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 1.5rem;
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .hero-meta-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    .hero-meta-item:last-child {
+      border-bottom: none;
+    }
+    .hero-meta-item .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #4A5568;
+    }
+    .hero-meta-item .value {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #E8EDF2;
+      font-family: 'Outfit', sans-serif;
+    }
+    .hero-meta-item .value .emerald {
+      color: #10B981;
+    }
+    .hero-meta-item .value .gold {
+      color: #FFD700;
+    }
+
+    /* ----- STRATEGIC DIVIDER ----- */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin: 2rem 0 3rem 0;
+      opacity: 0.3;
+    }
+    .divider-line {
+      height: 1px;
+      flex: 1;
+      background: linear-gradient(90deg, transparent, #FFD700, transparent);
+    }
+    .divider-icon {
+      color: #FFD700;
+      font-size: 0.8rem;
+      letter-spacing: 4px;
+    }
+
+    /* ----- SECTION HEADERS ----- */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .section-header .num {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 2rem;
+      color: rgba(255, 215, 0, 0.08);
+      line-height: 1;
+    }
+    .section-header h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+    .section-header .badge {
+      margin-left: auto;
+      padding: 0.2rem 1rem;
+      border-radius: 50px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      background: rgba(16, 185, 129, 0.1);
+      color: #10B981;
+      border: 1px solid rgba(16, 185, 129, 0.15);
+    }
+
+    /* ----- FEATURES GRID (The Arsenal) ----- */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 1.5rem;
+      padding: 2rem 1.8rem;
+      transition: all 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #10B981, #FFD700);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .feature-card:hover {
+      border-color: rgba(255, 215, 0, 0.15);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    }
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .feature-card .icon {
+      font-size: 1.8rem;
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+    .feature-card h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: #E8EDF2;
+    }
+    .feature-card p {
+      font-size: 0.9rem;
+      color: #9AA6B2;
+      line-height: 1.6;
+    }
+
+    /* ----- GOVERNMENT & DEFENSE SECTION (War Room Brief) ----- */
+    .defense-section {
+      background: rgba(255, 215, 0, 0.02);
+      border: 1px solid rgba(255, 215, 0, 0.06);
+      border-radius: 2rem;
+      padding: 2.5rem 3rem;
+      margin-bottom: 3rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+      transition: all 0.4s;
+    }
+    .defense-section:hover {
+      border-color: rgba(255, 215, 0, 0.15);
+      background: rgba(255, 215, 0, 0.03);
+    }
+
+    .defense-content h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #FFD700;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .defense-content p {
+      color: #9AA6B2;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .defense-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      list-style: none;
+    }
+    .defense-badges li {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.3rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      color: #9AA6B2;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .defense-badges li .check {
+      color: #10B981;
+      font-weight: 700;
+    }
+
+    .defense-cta {
+      text-align: right;
+    }
+    .defense-cta .btn {
+      display: inline-block;
+      padding: 0.7rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: 1px solid rgba(255, 215, 0, 0.25);
+      color: #FFD700;
+      background: rgba(255, 215, 0, 0.04);
+    }
+    .defense-cta .btn:hover {
+      background: #FFD700;
+      color: #080A0E;
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.15);
+    }
+    .defense-cta .meta {
+      display: block;
+      font-size: 0.65rem;
+      color: #4A5568;
+      margin-top: 0.5rem;
+      letter-spacing: 1px;
+    }
+
+    /* ----- REPOSITORY CARD ----- */
+    .repo-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 1.5rem;
+      padding: 2rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      transition: all 0.4s;
+    }
+    .repo-card:hover {
+      border-color: rgba(16, 185, 129, 0.15);
+    }
+    .repo-card .info h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+    .repo-card .info p {
+      font-size: 0.85rem;
+      color: #9AA6B2;
+    }
+    .repo-card .btn {
+      display: inline-block;
+      padding: 0.7rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-decoration: none;
+      transition: all 0.3s;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: #10B981;
+    }
+    .repo-card .btn:hover {
+      background: #10B981;
+      color: #080A0E;
+      box-shadow: 0 0 30px rgba(16, 185, 129, 0.15);
+    }
+
+    /* ----- FOOTER ----- */
+    .footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
+      text-align: center;
+      font-size: 0.75rem;
+      color: #4A5568;
+    }
+    .footer span {
+      color: #9AA6B2;
+    }
+    .footer .address {
+      display: block;
+      color: #4A5568;
+      margin-top: 0.2rem;
+      font-size: 0.7rem;
+    }
+
+    /* ----- RESPONSIVE ----- */
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .defense-section {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 1.5rem;
+      }
+      .defense-cta {
+        text-align: center;
+      }
+      .defense-badges {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      .navbar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1rem 1.5rem;
+        gap: 0.8rem;
+      }
+      .nav-links {
+        justify-content: center;
+        gap: 0.8rem;
+      }
+      .nav-actions {
+        text-align: center;
+      }
+      .hero {
+        padding: 1rem 0 2rem 0;
+      }
+      .repo-card {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0.8rem;
+      }
+      .nav-links a {
+        font-size: 0.7rem;
+      }
+      .hero-title {
+        font-size: 2.2rem;
+      }
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-meta {
+        padding: 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- ====== HEADER / NAVIGATION (same as index) ====== -->
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="tash.html" class="active">TASH</a></li>
-                <li><a href="book.html">Book</a></li>
-                <li><a href="codex-portal.html">Codex Portal</a></li>
-                <li><a href="community.html">Community</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <!-- ====== MAIN CONTENT ====== -->
-    <main>
-        <h1>Tactical Artificial System Hierarchy (TASH)</h1>
-        <p class="tagline">Self‑writing, infinite‑scaling Pyramid Mathematics.</p>
+  <!-- ===== BACKGROUND ===== -->
+  <div class="bg-grid"></div>
+  <div class="bg-glow gold"></div>
+  <div class="bg-glow emerald"></div>
 
-        <section>
-            <h2>Overview</h2>
-            <p>
-                TASH is an open‑software framework engineered for real‑time intelligence,
-                autonomous adaptation, and recursive data processing. Built on a
-                10‑dimensional pyramid architecture, it evolves its own codebase
-                to meet the demands of the most complex operational environments.
-            </p>
-        </section>
+  <!-- ===== MAIN CONTAINER ===== -->
+  <div class="container">
 
-        <section>
-            <h2>Key Features</h2>
-            <ul>
-                <li><strong>10‑Dimensional Pyramid Architecture</strong> – multi‑layered decision nodes</li>
-                <li><strong>Self‑writing Codebase</strong> – adapts logic without human intervention</li>
-                <li><strong>Real‑time Data Integration</strong> – ingests streams from sensors, APIs, and legacy systems</li>
-                <li><strong>Infinite Horizontal Scalability</strong> – distributes seamlessly across clusters</li>
-            </ul>
-        </section>
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar">
+      <a href="index.html" class="logo">
+        <svg class="logo-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="50,5 88.97,27.5 88.97,72.5 50,95 11.03,72.5 11.03,27.5" fill="none" stroke="#10B981" stroke-width="4" stroke-linejoin="round"/>
+          <circle cx="50" cy="50" r="14" fill="#FFD700" opacity="0.9">
+            <animate attributeName="r" values="14;16;14" dur="3s" repeatCount="indefinite" />
+          </circle>
+          <path d="M50 25 L50 40 M35 60 L45 50 M65 60 L55 50" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <div class="brand-text">
+          <span class="brand-name">Legacy Grove</span>
+          <span class="brand-legal">LGC LLC</span>
+        </div>
+      </a>
 
-        <section>
-            <h2>Government &amp; Defense Applications</h2>
-            <p>
-                TASH is built to meet federal security and compliance standards from the ground up.
-                It supports mission‑critical operations with:
-            </p>
-            <ul>
-                <li><strong>Zero‑trust architecture</strong> – data never leaves your controlled environment</li>
-                <li><strong>Petabyte‑scale handling</strong> – designed for signals intelligence and satellite data</li>
-                <li><strong>FedRAMP‑aligned controls</strong> – maps directly to NIST 800‑53</li>
-            </ul>
-            <p>
-                Available for evaluation under GSA Schedule and other federal procurement vehicles.
-            </p>
-        </section>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="tash.html" class="active">TASH</a>
+        <a href="book.html">Book</a>
+        <a href="codex-portal.html">Codex Portal</a>
+        <a href="community.html">Community</a>
+      </div>
 
-        <section>
-            <h2>Repository</h2>
-            <a href="https://github.com/tashscript-blip/TASH" target="_blank">View TASH on GitHub →</a>
-        </section>
-    </main>
+      <div class="nav-actions">
+        <a href="codex-portal.html" class="btn">Secure Access</a>
+      </div>
+    </nav>
 
-    <!-- ====== FOOTER ====== -->
-       <footer>
-        <p>&copy; 2026 Legacy Grove Codex LLC &bull; UEI D43ZB3D7QTW1 &bull; EIN 41‑2653211<br />
-        <span style="color: #4A5568; font-size: 0.75rem;">555 Hutchinson River Parkway, Bronx, NY 10465</span></p>
+    <!-- ===== HERO: COMMAND BRIEF ===== -->
+    <section class="hero">
+      <div class="hero-badge">✦ Strategic Asset · Sovereign System</div>
+
+      <div class="hero-grid">
+        <div>
+          <h1 class="hero-title">
+            TASH<br />
+            <span class="gold">Tactical Artificial<br />System Hierarchy</span>
+            <span class="sub">Self‑writing · Infinite‑scaling · Pyramid Mathematics</span>
+          </h1>
+          <p class="hero-description">
+            An open‑software framework engineered for real‑time intelligence,
+            autonomous adaptation, and recursive data processing. Built on a
+            10‑dimensional pyramid architecture, it evolves its own codebase
+            to meet the demands of the most complex operational environments.
+          </p>
+        </div>
+
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="label">Classification</span>
+            <span class="value"><span class="gold">SOVEREIGN</span></span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="label">Architecture</span>
+            <span class="value">10‑Dimensional Pyramid</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="label">Scalability</span>
+            <span class="value"><span class="emerald">Infinite</span></span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="label">Compliance</span>
+            <span class="value"><span class="gold">FedRAMP · NIST 800‑53</span></span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="label">UEI</span>
+            <span class="value" style="font-size:0.8rem; font-family:'Inter',monospace;">D43ZB3D7QTW1</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DIVIDER ===== -->
+    <div class="divider">
+      <span class="divider-line"></span>
+      <span class="divider-icon">◆ ◆ ◆</span>
+      <span class="divider-line"></span>
+    </div>
+
+    <!-- ===== FEATURES: THE ARSENAL ===== -->
+    <div class="section-header">
+      <span class="num">01</span>
+      <h2>Core Capabilities</h2>
+      <span class="badge">Active</span>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="icon">🧊</span>
+        <h3>10‑Dimensional Pyramid Architecture</h3>
+        <p>Multi‑layered decision nodes that process complexity across ten dimensions of operational data.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">⚡</span>
+        <h3>Self‑writing Codebase</h3>
+        <p>Adapts logic and evolves its own code without human intervention – true autonomous intelligence.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">📡</span>
+        <h3>Real‑time Data Integration</h3>
+        <p>Ingests streams from sensors, APIs, and legacy systems with zero latency degradation.</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">🌍</span>
+        <h3>Infinite Horizontal Scalability</h3>
+        <p>Distributes seamlessly across clusters – from edge devices to global data centers.</p>
+      </div>
+    </div>
+
+    <!-- ===== DIVIDER ===== -->
+    <div class="divider">
+      <span class="divider-line"></span>
+      <span class="divider-icon">◆ ◆ ◆</span>
+      <span class="divider-line"></span>
+    </div>
+
+    <!-- ===== GOVERNMENT & DEFENSE: WAR ROOM BRIEF ===== -->
+    <div class="section-header">
+      <span class="num">02</span>
+      <h2>Government &amp; Defense Applications</h2>
+      <span class="badge">FedRAMP Aligned</span>
+    </div>
+
+    <div class="defense-section">
+      <div class="defense-content">
+        <h3>
+          <span>🛡️</span> Mission‑Critical Operations
+        </h3>
+        <p>
+          TASH is built to meet federal security and compliance standards from the ground up.
+          It supports mission‑critical operations with zero‑trust architecture, petabyte‑scale
+          handling, and full alignment with FedRAMP and NIST 800‑53 controls.
+        </p>
+        <ul class="defense-badges">
+          <li><span class="check">✓</span> Zero‑trust architecture – data never leaves your environment</li>
+          <li><span class="check">✓</span> Petabyte‑scale handling – signals intelligence &amp; satellite data</li>
+          <li><span class="check">✓</span> FedRAMP‑aligned controls – maps directly to NIST 800‑53</li>
+        </ul>
+      </div>
+      <div class="defense-cta">
+        <a href="https://github.com/tashscript-blip/TASH" target="_blank" class="btn">View on GitHub →</a>
+        <span class="meta">Available for evaluation under GSA Schedule</span>
+      </div>
+    </div>
+
+    <!-- ===== REPOSITORY CARD ===== -->
+    <div class="repo-card">
+      <div class="info">
+        <h4>📂 Open Source Repository</h4>
+        <p>Access the complete TASH codebase. Contribute. Fork. Deploy.</p>
+      </div>
+      <a href="https://github.com/tashscript-blip/TASH" target="_blank" class="btn">Explore Repository →</a>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+      <p>
+        &copy; 2026 Legacy Grove Codex LLC &bull; <span>UEI D43ZB3D7QTW1</span> &bull; <span>EIN 41‑2653211</span>
+        <span class="address">555 Hutchinson River Parkway, Bronx, NY 10465</span>
+      </p>
     </footer>
+
+  </div>
+
 </body>
 </html>

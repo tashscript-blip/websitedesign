@@ -1,74 +1,724 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Legacy Grove Codex | Home</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Legacy Grove Codex | Sovereign Systems</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Particles.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+  
+  <style>
+    /* ----- RESET & BASE ----- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      background: #0A0C10;
+      color: #E8EDF2;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    
+    /* ----- PARTICLES BACKGROUND ----- */
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    
+    /* ----- AMBIENT GLOWS ----- */
+    .ambient-glow {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.15;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .glow-emerald { 
+      width: 600px; 
+      height: 600px; 
+      background: #10B981; 
+      top: -200px; 
+      right: -200px; 
+    }
+    .glow-gold { 
+      width: 500px; 
+      height: 500px; 
+      background: #FFD700; 
+      bottom: -150px; 
+      left: -150px; 
+    }
+    
+    /* ----- MAIN CONTAINER ----- */
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 2rem 4rem 2rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* ----- NAVIGATION (Glass Morphism) ----- */
+    .navbar {
+      background: rgba(10, 12, 16, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 2rem;
+      padding: 0.8rem 2rem;
+      margin-bottom: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+    }
+    
+    .logo-symbol {
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+    }
+    
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+    .brand-name {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #E8EDF2;
+      letter-spacing: 0.5px;
+    }
+    .brand-legal {
+      font-size: 0.65rem;
+      color: #9AA6B2;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: #9AA6B2;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+      letter-spacing: 0.5px;
+    }
+    .nav-links a:hover {
+      color: #FFD700;
+    }
+    .nav-links a.active {
+      color: #FFD700;
+    }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #FFD700;
+      border-radius: 2px;
+    }
+    
+    .nav-actions .btn {
+      display: inline-block;
+      padding: 0.6rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #10B981;
+      background: rgba(16, 185, 129, 0.08);
+    }
+    .nav-actions .btn:hover {
+      background: #10B981;
+      color: #0A0C10;
+      box-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+    }
+    
+    /* ----- HERO SECTION ----- */
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem 4rem 1rem;
+      position: relative;
+    }
+    
+    .hero-badge {
+      display: inline-block;
+      padding: 0.3rem 1.5rem;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: rgba(255, 215, 0, 0.08);
+      color: #FFD700;
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      margin-bottom: 1.5rem;
+      animation: pulse 3s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+    
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 0.5rem;
+    }
+    .hero-title .gold {
+      background: linear-gradient(135deg, #FFD700, #B8860B, #FFD700);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s ease-in-out infinite;
+    }
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+      color: #9AA6B2;
+      max-width: 700px;
+      margin: 0.5rem auto 2.5rem auto;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    
+    .hero-cta {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .btn-primary {
+      display: inline-block;
+      padding: 0.9rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary.gold {
+      background: linear-gradient(135deg, #FFD700, #B8860B);
+      color: #0A0C10;
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.15);
+    }
+    .btn-primary.gold:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 60px rgba(255, 215, 0, 0.3);
+    }
+    .btn-primary.emerald {
+      background: linear-gradient(135deg, #10B981, #059669);
+      color: #0A0C10;
+      box-shadow: 0 0 40px rgba(16, 185, 129, 0.15);
+    }
+    .btn-primary.emerald:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 60px rgba(16, 185, 129, 0.3);
+    }
+    .btn-outline {
+      display: inline-block;
+      padding: 0.9rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      color: #FFD700;
+      background: transparent;
+    }
+    .btn-outline:hover {
+      background: rgba(255, 215, 0, 0.08);
+      transform: translateY(-3px);
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.1);
+    }
+    
+    /* ----- GEOMETRIC DIVIDER ----- */
+    .divider {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      margin: 2rem 0 3rem 0;
+      opacity: 0.3;
+    }
+    .divider-line {
+      height: 1px;
+      flex: 1;
+      background: linear-gradient(90deg, transparent, #FFD700, transparent);
+      max-width: 200px;
+    }
+    .divider-icon {
+      color: #FFD700;
+      font-size: 1.2rem;
+    }
+    
+    /* ----- PHILOSOPHY CARD ----- */
+    .philosophy-card {
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 2rem;
+      padding: 3rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+      transition: all 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+    .philosophy-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 40%, rgba(16, 185, 129, 0.03) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .philosophy-card:hover {
+      border-color: rgba(255, 215, 0, 0.15);
+    }
+    
+    .philosophy-card h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #E8EDF2;
+    }
+    .philosophy-card h2 .gold { color: #FFD700; }
+    .philosophy-card p {
+      color: #9AA6B2;
+      font-size: 1.05rem;
+      max-width: 750px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+    
+    /* ----- GOVERNMENT SECTION (Enhanced) ----- */
+    .government-section {
+      background: rgba(255, 215, 0, 0.02);
+      border: 1px solid rgba(255, 215, 0, 0.08);
+      border-radius: 2rem;
+      padding: 2.5rem 3rem;
+      margin-bottom: 2rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      align-items: center;
+      transition: all 0.4s;
+    }
+    .government-section:hover {
+      border-color: rgba(255, 215, 0, 0.2);
+      background: rgba(255, 215, 0, 0.03);
+    }
+    
+    .government-content h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #FFD700;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .government-content p {
+      color: #9AA6B2;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+    .government-badge-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+    .government-badge-list li {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 0.3rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      color: #9AA6B2;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .government-badge-list li .check {
+      color: #10B981;
+      font-weight: 700;
+    }
+    
+    .government-cta {
+      text-align: right;
+    }
+    .government-cta .btn {
+      display: inline-block;
+      padding: 0.7rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      color: #FFD700;
+      background: rgba(255, 215, 0, 0.05);
+    }
+    .government-cta .btn:hover {
+      background: #FFD700;
+      color: #0A0C10;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+    }
+    .government-cta .badge-uei {
+      display: block;
+      font-size: 0.7rem;
+      color: #4A5568;
+      margin-top: 0.5rem;
+      letter-spacing: 1px;
+    }
+    
+    /* ----- ECOSYSTEM GRID ----- */
+    .ecosystem {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .ecosystem-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 1.5rem;
+      padding: 1.8rem 1.5rem;
+      text-align: center;
+      transition: all 0.4s;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+    }
+    .ecosystem-card:hover {
+      border-color: rgba(255, 215, 0, 0.2);
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    }
+    .ecosystem-card .icon {
+      font-size: 2.2rem;
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+    .ecosystem-card h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    .ecosystem-card p {
+      font-size: 0.8rem;
+      color: #9AA6B2;
+      line-height: 1.5;
+    }
+    .ecosystem-card .arrow {
+      display: inline-block;
+      margin-top: 0.8rem;
+      color: #FFD700;
+      font-size: 0.8rem;
+      transition: transform 0.3s;
+    }
+    .ecosystem-card:hover .arrow {
+      transform: translateX(5px);
+    }
+    
+    /* ----- FOOTER ----- */
+    .footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      text-align: center;
+      font-size: 0.8rem;
+      color: #4A5568;
+    }
+    .footer span {
+      color: #9AA6B2;
+    }
+    
+    /* ----- RESPONSIVE ----- */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1rem 1.5rem;
+        gap: 0.8rem;
+      }
+      .nav-links {
+        justify-content: center;
+        gap: 0.8rem;
+      }
+      .nav-actions {
+        text-align: center;
+      }
+      .government-section {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 1.5rem;
+      }
+      .government-cta {
+        text-align: center;
+      }
+      .government-badge-list {
+        justify-content: center;
+      }
+      .philosophy-card {
+        padding: 1.5rem;
+      }
+      .hero {
+        padding: 1rem 0.5rem 2rem 0.5rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .container { padding: 1rem; }
+      .nav-links a { font-size: 0.7rem; }
+      .btn-primary, .btn-outline { padding: 0.7rem 1.5rem; font-size: 0.7rem; }
+      .ecosystem { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
 </head>
 <body>
-    <!-- ====== HEADER / NAVIGATION ====== -->
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="tash.html">TASH</a></li>
-                <li><a href="book.html">Book</a></li>
-                <li><a href="codex-portal.html">Codex Portal</a></li>
-                <li><a href="community.html">Community</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <!-- ====== MAIN CONTENT ====== -->
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <h1>Legacy Grove Codex LLC</h1>
-            <p class="subtitle">Engineered Intelligence · Sovereign Systems</p>
-        </section>
+  <!-- ===== PARTICLES BACKGROUND ===== -->
+  <div id="particles-js"></div>
+  
+  <!-- ===== AMBIENT GLOWS ===== -->
+  <div class="ambient-glow glow-emerald"></div>
+  <div class="ambient-glow glow-gold"></div>
 
-        <!-- Core Philosophy -->
-        <section class="philosophy">
-            <h2>Core Philosophy</h2>
-            <p>
-                We build open‑source frameworks that bridge the gap between
-                mathematical abstraction and operational reality. Our systems are
-                designed to evolve, adapt, and protect the data they govern.
-            </p>
-        </section>
+  <!-- ===== MAIN CONTAINER ===== -->
+  <div class="container">
 
-        <!-- ====== NEW GOVERNMENT SECTION ====== -->
-        <section class="government-section">
-            <h2>FedRAMP &amp; Government‑Ready Solutions</h2>
-            <p>
-                Legacy Grove Codex LLC is registered and compliant for federal procurement.
-                Our systems are engineered to meet the highest standards of data sovereignty,
-                security, and operational transparency required by U.S. government contracts.
-            </p>
-            <ul>
-                <li>✓ Unique Entity Identifier (UEI): <strong>D43ZB3D7QTW1</strong></li>
-                <li>✓ SAM.gov Registered</li>
-                <li>✓ FedRAMP‑aligned security architecture</li>
-            </ul>
-            <a href="tash.html" class="cta-button">Explore TASH for Government →</a>
-        </section>
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar">
+      <a href="index.html" class="logo">
+        <svg class="logo-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="50,5 88.97,27.5 88.97,72.5 50,95 11.03,72.5 11.03,27.5" fill="none" stroke="#10B981" stroke-width="4" stroke-linejoin="round"/>
+          <circle cx="50" cy="50" r="14" fill="#FFD700" opacity="0.9">
+            <animate attributeName="r" values="14;16;14" dur="3s" repeatCount="indefinite" />
+          </circle>
+          <path d="M50 25 L50 40 M35 60 L45 50 M65 60 L55 50" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <div class="brand-text">
+          <span class="brand-name">Legacy Grove</span>
+          <span class="brand-legal">LGC LLC</span>
+        </div>
+      </a>
+      
+      <div class="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="tash.html">TASH</a>
+        <a href="book.html">Book</a>
+        <a href="codex-portal.html">Codex Portal</a>
+        <a href="community.html">Community</a>
+      </div>
+      
+      <div class="nav-actions">
+        <a href="codex-portal.html" class="btn">Secure Access</a>
+      </div>
+    </nav>
 
-        <!-- Quick Links -->
-        <section class="quick-links">
-            <h2>Explore Our Ecosystem</h2>
-            <ul>
-                <li><a href="tash.html">TASH – Tactical Artificial System Hierarchy</a></li>
-                <li><a href="book.html">The Codex Book</a></li>
-                <li><a href="codex-portal.html">Codex Portal</a></li>
-                <li><a href="community.html">Community Hub</a></li>
-            </ul>
-        </section>
-    </main>
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero">
+      <div class="hero-badge">✦ Sovereign Systems Platform</div>
+      <h1 class="hero-title">
+        Legacy Grove <br /><span class="gold">Codex</span>
+      </h1>
+      <p class="hero-subtitle">
+        Engineered Intelligence · Sovereign Systems ·<br />
+        Bridging mathematical abstraction and operational reality.
+      </p>
+      <div class="hero-cta">
+        <a href="tash.html" class="btn-primary gold">Explore TASH</a>
+        <a href="codex-portal.html" class="btn-outline">Enter Codex Portal</a>
+      </div>
+    </section>
 
-    <!-- ====== FOOTER ====== -->
-    <footer>
-        <p>&copy; 2026 Legacy Grove Codex LLC &bull; UEI D43ZB3D7QTW1 &bull; EIN 41‑2653211</p>
+    <!-- ===== DIVIDER ===== -->
+    <div class="divider">
+      <span class="divider-line"></span>
+      <span class="divider-icon">◆</span>
+      <span class="divider-line"></span>
+    </div>
+
+    <!-- ===== PHILOSOPHY CARD ===== -->
+    <div class="philosophy-card">
+      <h2>Core <span class="gold">Philosophy</span></h2>
+      <p>
+        We build open‑source frameworks that bridge the gap between
+        mathematical abstraction and operational reality. Our systems are
+        designed to evolve, adapt, and protect the data they govern.
+      </p>
+    </div>
+
+    <!-- ===== GOVERNMENT SECTION ===== -->
+    <div class="government-section">
+      <div class="government-content">
+        <h3>
+          <span>🇺🇸</span> FedRAMP &amp; Government‑Ready Solutions
+        </h3>
+        <p>
+          Legacy Grove Codex LLC is registered and compliant for federal procurement. 
+          Our systems are engineered to meet the highest standards of data sovereignty, 
+          security, and operational transparency required by U.S. government contracts.
+        </p>
+        <ul class="government-badge-list">
+          <li><span class="check">✓</span> UEI: <strong style="color:#E8EDF2;">D43ZB3D7QTW1</strong></li>
+          <li><span class="check">✓</span> SAM.gov Registered</li>
+          <li><span class="check">✓</span> FedRAMP‑aligned Security</li>
+        </ul>
+      </div>
+      <div class="government-cta">
+        <a href="tash.html" class="btn">Explore TASH for Government →</a>
+        <span class="badge-uei">UEI D43ZB3D7QTW1</span>
+      </div>
+    </div>
+
+    <!-- ===== ECOSYSTEM ===== -->
+    <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 600; margin-bottom: 1rem; text-align: center;">
+      Explore Our <span style="color: #FFD700;">Ecosystem</span>
+    </h3>
+    
+    <div class="ecosystem">
+      <a href="tash.html" class="ecosystem-card">
+        <span class="icon">🧠</span>
+        <h4>TASH</h4>
+        <p>Tactical Artificial System Hierarchy</p>
+        <span class="arrow">→</span>
+      </a>
+      <a href="book.html" class="ecosystem-card">
+        <span class="icon">📖</span>
+        <h4>The Codex Book</h4>
+        <p>Digital Vault Blueprint &amp; Framework</p>
+        <span class="arrow">→</span>
+      </a>
+      <a href="codex-portal.html" class="ecosystem-card">
+        <span class="icon">🔐</span>
+        <h4>Codex Portal</h4>
+        <p>Sovereign Identity &amp; Compliance</p>
+        <span class="arrow">→</span>
+      </a>
+      <a href="community.html" class="ecosystem-card">
+        <span class="icon">🌐</span>
+        <h4>Community Hub</h4>
+        <p>Network Nodes &amp; Alliance Circles</p>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+      <p>
+        &copy; 2026 Legacy Grove Codex LLC &bull; <span>UEI D43ZB3D7QTW1</span> &bull; <span>EIN 41‑2653211</span>
+      </p>
     </footer>
+
+  </div>
+
+  <!-- ===== PARTICLES.JS CONFIGURATION ===== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof particlesJS !== 'undefined') {
+        particlesJS('particles-js', {
+          particles: {
+            number: { value: 80, density: { enable: true, value_area: 800 } },
+            color: { value: '#FFD700' },
+            shape: { type: 'circle' },
+            opacity: { value: 0.25, random: true },
+            size: { value: 2, random: true },
+            line_linked: {
+              enable: true,
+              distance: 150,
+              color: '#FFD700',
+              opacity: 0.08,
+              width: 1
+            },
+            move: {
+              enable: true,
+              speed: 0.8,
+              direction: 'none',
+              random: true,
+              straight: false,
+              out_mode: 'out'
+            }
+          },
+          interactivity: {
+            detect_on: 'canvas',
+            events: {
+              onhover: { enable: true, mode: 'repulse' },
+              onclick: { enable: true, mode: 'push' }
+            }
+          },
+          retina_detect: true
+        });
+      }
+    });
+  </script>
+
 </body>
 </html>

@@ -4,206 +4,134 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Legacy Grove Codex | Sovereign Systems</title>
-  
+
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  
-  <!-- Particles.js CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-  
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
   <style>
-    /* ----- RESET & BASE ----- */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    
+    /* ----- RESET ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      background: #0A0C10;
+      background: #080A0E;
       color: #E8EDF2;
       font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
-      min-height: 100vh;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
     }
-    
-    /* ----- PARTICLES BACKGROUND ----- */
-    #particles-js {
+
+    /* ----- GATE OVERLAY (Canvas) ----- */
+    #gate-canvas {
       position: fixed;
-      width: 100%;
-      height: 100%;
       top: 0;
       left: 0;
-      z-index: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1000;
+      background: #080A0E;
+      display: block;
       pointer-events: none;
     }
-    
-    /* ----- AMBIENT GLOWS ----- */
+
+    /* ----- MAIN CONTENT (Hidden until gate opens) ----- */
+    #main-content {
+      position: relative;
+      z-index: 1;
+      width: 100vw;
+      height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      opacity: 0;
+      transition: opacity 1.2s ease 2.5s;
+      background: #080A0E;
+    }
+
+    #main-content.reveal {
+      opacity: 1;
+    }
+
+    /* ----- SCROLLBAR ----- */
+    #main-content::-webkit-scrollbar {
+      width: 6px;
+    }
+    #main-content::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    #main-content::-webkit-scrollbar-thumb {
+      background: #FFD700;
+      border-radius: 3px;
+    }
+
+    /* ----- AMBIENT GLOWS (in main content) ----- */
     .ambient-glow {
       position: fixed;
       border-radius: 50%;
-      filter: blur(120px);
-      opacity: 0.15;
+      filter: blur(150px);
+      opacity: 0.08;
       z-index: 0;
       pointer-events: none;
     }
-    .glow-emerald { 
-      width: 600px; 
-      height: 600px; 
-      background: #10B981; 
-      top: -200px; 
-      right: -200px; 
+    .glow-emerald {
+      width: 600px;
+      height: 600px;
+      background: #10B981;
+      bottom: -200px;
+      left: -200px;
     }
-    .glow-gold { 
-      width: 500px; 
-      height: 500px; 
-      background: #FFD700; 
-      bottom: -150px; 
-      left: -150px; 
+    .glow-gold {
+      width: 600px;
+      height: 600px;
+      background: #FFD700;
+      top: -200px;
+      right: -200px;
     }
-    
-    /* ================================================================ */
-    /* DIGITAL GATE OVERLAY                                            */
-    /* ================================================================ */
-    #gate-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 999;
-      background: #0A0C10;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      pointer-events: none;
-      transition: opacity 1.2s ease;
-      opacity: 1;
-    }
-    #gate-overlay.fade-out {
-      opacity: 0;
-    }
-    #gate-overlay.hidden {
-      display: none;
-    }
-    
-    .gate-container {
-      position: relative;
-      width: 300px;
-      height: 300px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    /* The two pyramid halves (left and right) */
-    .gate-half {
-      position: absolute;
-      width: 150px;
-      height: 260px;
-      transition: transform 1.8s cubic-bezier(0.65, 0, 0.35, 1);
-      transform: translateX(0);
-      will-change: transform;
-    }
-    .gate-half svg {
-      width: 100%;
-      height: 100%;
-      display: block;
-      filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.3));
-    }
-    .gate-half.left {
-      left: 0;
-      transform-origin: right center;
-    }
-    .gate-half.right {
-      right: 0;
-      transform-origin: left center;
-    }
-    
-    /* Open state – slide apart */
-    .gate-open .gate-half.left {
-      transform: translateX(-180px) scale(0.9);
-    }
-    .gate-open .gate-half.right {
-      transform: translateX(180px) scale(0.9);
-    }
-    
-    /* Inner glow ring */
-    .gate-ring {
-      position: absolute;
-      width: 280px;
-      height: 280px;
-      border-radius: 50%;
-      border: 2px solid rgba(255, 215, 0, 0.15);
-      box-shadow: 0 0 60px rgba(255, 215, 0, 0.05), inset 0 0 60px rgba(255, 215, 0, 0.02);
-      animation: ringPulse 2s ease-in-out infinite;
-    }
-    @keyframes ringPulse {
-      0%, 100% { transform: scale(1); opacity: 0.3; }
-      50% { transform: scale(1.08); opacity: 0.8; }
-    }
-    
-    /* Loading text below gate */
-    .gate-loader {
-      position: absolute;
-      bottom: -60px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.8rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: #4A5568;
-      animation: blinkText 1.2s step-end infinite;
-    }
-    @keyframes blinkText {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.2; }
-    }
-    
-    /* ----- MAIN CONTAINER (hidden until gate opens) ----- */
+
+    /* ----- CONTAINER ----- */
     .container {
       position: relative;
       z-index: 1;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 2rem 2rem 4rem 2rem;
+      padding: 1.5rem 2rem 3rem 2rem;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      opacity: 0;
-      transition: opacity 1s ease 2.2s;
     }
-    .container.reveal {
-      opacity: 1;
-    }
-    
-    /* ----- NAVIGATION (Glass Morphism) ----- */
+
+    /* ----- NAVIGATION ----- */
     .navbar {
-      background: rgba(10, 12, 16, 0.7);
+      background: rgba(8, 10, 14, 0.7);
       backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 2rem;
-      padding: 0.8rem 2rem;
-      margin-bottom: 3rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 1.5rem;
+      padding: 0.7rem 2rem;
+      margin-bottom: 2.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 1rem;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
     }
-    
+
     .logo {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.8rem;
       text-decoration: none;
     }
-    
+
     .logo-symbol {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       flex-shrink: 0;
     }
-    
+
     .brand-text {
       display: flex;
       flex-direction: column;
@@ -212,17 +140,17 @@
     .brand-name {
       font-family: 'Outfit', sans-serif;
       font-weight: 800;
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: #E8EDF2;
       letter-spacing: 0.5px;
     }
     .brand-legal {
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       color: #9AA6B2;
       letter-spacing: 2px;
       text-transform: uppercase;
     }
-    
+
     .nav-links {
       display: flex;
       gap: 1.5rem;
@@ -232,11 +160,11 @@
     .nav-links a {
       color: #9AA6B2;
       text-decoration: none;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 500;
       transition: color 0.3s;
-      position: relative;
       letter-spacing: 0.5px;
+      position: relative;
     }
     .nav-links a:hover {
       color: #FFD700;
@@ -254,34 +182,37 @@
       background: #FFD700;
       border-radius: 2px;
     }
-    
+
     .nav-actions .btn {
       display: inline-block;
-      padding: 0.6rem 1.5rem;
+      padding: 0.5rem 1.5rem;
       border-radius: 50px;
       font-weight: 600;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 1px;
       text-decoration: none;
       transition: all 0.3s;
       border: 1px solid rgba(16, 185, 129, 0.3);
       color: #10B981;
-      background: rgba(16, 185, 129, 0.08);
+      background: rgba(16, 185, 129, 0.06);
     }
     .nav-actions .btn:hover {
       background: #10B981;
-      color: #0A0C10;
-      box-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+      color: #080A0E;
+      box-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
     }
-    
-    /* ----- HERO SECTION ----- */
+
+    /* ----- HERO ----- */
     .hero {
       text-align: center;
-      padding: 3rem 1rem 4rem 1rem;
-      position: relative;
+      padding: 2rem 1rem 3rem 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
-    
+
     .hero-badge {
       display: inline-block;
       padding: 0.3rem 1.5rem;
@@ -290,18 +221,24 @@
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
-      background: rgba(255, 215, 0, 0.08);
+      background: rgba(255, 215, 0, 0.06);
       color: #FFD700;
-      border: 1px solid rgba(255, 215, 0, 0.2);
+      border: 1px solid rgba(255, 215, 0, 0.12);
       margin-bottom: 1.5rem;
+      align-self: center;
       animation: pulse 3s ease-in-out infinite;
     }
-    
+
     @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.6; }
+      0%,
+      100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
     }
-    
+
     .hero-title {
       font-family: 'Outfit', sans-serif;
       font-size: clamp(3rem, 7vw, 6rem);
@@ -318,11 +255,17 @@
       background-clip: text;
       animation: shimmer 4s ease-in-out infinite;
     }
+
     @keyframes shimmer {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
+      0%,
+      100% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
     }
-    
+
     .hero-subtitle {
       font-size: clamp(1.1rem, 1.8vw, 1.5rem);
       color: #9AA6B2;
@@ -332,27 +275,14 @@
       font-weight: 300;
       min-height: 2.5rem;
     }
-    .hero-subtitle .cursor {
-      display: inline-block;
-      width: 2px;
-      height: 1.2em;
-      background: #FFD700;
-      margin-left: 2px;
-      vertical-align: text-bottom;
-      animation: blink 0.8s step-end infinite;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-    
+
     .hero-cta {
       display: flex;
       justify-content: center;
       gap: 1rem;
       flex-wrap: wrap;
     }
-    
+
     .btn-primary {
       display: inline-block;
       padding: 0.9rem 2.5rem;
@@ -368,21 +298,12 @@
     }
     .btn-primary.gold {
       background: linear-gradient(135deg, #FFD700, #B8860B);
-      color: #0A0C10;
+      color: #080A0E;
       box-shadow: 0 0 40px rgba(255, 215, 0, 0.15);
     }
     .btn-primary.gold:hover {
       transform: translateY(-3px);
       box-shadow: 0 0 60px rgba(255, 215, 0, 0.3);
-    }
-    .btn-primary.emerald {
-      background: linear-gradient(135deg, #10B981, #059669);
-      color: #0A0C10;
-      box-shadow: 0 0 40px rgba(16, 185, 129, 0.15);
-    }
-    .btn-primary.emerald:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 0 60px rgba(16, 185, 129, 0.3);
     }
     .btn-outline {
       display: inline-block;
@@ -394,24 +315,24 @@
       letter-spacing: 1.5px;
       text-decoration: none;
       transition: all 0.3s;
-      border: 1px solid rgba(255, 215, 0, 0.3);
+      border: 1px solid rgba(255, 215, 0, 0.25);
       color: #FFD700;
       background: transparent;
     }
     .btn-outline:hover {
-      background: rgba(255, 215, 0, 0.08);
+      background: rgba(255, 215, 0, 0.06);
       transform: translateY(-3px);
-      box-shadow: 0 0 40px rgba(255, 215, 0, 0.1);
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.08);
     }
-    
-    /* ----- GEOMETRIC DIVIDER ----- */
+
+    /* ----- DIVIDER ----- */
     .divider {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 1.5rem;
       margin: 2rem 0 3rem 0;
-      opacity: 0.3;
+      opacity: 0.2;
     }
     .divider-line {
       height: 1px;
@@ -423,44 +344,27 @@
       color: #FFD700;
       font-size: 1.2rem;
     }
-    
-    /* ----- PHILOSOPHY CARD ----- */
+
+    /* ----- PHILOSOPHY ----- */
     .philosophy-card {
       background: rgba(255, 255, 255, 0.02);
       backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.04);
       border-radius: 2rem;
-      padding: 3rem;
+      padding: 2.5rem 3rem;
       margin-bottom: 2rem;
       text-align: center;
       box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
-      transition: all 0.4s;
-      position: relative;
-      overflow: hidden;
     }
-    .philosophy-card::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at 30% 40%, rgba(16, 185, 129, 0.03) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .philosophy-card:hover {
-      border-color: rgba(255, 215, 0, 0.15);
-    }
-    
     .philosophy-card h2 {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-weight: 700;
-      margin-bottom: 1rem;
-      color: #E8EDF2;
+      margin-bottom: 0.8rem;
     }
-    .philosophy-card h2 .gold { color: #FFD700; }
+    .philosophy-card h2 .gold {
+      color: #FFD700;
+    }
     .philosophy-card p {
       color: #9AA6B2;
       font-size: 1.05rem;
@@ -468,69 +372,62 @@
       margin: 0 auto;
       line-height: 1.8;
     }
-    
-    /* ----- GOVERNMENT SECTION (Enhanced) ----- */
+
+    /* ----- GOVERNMENT ----- */
     .government-section {
       background: rgba(255, 215, 0, 0.02);
-      border: 1px solid rgba(255, 215, 0, 0.08);
+      border: 1px solid rgba(255, 215, 0, 0.06);
       border-radius: 2rem;
-      padding: 2.5rem 3rem;
+      padding: 2rem 2.5rem;
       margin-bottom: 2rem;
       display: grid;
       grid-template-columns: 2fr 1fr;
       gap: 2rem;
       align-items: center;
-      transition: all 0.4s;
     }
-    .government-section:hover {
-      border-color: rgba(255, 215, 0, 0.2);
-      background: rgba(255, 215, 0, 0.03);
-    }
-    
-    .government-content h3 {
+    .government-section h3 {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 700;
       color: #FFD700;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.3rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
-    .government-content p {
+    .government-section p {
       color: #9AA6B2;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       line-height: 1.7;
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
     }
     .government-badge-list {
       list-style: none;
       display: flex;
       flex-wrap: wrap;
-      gap: 0.8rem;
+      gap: 0.6rem;
     }
     .government-badge-list li {
-      background: rgba(255, 255, 255, 0.04);
-      padding: 0.3rem 1.2rem;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.2rem 1rem;
       border-radius: 50px;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: #9AA6B2;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.04);
       display: flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.3rem;
     }
     .government-badge-list li .check {
       color: #10B981;
       font-weight: 700;
     }
-    
     .government-cta {
       text-align: right;
     }
     .government-cta .btn {
       display: inline-block;
-      padding: 0.7rem 2rem;
+      padding: 0.6rem 1.8rem;
       border-radius: 50px;
       font-weight: 600;
       font-size: 0.8rem;
@@ -538,27 +435,27 @@
       letter-spacing: 1px;
       text-decoration: none;
       transition: all 0.3s;
-      border: 1px solid rgba(255, 215, 0, 0.3);
+      border: 1px solid rgba(255, 215, 0, 0.25);
       color: #FFD700;
-      background: rgba(255, 215, 0, 0.05);
+      background: rgba(255, 215, 0, 0.04);
     }
     .government-cta .btn:hover {
       background: #FFD700;
-      color: #0A0C10;
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+      color: #080A0E;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.15);
     }
     .government-cta .badge-uei {
       display: block;
-      font-size: 0.7rem;
+      font-size: 0.6rem;
       color: #4A5568;
-      margin-top: 0.5rem;
+      margin-top: 0.4rem;
       letter-spacing: 1px;
     }
-    
-    /* ----- ECOSYSTEM GRID ----- */
+
+    /* ----- ECOSYSTEM ----- */
     .ecosystem {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1.5rem;
       margin-top: 1rem;
     }
@@ -566,76 +463,80 @@
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.04);
       border-radius: 1.5rem;
-      padding: 1.8rem 1.5rem;
+      padding: 1.5rem 1.5rem;
       text-align: center;
       transition: all 0.4s;
       text-decoration: none;
       color: inherit;
-      position: relative;
-      overflow: hidden;
     }
     .ecosystem-card:hover {
-      border-color: rgba(255, 215, 0, 0.2);
-      transform: translateY(-5px);
+      border-color: rgba(255, 215, 0, 0.15);
+      transform: translateY(-4px);
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
     }
     .ecosystem-card .icon {
-      font-size: 2.2rem;
+      font-size: 2rem;
       display: block;
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.6rem;
     }
     .ecosystem-card h4 {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 600;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.2rem;
     }
     .ecosystem-card p {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: #9AA6B2;
-      line-height: 1.5;
+      line-height: 1.4;
     }
     .ecosystem-card .arrow {
       display: inline-block;
-      margin-top: 0.8rem;
+      margin-top: 0.6rem;
       color: #FFD700;
       font-size: 0.8rem;
       transition: transform 0.3s;
     }
     .ecosystem-card:hover .arrow {
-      transform: translateX(5px);
+      transform: translateX(4px);
     }
-    
+
     /* ----- FOOTER ----- */
     .footer {
-      margin-top: 4rem;
-      padding-top: 2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
       text-align: center;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       color: #4A5568;
     }
     .footer span {
       color: #9AA6B2;
     }
     .footer .address {
-      color: #4A5568;
-      font-size: 0.75rem;
-      margin-top: 0.3rem;
       display: block;
+      color: #4A5568;
+      margin-top: 0.2rem;
+      font-size: 0.65rem;
     }
-    
+
     /* ----- RESPONSIVE ----- */
     @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
       .navbar {
         flex-direction: column;
         align-items: stretch;
-        padding: 1rem 1.5rem;
-        gap: 0.8rem;
+        padding: 0.8rem 1.2rem;
+        gap: 0.6rem;
       }
       .nav-links {
         justify-content: center;
-        gap: 0.8rem;
+        gap: 0.6rem;
+      }
+      .nav-links a {
+        font-size: 0.7rem;
       }
       .nav-actions {
         text-align: center;
@@ -657,295 +558,581 @@
       .hero {
         padding: 1rem 0.5rem 2rem 0.5rem;
       }
-      .gate-container { width: 200px; height: 200px; }
-      .gate-half { width: 100px; height: 180px; }
-      .gate-ring { width: 190px; height: 190px; }
-      .gate-open .gate-half.left { transform: translateX(-120px) scale(0.8); }
-      .gate-open .gate-half.right { transform: translateX(120px) scale(0.8); }
+      .ecosystem {
+        grid-template-columns: 1fr 1fr;
+      }
     }
+
     @media (max-width: 480px) {
-      .container { padding: 1rem; }
-      .nav-links a { font-size: 0.7rem; }
-      .btn-primary, .btn-outline { padding: 0.7rem 1.5rem; font-size: 0.7rem; }
-      .ecosystem { grid-template-columns: 1fr 1fr; }
+      .container {
+        padding: 0.6rem;
+      }
+      .nav-links a {
+        font-size: 0.6rem;
+      }
+      .ecosystem {
+        grid-template-columns: 1fr;
+      }
+      .btn-primary,
+      .btn-outline {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.7rem;
+      }
     }
   </style>
 </head>
 <body>
 
   <!-- ================================================================ -->
-  <!-- DIGITAL GATE OVERLAY                                             -->
+  <!-- CINEMATIC GATE – CANVAS OVERLAY                                 -->
   <!-- ================================================================ -->
-  <div id="gate-overlay">
-    <div class="gate-container" id="gateContainer">
-      <!-- Left pyramid half -->
-      <div class="gate-half left" id="gateLeft">
-        <svg viewBox="0 0 100 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="gateGradL" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#FFD700" stop-opacity="0.3" />
-              <stop offset="100%" stop-color="#10B981" stop-opacity="0.1" />
-            </linearGradient>
-          </defs>
-          <!-- Left half of a pyramid (triangle) -->
-          <polygon points="100,0 0,200 100,200" fill="url(#gateGradL)" stroke="#FFD700" stroke-width="1.5" stroke-opacity="0.6"/>
-          <polygon points="100,20 20,180 100,180" fill="none" stroke="#FFD700" stroke-width="0.5" stroke-opacity="0.2"/>
-          <polygon points="100,40 40,160 100,160" fill="none" stroke="#FFD700" stroke-width="0.5" stroke-opacity="0.2"/>
-          <polygon points="100,60 60,140 100,140" fill="none" stroke="#FFD700" stroke-width="0.5" stroke-opacity="0.2"/>
-          <polygon points="100,80 80,120 100,120" fill="none" stroke="#FFD700" stroke-width="0.5" stroke-opacity="0.2"/>
-          <!-- Glowing eye / gem -->
-          <circle cx="60" cy="100" r="12" fill="#FFD700" opacity="0.4" filter="url(#glow)"/>
-        </svg>
-      </div>
-      
-      <!-- Right pyramid half -->
-      <div class="gate-half right" id="gateRight">
-        <svg viewBox="0 0 100 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="gateGradR" x1="100%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#FFD700" stop-opacity="0.3" />
-              <stop offset="100%" stop-color="#10B981" stop-opacity="0.1" />
-            </linearGradient>
-          </defs>
-          <!-- Right half of a pyramid (triangle) -->
-          <polygon points="0,0 100,200 0,200" fill="url(#gateGradR)" stroke="#FFD700" stroke-width="1.5" stroke-opacity="0.6"/>
-          <polygon points="0,20 80,180 0,180" fill="none" stroke="#FFD700" stroke-width="0.5" stroke-opacity="0.2"/>
-          <polygon points="0,40 60,160 0,160" fill="none" stroke="#FFD700" stroke-width="0.5" stroke-opacity="0.2"/>
-          <polygon points="0,60 40,140 0,140" fill="none" stroke="#FFD700" stroke-width="0.5" stroke-opacity="0.2"/>
-          <polygon points="0,80 20,120 0,120" fill="none" stroke="#FFD700" stroke-width="0.5" stroke-opacity="0.2"/>
-          <!-- Glowing eye / gem -->
-          <circle cx="40" cy="100" r="12" fill="#FFD700" opacity="0.4"/>
-        </svg>
-      </div>
-      
-      <!-- Outer ring -->
-      <div class="gate-ring"></div>
-      
-      <!-- Loading text -->
-      <div class="gate-loader">Opening Vault</div>
-    </div>
-  </div>
+  <canvas id="gate-canvas"></canvas>
 
-  <!-- ===== PARTICLES BACKGROUND ===== -->
-  <div id="particles-js"></div>
-  
-  <!-- ===== AMBIENT GLOWS ===== -->
-  <div class="ambient-glow glow-emerald"></div>
-  <div class="ambient-glow glow-gold"></div>
+  <!-- ================================================================ -->
+  <!-- MAIN CONTENT (Hidden until gate opens)                         -->
+  <!-- ================================================================ -->
+  <div id="main-content">
 
-  <!-- ===== MAIN CONTAINER ===== -->
-  <div class="container" id="mainContainer">
+    <div class="ambient-glow glow-emerald"></div>
+    <div class="ambient-glow glow-gold"></div>
 
-    <!-- ===== NAVIGATION ===== -->
-    <nav class="navbar">
-      <a href="index.html" class="logo">
-        <svg class="logo-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="50,5 88.97,27.5 88.97,72.5 50,95 11.03,72.5 11.03,27.5" fill="none" stroke="#10B981" stroke-width="4" stroke-linejoin="round"/>
-          <circle cx="50" cy="50" r="14" fill="#FFD700" opacity="0.9">
-            <animate attributeName="r" values="14;16;14" dur="3s" repeatCount="indefinite" />
-          </circle>
-          <path d="M50 25 L50 40 M35 60 L45 50 M65 60 L55 50" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
-        </svg>
-        <div class="brand-text">
-          <span class="brand-name">Legacy Grove</span>
-          <span class="brand-legal">LGC LLC</span>
+    <div class="container">
+
+      <!-- ===== NAVIGATION ===== -->
+      <nav class="navbar">
+        <a href="index.html" class="logo">
+          <svg class="logo-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="50,5 88.97,27.5 88.97,72.5 50,95 11.03,72.5 11.03,27.5" fill="none" stroke="#10B981" stroke-width="4" stroke-linejoin="round"/>
+            <circle cx="50" cy="50" r="14" fill="#FFD700" opacity="0.9">
+              <animate attributeName="r" values="14;16;14" dur="3s" repeatCount="indefinite" />
+            </circle>
+            <path d="M50 25 L50 40 M35 60 L45 50 M65 60 L55 50" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <div class="brand-text">
+            <span class="brand-name">Legacy Grove</span>
+            <span class="brand-legal">LGC LLC</span>
+          </div>
+        </a>
+
+        <div class="nav-links">
+          <a href="index.html" class="active">Home</a>
+          <a href="tash.html">TASH</a>
+          <a href="book.html">Book</a>
+          <a href="codex-portal.html">Codex Portal</a>
+          <a href="systems.html">Systems</a>
+          <a href="community.html">Community</a>
         </div>
-      </a>
-      
-      <div class="nav-links">
-        <a href="index.html" class="active">Home</a>
-        <a href="tash.html">TASH</a>
-        <a href="book.html">Book</a>
-        <a href="codex-portal.html">Codex Portal</a>
-        <a href="community.html">Community</a>
-      </div>
-      
-      <div class="nav-actions">
-        <a href="codex-portal.html" class="btn">Secure Access</a>
-      </div>
-    </nav>
 
-    <!-- ===== HERO SECTION ===== -->
-    <section class="hero">
-      <div class="hero-badge">✦ Sovereign Systems Platform</div>
-      <h1 class="hero-title">
-        Legacy Grove <br /><span class="gold">Codex</span>
-      </h1>
-      <p class="hero-subtitle" id="typing-text">
-        <span id="typed-output"></span><span class="cursor"></span>
-      </p>
-      <div class="hero-cta">
-        <a href="tash.html" class="btn-primary gold">Explore TASH</a>
-        <a href="codex-portal.html" class="btn-outline">Enter Codex Portal</a>
-      </div>
-    </section>
+        <div class="nav-actions">
+          <a href="codex-portal.html" class="btn">Secure Access</a>
+        </div>
+      </nav>
 
-    <!-- ===== DIVIDER ===== -->
-    <div class="divider">
-      <span class="divider-line"></span>
-      <span class="divider-icon">◆</span>
-      <span class="divider-line"></span>
-    </div>
-
-    <!-- ===== PHILOSOPHY CARD ===== -->
-    <div class="philosophy-card">
-      <h2>Core <span class="gold">Philosophy</span></h2>
-      <p>
-        We build open‑source frameworks that bridge the gap between
-        mathematical abstraction and operational reality. Our systems are
-        designed to evolve, adapt, and protect the data they govern.
-      </p>
-    </div>
-
-    <!-- ===== GOVERNMENT SECTION ===== -->
-    <div class="government-section">
-      <div class="government-content">
-        <h3>
-          <span>🇺🇸</span> FedRAMP &amp; Government‑Ready Solutions
-        </h3>
-        <p>
-          Legacy Grove Codex LLC is registered and compliant for federal procurement. 
-          Our systems are engineered to meet the highest standards of data sovereignty, 
-          security, and operational transparency required by U.S. government contracts.
+      <!-- ===== HERO ===== -->
+      <section class="hero">
+        <div class="hero-badge">✦ Sovereign Systems Platform</div>
+        <h1 class="hero-title">
+          Legacy Grove <br /><span class="gold">Codex</span>
+        </h1>
+        <p class="hero-subtitle" id="typing-text">
+          <span id="typed-output"></span><span class="cursor" style="display:inline-block;width:2px;height:1.2em;background:#FFD700;margin-left:2px;vertical-align:text-bottom;animation:blink 0.8s step-end infinite;"></span>
         </p>
-        <ul class="government-badge-list">
-          <li><span class="check">✓</span> UEI: <strong style="color:#E8EDF2;">D43ZB3D7QTW1</strong></li>
-          <li><span class="check">✓</span> SAM.gov Registered</li>
-          <li><span class="check">✓</span> FedRAMP‑aligned Security</li>
-        </ul>
+        <div class="hero-cta">
+          <a href="tash.html" class="btn-primary gold">Explore TASH</a>
+          <a href="codex-portal.html" class="btn-outline">Enter Codex Portal</a>
+        </div>
+      </section>
+
+      <!-- ===== DIVIDER ===== -->
+      <div class="divider">
+        <span class="divider-line"></span>
+        <span class="divider-icon">◆</span>
+        <span class="divider-line"></span>
       </div>
-      <div class="government-cta">
-        <a href="tash.html" class="btn">Explore TASH for Government →</a>
-        <span class="badge-uei">UEI D43ZB3D7QTW1</span>
+
+      <!-- ===== PHILOSOPHY ===== -->
+      <div class="philosophy-card">
+        <h2>Core <span class="gold">Philosophy</span></h2>
+        <p>
+          We build open‑source frameworks that bridge the gap between
+          mathematical abstraction and operational reality. Our systems are
+          designed to evolve, adapt, and protect the data they govern.
+        </p>
       </div>
+
+      <!-- ===== GOVERNMENT ===== -->
+      <div class="government-section">
+        <div class="government-content">
+          <h3><span>🇺🇸</span> FedRAMP &amp; Government‑Ready Solutions</h3>
+          <p>
+            Legacy Grove Codex LLC is registered and compliant for federal procurement.
+            Our systems are engineered to meet the highest standards of data sovereignty,
+            security, and operational transparency required by U.S. government contracts.
+          </p>
+          <ul class="government-badge-list">
+            <li><span class="check">✓</span> UEI: <strong style="color:#E8EDF2;">D43ZB3D7QTW1</strong></li>
+            <li><span class="check">✓</span> SAM.gov Registered</li>
+            <li><span class="check">✓</span> FedRAMP‑aligned Security</li>
+          </ul>
+        </div>
+        <div class="government-cta">
+          <a href="tash.html" class="btn">Explore TASH for Government →</a>
+          <span class="badge-uei">UEI D43ZB3D7QTW1</span>
+        </div>
+      </div>
+
+      <!-- ===== ECOSYSTEM ===== -->
+      <h3 style="font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:600;margin-bottom:1rem;text-align:center;">
+        Explore Our <span style="color:#FFD700;">Ecosystem</span>
+      </h3>
+
+      <div class="ecosystem">
+        <a href="tash.html" class="ecosystem-card">
+          <span class="icon">🧠</span>
+          <h4>TASH</h4>
+          <p>Tactical Artificial System Hierarchy</p>
+          <span class="arrow">→</span>
+        </a>
+        <a href="book.html" class="ecosystem-card">
+          <span class="icon">📖</span>
+          <h4>The Codex Book</h4>
+          <p>Digital Vault Blueprint &amp; Framework</p>
+          <span class="arrow">→</span>
+        </a>
+        <a href="codex-portal.html" class="ecosystem-card">
+          <span class="icon">🔐</span>
+          <h4>Codex Portal</h4>
+          <p>Sovereign Identity &amp; Compliance</p>
+          <span class="arrow">→</span>
+        </a>
+        <a href="community.html" class="ecosystem-card">
+          <span class="icon">🌐</span>
+          <h4>Community Hub</h4>
+          <p>Network Nodes &amp; Alliance Circles</p>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <!-- ===== FOOTER ===== -->
+      <footer class="footer">
+        <p>
+          &copy; 2026 Legacy Grove Codex LLC &bull; <span>UEI D43ZB3D7QTW1</span> &bull; <span>EIN 41‑2653211</span>
+          <span class="address">555 Hutchinson River Parkway, Bronx, NY 10465</span>
+        </p>
+      </footer>
+
     </div>
-
-    <!-- ===== ECOSYSTEM ===== -->
-    <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 600; margin-bottom: 1rem; text-align: center;">
-      Explore Our <span style="color: #FFD700;">Ecosystem</span>
-    </h3>
-    
-    <div class="ecosystem">
-      <a href="tash.html" class="ecosystem-card">
-        <span class="icon">🧠</span>
-        <h4>TASH</h4>
-        <p>Tactical Artificial System Hierarchy</p>
-        <span class="arrow">→</span>
-      </a>
-      <a href="book.html" class="ecosystem-card">
-        <span class="icon">📖</span>
-        <h4>The Codex Book</h4>
-        <p>Digital Vault Blueprint &amp; Framework</p>
-        <span class="arrow">→</span>
-      </a>
-      <a href="codex-portal.html" class="ecosystem-card">
-        <span class="icon">🔐</span>
-        <h4>Codex Portal</h4>
-        <p>Sovereign Identity &amp; Compliance</p>
-        <span class="arrow">→</span>
-      </a>
-      <a href="community.html" class="ecosystem-card">
-        <span class="icon">🌐</span>
-        <h4>Community Hub</h4>
-        <p>Network Nodes &amp; Alliance Circles</p>
-        <span class="arrow">→</span>
-      </a>
-    </div>
-
-    <!-- ===== FOOTER ===== -->
-    <footer class="footer">
-      <p>
-        &copy; 2026 Legacy Grove Codex LLC &bull; <span>UEI D43ZB3D7QTW1</span> &bull; <span>EIN 41‑2653211</span>
-        <span class="address">555 Hutchinson River Parkway, Bronx, NY 10465</span>
-      </p>
-    </footer>
-
   </div>
 
   <!-- ================================================================ -->
-  <!-- GATE ANIMATION SCRIPT                                             -->
+  <!-- SCRIPTS: Cinematic Gate + Typing Effect                          -->
   <!-- ================================================================ -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const overlay = document.getElementById('gate-overlay');
-      const gateContainer = document.getElementById('gateContainer');
-      const mainContainer = document.getElementById('mainContainer');
-      
-      // Trigger gate opening after a short delay
-      setTimeout(function() {
-        gateContainer.classList.add('gate-open');
-      }, 400);
-      
-      // Fade out overlay and reveal main content
-      setTimeout(function() {
-        overlay.classList.add('fade-out');
-        mainContainer.classList.add('reveal');
-      }, 2200);
-      
-      // Remove overlay from DOM after animation
-      setTimeout(function() {
-        overlay.classList.add('hidden');
-      }, 3400);
-    });
-  </script>
+    // ================================================================
+    // 1. CINEMATIC GATE – Canvas Animation
+    // ================================================================
+    (function cinematicGate() {
+      const canvas = document.getElementById('gate-canvas');
+      const ctx = canvas.getContext('2d');
+      const mainContent = document.getElementById('main-content');
 
-  <!-- ===== TYPING EFFECT SCRIPT ===== -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
+      let W, H;
+      let particles = [];
+      let gateProgress = 0; // 0 = closed, 1 = fully open
+      let phase = 0; // 0 = building, 1 = opening, 2 = burst, 3 = fading
+      let burstParticles = [];
+      let startTime = performance.now();
+      let animFrame;
+
+      function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      // --- Helper: Starfield (background) ---
+      const stars = [];
+      for (let i = 0; i < 200; i++) {
+        stars.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          r: Math.random() * 1.2 + 0.3,
+          a: Math.random() * 0.6 + 0.2,
+          speed: 0.002 + Math.random() * 0.004
+        });
+      }
+
+      // --- Gate Geometry (3D-like pyramid) ---
+      function drawGate(p) {
+        // p: 0 = closed, 1 = open
+        const cx = W / 2;
+        const cy = H / 2 - 20;
+
+        // Base dimensions
+        const baseW = Math.min(W, H) * 0.45;
+        const baseH = baseW * 1.6;
+        const spread = p * baseW * 1.2; // how far the halves spread
+
+        // Left half
+        const lx = cx - spread / 2;
+        const rx = cx + spread / 2;
+
+        // === GLOW RING ===
+        const ringRadius = baseW * 0.55 * (1 + p * 0.1);
+        const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, ringRadius);
+        grad.addColorStop(0, `rgba(255,215,0,${0.03 + p * 0.04})`);
+        grad.addColorStop(0.5, `rgba(255,215,0,${0.02 + p * 0.02})`);
+        grad.addColorStop(1, 'rgba(255,215,0,0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, ringRadius, 0, Math.PI * 2);
+        ctx.fill();
+
+        // === GLOW LINES ===
+        for (let i = 0; i < 12; i++) {
+          const angle = (i / 12) * Math.PI * 2 + p * 0.3;
+          const r1 = ringRadius * 0.3;
+          const r2 = ringRadius * (0.9 + Math.sin(p * 10 + i) * 0.05);
+          ctx.beginPath();
+          ctx.moveTo(cx + Math.cos(angle) * r1, cy + Math.sin(angle) * r1);
+          ctx.lineTo(cx + Math.cos(angle) * r2, cy + Math.sin(angle) * r2);
+          ctx.strokeStyle = `rgba(255,215,0,${0.04 + p * 0.04})`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+
+        // === LEFT PYRAMID HALF ===
+        const lTopX = lx;
+        const lTopY = cy - baseH * 0.5;
+        const lBotX = lx;
+        const lBotY = cy + baseH * 0.5;
+        const lOuterX = cx - baseW * 0.5 - spread / 2;
+
+        // Left half gradient
+        const lGrad = ctx.createLinearGradient(lOuterX, cy, cx, cy);
+        lGrad.addColorStop(0, `rgba(255,215,0,${0.05 + p * 0.02})`);
+        lGrad.addColorStop(0.5, `rgba(16,185,129,${0.02 + p * 0.01})`);
+        lGrad.addColorStop(1, 'rgba(255,215,0,0)');
+
+        ctx.beginPath();
+        ctx.moveTo(lTopX, lTopY);
+        ctx.lineTo(lOuterX, lBotY);
+        ctx.lineTo(lBotX, lBotY);
+        ctx.closePath();
+        ctx.fillStyle = lGrad;
+        ctx.fill();
+        ctx.strokeStyle = `rgba(255,215,0,${0.15 + p * 0.1})`;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Inner lines (left)
+        for (let i = 1; i < 8; i++) {
+          const t = i / 8;
+          const y = lTopY + t * (lBotY - lTopY);
+          const xLeft = lOuterX + t * (lBotY - lTopY) * 0.5;
+          const xRight = lTopX + t * (lBotY - lTopY) * 0.1;
+          ctx.beginPath();
+          ctx.moveTo(xLeft, y);
+          ctx.lineTo(xRight, y);
+          ctx.strokeStyle = `rgba(255,215,0,${0.05 + p * 0.05})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+
+        // === RIGHT PYRAMID HALF ===
+        const rTopX = rx;
+        const rTopY = cy - baseH * 0.5;
+        const rBotX = rx;
+        const rBotY = cy + baseH * 0.5;
+        const rOuterX = cx + baseW * 0.5 + spread / 2;
+
+        const rGrad = ctx.createLinearGradient(rOuterX, cy, cx, cy);
+        rGrad.addColorStop(0, `rgba(255,215,0,${0.05 + p * 0.02})`);
+        rGrad.addColorStop(0.5, `rgba(16,185,129,${0.02 + p * 0.01})`);
+        rGrad.addColorStop(1, 'rgba(255,215,0,0)');
+
+        ctx.beginPath();
+        ctx.moveTo(rTopX, rTopY);
+        ctx.lineTo(rOuterX, rBotY);
+        ctx.lineTo(rBotX, rBotY);
+        ctx.closePath();
+        ctx.fillStyle = rGrad;
+        ctx.fill();
+        ctx.strokeStyle = `rgba(255,215,0,${0.15 + p * 0.1})`;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Inner lines (right)
+        for (let i = 1; i < 8; i++) {
+          const t = i / 8;
+          const y = rTopY + t * (rBotY - rTopY);
+          const xLeft = rTopX + t * (rBotY - rTopY) * 0.1;
+          const xRight = rOuterX - t * (rBotY - rTopY) * 0.5;
+          ctx.beginPath();
+          ctx.moveTo(xLeft, y);
+          ctx.lineTo(xRight, y);
+          ctx.strokeStyle = `rgba(255,215,0,${0.05 + p * 0.05})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+
+        // === EYE / GEM (center) ===
+        const eyeSize = 14 + p * 6;
+        const eyeGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, eyeSize * 3);
+        eyeGlow.addColorStop(0, `rgba(255,215,0,${0.3 + p * 0.2})`);
+        eyeGlow.addColorStop(0.3, `rgba(255,215,0,${0.1 + p * 0.05})`);
+        eyeGlow.addColorStop(1, 'rgba(255,215,0,0)');
+        ctx.fillStyle = eyeGlow;
+        ctx.beginPath();
+        ctx.arc(cx, cy, eyeSize * 3, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.shadowColor = 'rgba(255,215,0,0.3)';
+        ctx.shadowBlur = 30;
+        ctx.beginPath();
+        ctx.arc(cx, cy, eyeSize, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,215,0,${0.2 + p * 0.15})`;
+        ctx.fill();
+        ctx.strokeStyle = `rgba(255,215,0,${0.3 + p * 0.2})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        // Inner core
+        ctx.beginPath();
+        ctx.arc(cx, cy, eyeSize * 0.4, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${0.15 + p * 0.1})`;
+        ctx.fill();
+
+        return { cx, cy, baseW, baseH, spread };
+      }
+
+      // --- Burst particles ---
+      function createBurst(count, cx, cy, speed) {
+        for (let i = 0; i < count; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const spd = speed * (0.3 + Math.random() * 0.7);
+          burstParticles.push({
+            x: cx + (Math.random() - 0.5) * 20,
+            y: cy + (Math.random() - 0.5) * 20,
+            vx: Math.cos(angle) * spd,
+            vy: Math.sin(angle) * spd,
+            life: 1,
+            decay: 0.002 + Math.random() * 0.005,
+            size: 1 + Math.random() * 3,
+            color: Math.random() > 0.6 ? '#10B981' : '#FFD700'
+          });
+        }
+      }
+
+      // --- Update burst particles ---
+      function updateBurst() {
+        for (let i = burstParticles.length - 1; i >= 0; i--) {
+          const p = burstParticles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vx *= 0.99;
+          p.vy *= 0.99;
+          p.life -= p.decay;
+          if (p.life <= 0) {
+            burstParticles.splice(i, 1);
+          }
+        }
+      }
+
+      // --- Draw burst ---
+      function drawBurst() {
+        for (const p of burstParticles) {
+          ctx.globalAlpha = p.life;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      // --- Main loop ---
+      function animate(time) {
+        const dt = (time - startTime) / 1000;
+        startTime = time;
+
+        // Phase control
+        if (phase === 0 && dt > 0.3) {
+          phase = 1; // start opening
+        }
+        if (phase === 1) {
+          gateProgress += dt * 0.6;
+          if (gateProgress >= 1) {
+            gateProgress = 1;
+            phase = 2; // burst
+            const g = drawGate(1);
+            createBurst(300, g.cx, g.cy, 6);
+            createBurst(150, g.cx - 100, g.cy - 80, 4);
+            createBurst(150, g.cx + 100, g.cy + 80, 4);
+            // Reveal main content after a short delay
+            setTimeout(() => {
+              mainContent.classList.add('reveal');
+            }, 400);
+            setTimeout(() => {
+              phase = 3; // fade
+            }, 1200);
+          }
+        }
+        if (phase === 2) {
+          // Burst particles naturally die
+          updateBurst();
+          // After burst particles are mostly gone, move to fade
+          if (burstParticles.length < 20 && phase === 2) {
+            setTimeout(() => {
+              phase = 3;
+            }, 300);
+          }
+        }
+        if (phase === 3) {
+          // Fade out the canvas
+          canvas.style.transition = 'opacity 1.2s ease';
+          canvas.style.opacity = '0';
+          // Remove canvas after fade
+          setTimeout(() => {
+            canvas.style.display = 'none';
+            // Start typing effect after gate is gone
+            startTyping();
+          }, 1400);
+          // Stop the animation loop after fade
+          if (animFrame) {
+            cancelAnimationFrame(animFrame);
+            // Keep drawing the final state but fade out
+          }
+          // We'll let the CSS transition handle the fade
+        }
+
+        // --- DRAW ---
+        ctx.clearRect(0, 0, W, H);
+
+        // Stars
+        for (const star of stars) {
+          star.a += star.speed;
+          const alpha = 0.2 + Math.sin(star.a) * 0.15 + 0.15;
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+          ctx.fill();
+        }
+
+        // Draw gate (if not fully faded)
+        if (phase < 3 || canvas.style.opacity !== '0') {
+          drawGate(gateProgress);
+        }
+
+        // Draw burst particles
+        if (phase >= 2) {
+          drawBurst();
+        }
+
+        // Draw "Opening Vault" text
+        if (phase < 3) {
+          const text = phase === 0 ? 'INITIALIZING' :
+            phase === 1 ? 'OPENING VAULT' :
+            phase === 2 ? '◈ ACCESS GRANTED ◈' : '';
+          ctx.font = '600 12px Inter, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'bottom';
+          const alpha = phase === 0 ? 0.6 : phase === 1 ? 0.8 : 1;
+          ctx.fillStyle = `rgba(255,215,0,${alpha * 0.3})`;
+          ctx.fillText(text, W / 2, H - 60);
+
+          // Small progress dots
+          const dotCount = 20;
+          const dotWidth = 3;
+          const dotGap = 6;
+          const totalWidth = dotCount * (dotWidth + dotGap) - dotGap;
+          const startX = (W - totalWidth) / 2;
+          const dotsFilled = Math.floor(gateProgress * dotCount);
+          for (let i = 0; i < dotCount; i++) {
+            const x = startX + i * (dotWidth + dotGap);
+            const y = H - 40;
+            ctx.beginPath();
+            ctx.arc(x, y, dotWidth / 2, 0, Math.PI * 2);
+            if (i < dotsFilled) {
+              ctx.fillStyle = `rgba(255,215,0,${0.6 + Math.sin(time / 200 + i) * 0.2})`;
+            } else {
+              ctx.fillStyle = 'rgba(255,255,255,0.08)';
+            }
+            ctx.fill();
+          }
+        }
+
+        // Continue loop if not faded
+        if (phase < 3 || canvas.style.opacity !== '0') {
+          animFrame = requestAnimationFrame(animate);
+        }
+      }
+
+      // Start animation
+      animFrame = requestAnimationFrame(animate);
+
+      // Handle window resize during animation
+      window.addEventListener('resize', () => {
+        resize();
+        // Rebuild stars
+        stars.length = 0;
+        for (let i = 0; i < 200; i++) {
+          stars.push({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            r: Math.random() * 1.2 + 0.3,
+            a: Math.random() * 0.6 + 0.2,
+            speed: 0.002 + Math.random() * 0.004
+          });
+        }
+      });
+
+    })();
+
+
+    // ================================================================
+    // 2. TYPING EFFECT
+    // ================================================================
+    let typingStarted = false;
+
+    function startTyping() {
+      if (typingStarted) return;
+      typingStarted = true;
       const text = "Engineered Intelligence · Sovereign Systems · Bridging mathematical abstraction and operational reality.";
       const output = document.getElementById('typed-output');
+      if (!output) return;
       let index = 0;
-      
+      output.textContent = '';
+
       function type() {
         if (index < text.length) {
           output.textContent += text.charAt(index);
           index++;
-          setTimeout(type, 30 + Math.random() * 20);
+          setTimeout(type, 25 + Math.random() * 20);
         }
       }
-      
-      // Start typing after gate opens
-      setTimeout(type, 2500);
-    });
-  </script>
+      setTimeout(type, 300);
+    }
 
-  <!-- ===== PARTICLES.JS CONFIGURATION ===== -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      if (typeof particlesJS !== 'undefined') {
-        particlesJS('particles-js', {
-          particles: {
-            number: { value: 80, density: { enable: true, value_area: 800 } },
-            color: { value: '#FFD700' },
-            shape: { type: 'circle' },
-            opacity: { value: 0.25, random: true },
-            size: { value: 2, random: true },
-            line_linked: {
-              enable: true,
-              distance: 150,
-              color: '#FFD700',
-              opacity: 0.08,
-              width: 1
-            },
-            move: {
-              enable: true,
-              speed: 0.8,
-              direction: 'none',
-              random: true,
-              straight: false,
-              out_mode: 'out'
-            }
-          },
-          interactivity: {
-            detect_on: 'canvas',
-            events: {
-              onhover: { enable: true, mode: 'repulse' },
-              onclick: { enable: true, mode: 'push' }
-            }
-          },
-          retina_detect: true
-        });
+    // Fallback: if something goes wrong with the gate, start typing after 5 seconds
+    setTimeout(() => {
+      if (!typingStarted) {
+        startTyping();
+        document.getElementById('main-content').classList.add('reveal');
       }
+    }, 6000);
+
+    // Also start typing when main content is revealed (as a backup)
+    document.addEventListener('DOMContentLoaded', function() {
+      // If the gate is already gone, start typing
+      setTimeout(() => {
+        const canvas = document.getElementById('gate-canvas');
+        if (canvas && canvas.style.display === 'none') {
+          startTyping();
+        }
+      }, 3000);
     });
   </script>
 

@@ -58,7 +58,106 @@
       left: -150px; 
     }
     
-    /* ----- MAIN CONTAINER ----- */
+    /* ================================================================ */
+    /* DIGITAL GATE OVERLAY                                            */
+    /* ================================================================ */
+    #gate-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999;
+      background: #0A0C10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      pointer-events: none;
+      transition: opacity 1.2s ease;
+      opacity: 1;
+    }
+    #gate-overlay.fade-out {
+      opacity: 0;
+    }
+    #gate-overlay.hidden {
+      display: none;
+    }
+    
+    .gate-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    /* The two pyramid halves (left and right) */
+    .gate-half {
+      position: absolute;
+      width: 150px;
+      height: 260px;
+      transition: transform 1.8s cubic-bezier(0.65, 0, 0.35, 1);
+      transform: translateX(0);
+      will-change: transform;
+    }
+    .gate-half svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.3));
+    }
+    .gate-half.left {
+      left: 0;
+      transform-origin: right center;
+    }
+    .gate-half.right {
+      right: 0;
+      transform-origin: left center;
+    }
+    
+    /* Open state – slide apart */
+    .gate-open .gate-half.left {
+      transform: translateX(-180px) scale(0.9);
+    }
+    .gate-open .gate-half.right {
+      transform: translateX(180px) scale(0.9);
+    }
+    
+    /* Inner glow ring */
+    .gate-ring {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 215, 0, 0.15);
+      box-shadow: 0 0 60px rgba(255, 215, 0, 0.05), inset 0 0 60px rgba(255, 215, 0, 0.02);
+      animation: ringPulse 2s ease-in-out infinite;
+    }
+    @keyframes ringPulse {
+      0%, 100% { transform: scale(1); opacity: 0.3; }
+      50% { transform: scale(1.08); opacity: 0.8; }
+    }
+    
+    /* Loading text below gate */
+    .gate-loader {
+      position: absolute;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #4A5568;
+      animation: blinkText 1.2s step-end infinite;
+    }
+    @keyframes blinkText {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+    
+    /* ----- MAIN CONTAINER (hidden until gate opens) ----- */
     .container {
       position: relative;
       z-index: 1;
@@ -68,6 +167,11 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      opacity: 0;
+      transition: opacity 1s ease 2.2s;
+    }
+    .container.reveal {
+      opacity: 1;
     }
     
     /* ----- NAVIGATION (Glass Morphism) ----- */
@@ -226,6 +330,20 @@
       margin: 0.5rem auto 2.5rem auto;
       line-height: 1.7;
       font-weight: 300;
+      min-height: 2.5rem;
+    }
+    .hero-subtitle .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.2em;
+      background: #FFD700;
+      margin-left: 2px;
+      vertical-align: text-bottom;
+      animation: blink 0.8s step-end infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
     }
     
     .hero-cta {
@@ -500,6 +618,12 @@
     .footer span {
       color: #9AA6B2;
     }
+    .footer .address {
+      color: #4A5568;
+      font-size: 0.75rem;
+      margin-top: 0.3rem;
+      display: block;
+    }
     
     /* ----- RESPONSIVE ----- */
     @media (max-width: 768px) {
@@ -533,6 +657,11 @@
       .hero {
         padding: 1rem 0.5rem 2rem 0.5rem;
       }
+      .gate-container { width: 200px; height: 200px; }
+      .gate-half { width: 100px; height: 180px; }
+      .gate-ring { width: 190px; height: 190px; }
+      .gate-open .gate-half.left { transform: translateX(-120px) scale(0.8); }
+      .gate-open .gate-half.right { transform: translateX(120px) scale(0.8); }
     }
     @media (max-width: 480px) {
       .container { padding: 1rem; }
@@ -544,6 +673,59 @@
 </head>
 <body>
 
+  <!-- ================================================================ -->
+  <!-- DIGITAL GATE OVERLAY                                             -->
+  <!-- ================================================================ -->
+  <div id="gate-overlay">
+    <div class="gate-container" id="gateContainer">
+      <!-- Left pyramid half -->
+      <div class="gate-half left" id="gateLeft">
+        <svg viewBox="0 0 100 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="gateGradL" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FFD700" stop-opacity="0.3" />
+              <stop offset="100%" stop-color="#10B981" stop-opacity="0.1" />
+            </linearGradient>
+          </defs>
+          <!-- Left half of a pyramid (triangle) -->
+          <polygon points="100,0 0,200 100,200" fill="url(#gateGradL)" stroke="#FFD700" stroke-width="1.5" stroke-opacity="0.6"/>
+          <polygon points="100,20 20,180 100,180" fill="none" stroke="#FFD700" stroke-width="0.5" stroke-opacity="0.2"/>
+          <polygon points="100,40 40,160 100,160" fill="none" stroke="#FFD700" stroke-width="0.5" stroke-opacity="0.2"/>
+          <polygon points="100,60 60,140 100,140" fill="none" stroke="#FFD700" stroke-width="0.5" stroke-opacity="0.2"/>
+          <polygon points="100,80 80,120 100,120" fill="none" stroke="#FFD700" stroke-width="0.5" stroke-opacity="0.2"/>
+          <!-- Glowing eye / gem -->
+          <circle cx="60" cy="100" r="12" fill="#FFD700" opacity="0.4" filter="url(#glow)"/>
+        </svg>
+      </div>
+      
+      <!-- Right pyramid half -->
+      <div class="gate-half right" id="gateRight">
+        <svg viewBox="0 0 100 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="gateGradR" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#FFD700" stop-opacity="0.3" />
+              <stop offset="100%" stop-color="#10B981" stop-opacity="0.1" />
+            </linearGradient>
+          </defs>
+          <!-- Right half of a pyramid (triangle) -->
+          <polygon points="0,0 100,200 0,200" fill="url(#gateGradR)" stroke="#FFD700" stroke-width="1.5" stroke-opacity="0.6"/>
+          <polygon points="0,20 80,180 0,180" fill="none" stroke="#FFD700" stroke-width="0.5" stroke-opacity="0.2"/>
+          <polygon points="0,40 60,160 0,160" fill="none" stroke="#FFD700" stroke-width="0.5" stroke-opacity="0.2"/>
+          <polygon points="0,60 40,140 0,140" fill="none" stroke="#FFD700" stroke-width="0.5" stroke-opacity="0.2"/>
+          <polygon points="0,80 20,120 0,120" fill="none" stroke="#FFD700" stroke-width="0.5" stroke-opacity="0.2"/>
+          <!-- Glowing eye / gem -->
+          <circle cx="40" cy="100" r="12" fill="#FFD700" opacity="0.4"/>
+        </svg>
+      </div>
+      
+      <!-- Outer ring -->
+      <div class="gate-ring"></div>
+      
+      <!-- Loading text -->
+      <div class="gate-loader">Opening Vault</div>
+    </div>
+  </div>
+
   <!-- ===== PARTICLES BACKGROUND ===== -->
   <div id="particles-js"></div>
   
@@ -552,7 +734,7 @@
   <div class="ambient-glow glow-gold"></div>
 
   <!-- ===== MAIN CONTAINER ===== -->
-  <div class="container">
+  <div class="container" id="mainContainer">
 
     <!-- ===== NAVIGATION ===== -->
     <nav class="navbar">
@@ -589,9 +771,8 @@
       <h1 class="hero-title">
         Legacy Grove <br /><span class="gold">Codex</span>
       </h1>
-      <p class="hero-subtitle">
-        Engineered Intelligence · Sovereign Systems ·<br />
-        Bridging mathematical abstraction and operational reality.
+      <p class="hero-subtitle" id="typing-text">
+        <span id="typed-output"></span><span class="cursor"></span>
       </p>
       <div class="hero-cta">
         <a href="tash.html" class="btn-primary gold">Explore TASH</a>
@@ -675,10 +856,58 @@
     <footer class="footer">
       <p>
         &copy; 2026 Legacy Grove Codex LLC &bull; <span>UEI D43ZB3D7QTW1</span> &bull; <span>EIN 41‑2653211</span>
+        <span class="address">555 Hutchinson River Parkway, Bronx, NY 10465</span>
       </p>
     </footer>
 
   </div>
+
+  <!-- ================================================================ -->
+  <!-- GATE ANIMATION SCRIPT                                             -->
+  <!-- ================================================================ -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const overlay = document.getElementById('gate-overlay');
+      const gateContainer = document.getElementById('gateContainer');
+      const mainContainer = document.getElementById('mainContainer');
+      
+      // Trigger gate opening after a short delay
+      setTimeout(function() {
+        gateContainer.classList.add('gate-open');
+      }, 400);
+      
+      // Fade out overlay and reveal main content
+      setTimeout(function() {
+        overlay.classList.add('fade-out');
+        mainContainer.classList.add('reveal');
+      }, 2200);
+      
+      // Remove overlay from DOM after animation
+      setTimeout(function() {
+        overlay.classList.add('hidden');
+      }, 3400);
+    });
+  </script>
+
+  <!-- ===== TYPING EFFECT SCRIPT ===== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const text = "Engineered Intelligence · Sovereign Systems · Bridging mathematical abstraction and operational reality.";
+      const output = document.getElementById('typed-output');
+      let index = 0;
+      
+      function type() {
+        if (index < text.length) {
+          output.textContent += text.charAt(index);
+          index++;
+          setTimeout(type, 30 + Math.random() * 20);
+        }
+      }
+      
+      // Start typing after gate opens
+      setTimeout(type, 2500);
+    });
+  </script>
 
   <!-- ===== PARTICLES.JS CONFIGURATION ===== -->
   <script>

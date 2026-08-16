@@ -1,449 +1,483 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<select id="language-switcher" class="lang-select" aria-label="Language selector">
-  <option value="en">EN</option>
-  <option value="es">ES</option>
-  <option value="fr">FR</option>
-  <option value="ar">AR</option>
-  <option value="de">DE</option>
-</select>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Codex Portal - Legacy Grove Codex LLC</title>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Local Stylesheet -->
-    <link rel="stylesheet" href="styles.css">
-    
-    <!-- Particles JS CDN -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Codex Portal - Legacy Grove Codex LLC</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Local Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Particles JS CDN -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+  <style>
+    /* Additional inline styles – preserve your existing styles.css */
+    .lang-select {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 50px;
+      color: #E8EDF2;
+      padding: 0.4rem 2.2rem 0.4rem 1.2rem;
+      font-size: 0.7rem;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239AA6B2'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.8rem center;
+      background-size: 10px 6px;
+      transition: border-color 0.3s;
+    }
+    .lang-select:hover {
+      border-color: #FFD700;
+    }
+    .lang-select option {
+      background: #0A0C10;
+      color: #E8EDF2;
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+  </style>
 </head>
+
 <body class="dark-theme portal-page">
 
-    <!-- Particles Background -->
-    <div id="particles-js"></div>
+  <!-- Particles Background -->
+  <div id="particles-js"></div>
 
-    <!-- Ambient Glows -->
-    <div class="ambient-glow bg-left"></div>
-    <div class="ambient-glow bg-right"></div>
+  <!-- Ambient Glows -->
+  <div class="ambient-glow bg-left"></div>
+  <div class="ambient-glow bg-right"></div>
 
-    <!-- Navigation Header (UPDATED: added TASH link) -->
-    <header class="navbar scrolled">
-        <div class="nav-container">
-            <div class="logo">
-                <a href="index.html" style="text-decoration: none; display: flex; align-items: center; gap: 1rem; color: inherit;">
-                    <svg class="lgc-symbol-small" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 36px; height: 36px;">
-                        <polygon points="50,5 88.97,27.5 88.97,72.5 50,95 11.03,72.5 11.03,27.5" fill="none" stroke="#10B981" stroke-width="4" stroke-linejoin="round"/>
-                        <circle cx="50" cy="50" r="14" fill="#FFD700" />
-                    </svg>
-                    <div class="brand-text">
-                        <span class="brand-name">LGC LLC</span>
-                        <span class="brand-legal">Codex Portal</span>
-                    </div>
-                </a>
-            </div>
-            <div class="nav-links">
-                <a href="index.html" class="hover-underline">Return to Hub</a>
-                <a href="tash.html" class="hover-underline">TASH</a>   <!-- 👈 NEW -->
-                <a href="index.html#codex-vault" class="hover-underline">Product Suites</a>
-                <a href="index.html#credentials" class="hover-underline">Verify Entity</a>
-            </div>
-            <div class="nav-actions">
-                <div class="auth-badge gold-badge">
-                    <span class="pulse-dot-gold"></span> Tier 2 Authorized
-                </div>
-            </div>
+  <!-- Navigation Header (UPDATED: added TASH link + language switcher) -->
+  <header class="navbar scrolled">
+    <div class="nav-container">
+      <div class="logo">
+        <a href="index.html" style="text-decoration: none; display: flex; align-items: center; gap: 1rem; color: inherit;">
+          <svg class="lgc-symbol-small" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 36px; height: 36px;">
+            <polygon points="50,5 88.97,27.5 88.97,72.5 50,95 11.03,72.5 11.03,27.5" fill="none" stroke="#10B981" stroke-width="4" stroke-linejoin="round"/>
+            <circle cx="50" cy="50" r="14" fill="#FFD700" />
+          </svg>
+          <div class="brand-text">
+            <span class="brand-name">LGC LLC</span>
+            <span class="brand-legal">Codex Portal</span>
+          </div>
+        </a>
+      </div>
+      <div class="nav-links">
+        <a href="index.html" class="hover-underline" data-i18n="nav_home">Return to Hub</a>
+        <a href="tash.html" class="hover-underline" data-i18n="nav_tash">TASH</a>
+        <a href="index.html#codex-vault" class="hover-underline" data-i18n="nav_product">Product Suites</a>
+        <a href="index.html#credentials" class="hover-underline" data-i18n="nav_verify">Verify Entity</a>
+      </div>
+      <div class="nav-actions">
+        <select id="language-switcher" class="lang-select">
+          <option value="en">EN</option>
+          <option value="es">ES</option>
+          <option value="fr">FR</option>
+          <option value="ar">AR</option>
+          <option value="de">DE</option>
+        </select>
+        <div class="auth-badge gold-badge">
+          <span class="pulse-dot-gold"></span> <span data-i18n="portal_badge">Tier 2 Authorized</span>
         </div>
-    </header>
+      </div>
+    </div>
+  </header>
 
-    <!-- Main Portal Dashboard Section -->
-    <main class="portal-main">
-        <div class="portal-container">
-            
-            <!-- Dashboard Sidebar -->
-            <aside class="portal-sidebar glass-card">
-                <div class="user-profile">
-                    <div class="profile-avatar">T</div>
-                    <div class="profile-info">
-                        <h4>Sovereign Entity</h4>
-                        <p class="profile-status">Status: Active</p>
-                    </div>
-                </div>
-                
-                <nav class="portal-tabs">
-                    <button class="tab-btn active" data-target="sovereignty-module">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        <span>Sovereignty Matrix</span>
-                    </button>
-                    <button class="tab-btn" data-target="maat-module">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-                        <span>Ma'at Laws Explorer</span>
-                    </button>
-                    <button class="tab-btn" data-target="masterclass-module">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-                        <span>Masterclass Audio</span>
-                    </button>
-                </nav>
+  <!-- Main Portal Dashboard Section -->
+  <main class="portal-main">
+    <div class="portal-container">
 
-                <div class="sidebar-footer">
-                    <div class="alignment-meter-container">
-                        <div class="meter-header">
-                            <span>Sovereignty Score</span>
-                            <span id="meter-score">0%</span>
-                        </div>
-                        <div class="meter-bar-bg">
-                            <div class="meter-bar-fill" id="meter-fill" style="width: 0%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </aside>
-
-            <!-- Dashboard Content Panels -->
-            <section class="portal-content">
-                
-                <!-- MODULE 1: SOVEREIGNTY MATRIX (UPDATED: added Step 5 for Federal Contracting) -->
-                <div id="sovereignty-module" class="module-panel active-panel">
-                    <div class="module-header">
-                        <span class="module-subtitle">Pillar I: Operations & Compliance</span>
-                        <h2>Corporate Sovereignty Matrix</h2>
-                        <p>Complete these federal, state, and private alignment checkpoints to formalize your corporate vessel and protect its assets. <strong style="color: var(--c-gold-bright);">Government contracting ready?</strong> Check step 5.</p>
-                    </div>
-
-                    <div class="matrix-grid">
-                        <!-- Step 1 -->
-                        <label class="matrix-card glass-card">
-                            <input type="checkbox" class="matrix-checkbox" data-score="20">
-                            <div class="checkbox-visual">
-                                <div class="check-dot"></div>
-                            </div>
-                            <div class="matrix-card-content">
-                                <div class="matrix-badge">State Registration</div>
-                                <h3>Establish LLC/Entity</h3>
-                                <p>File Articles of Organization with your State's Department of State (e.g., NYS DOS ID #7761343).</p>
-                            </div>
-                        </label>
-
-                        <!-- Step 2 -->
-                        <label class="matrix-card glass-card">
-                            <input type="checkbox" class="matrix-checkbox" data-score="20">
-                            <div class="checkbox-visual">
-                                <div class="check-dot"></div>
-                            </div>
-                            <div class="matrix-card-content">
-                                <div class="matrix-badge">Federal Identifier</div>
-                                <h3>Secure Employer ID (EIN)</h3>
-                                <p>Request and acquire a unique 9-digit IRS Federal tax number for bank accounts and operations.</p>
-                            </div>
-                        </label>
-
-                        <!-- Step 3 -->
-                        <label class="matrix-card glass-card">
-                            <input type="checkbox" class="matrix-checkbox" data-score="20">
-                            <div class="checkbox-visual">
-                                <div class="check-dot"></div>
-                            </div>
-                            <div class="matrix-card-content">
-                                <div class="matrix-badge">System Procurement</div>
-                                <h3>Obtain SAM / UEI</h3>
-                                <p>Acquire your Unique Entity Identifier (UEI) registration to authorize you for federal-level contracts.</p>
-                            </div>
-                        </label>
-
-                        <!-- Step 4 -->
-                        <label class="matrix-card glass-card">
-                            <input type="checkbox" class="matrix-checkbox" data-score="20">
-                            <div class="checkbox-visual">
-                                <div class="check-dot"></div>
-                            </div>
-                            <div class="matrix-card-content">
-                                <div class="matrix-badge">Operational Security</div>
-                                <h3>Draft Corporate Resolution</h3>
-                                <p>Formally record board appointments, CEO and Secretary roles, and specify financial accounts protocol.</p>
-                            </div>
-                        </label>
-
-                        <!-- ===== NEW STEP 5: FEDERAL CONTRACTING READY ===== -->
-                        <label class="matrix-card glass-card" style="border-color: rgba(255, 215, 0, 0.5);">
-                            <input type="checkbox" class="matrix-checkbox" data-score="20" id="federal-check">
-                            <div class="checkbox-visual">
-                                <div class="check-dot"></div>
-                            </div>
-                            <div class="matrix-card-content">
-                                <div class="matrix-badge" style="background: var(--c-gold-bright); color: #000;">Federal Ready</div>
-                                <h3>Activate Government Contracting</h3>
-                                <p>
-                                    <strong>UEI: D43ZB3D7QTW1</strong> – Legacy Grove Codex LLC is registered in SAM.gov and aligned with 
-                                    FedRAMP &amp; NIST 800‑53 controls. We are positioned to respond to RFPs and sole‑source opportunities.
-                                    <br><a href="tash.html" style="color: var(--c-gold-bright); text-decoration: underline;">Explore TASH for Defense →</a>
-                                </p>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- MODULE 2: MA'AT LAWS EXPLORER (unchanged) -->
-                <div id="maat-module" class="module-panel">
-                    <div class="module-header">
-                        <span class="module-subtitle">Pillar II: Spiritual Science</span>
-                        <h2>42 Laws of Ma'at Alignment</h2>
-                        <p>Explore modern business interpretations of the Kemetic Laws of Alignment. Track your reflection notes to maintain organizational integrity.</p>
-                    </div>
-
-                    <!-- Interactive Slider/Card View -->
-                    <div class="maat-explorer-card glass-card">
-                        <div class="maat-selector-header">
-                            <button class="arrow-btn" id="prev-law">&larr;</button>
-                            <div class="maat-number-display">
-                                <span class="law-num-title">Declarations of Ma'at</span>
-                                <h3 id="law-number">Law 1 of 42</h3>
-                            </div>
-                            <button class="arrow-btn" id="next-law">&rarr;</button>
-                        </div>
-
-                        <div class="law-card-body">
-                            <div class="law-hieroglyph-glow"></div>
-                            <h4 id="law-text">"I have not committed sin."</h4>
-                            <p class="law-interpretation-title">Modern Corporate Sovereignty Interpretation:</p>
-                            <p id="law-interpretation" class="law-interpretation-text">
-                                Operating with absolute transparency, avoiding hidden transaction schemes, and guaranteeing that your corporate operations build rather than deplete community trust.
-                            </p>
-                            
-                            <div class="journal-input-section">
-                                <label for="journal-note">Sovereign Integrity Journal Entry:</label>
-                                <textarea id="journal-note" placeholder="Reflect on how your business aligned with this principle today... (autosaves in dashboard)"></textarea>
-                                <div class="journal-status" id="journal-save-status">All inputs stored locally.</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- MODULE 3: MASTERCLASS AUDIO PREVIEW (unchanged) -->
-                <div id="masterclass-module" class="module-panel">
-                    <div class="module-header">
-                        <span class="module-subtitle">Pillar III: Enterprise & Mastery</span>
-                        <h2>Citadel Masterclass Modules</h2>
-                        <p>Preview training session modules designed by principal architect TASH-Raheem Joyner on structuring corporate operations.</p>
-                    </div>
-
-                    <div class="audio-playlist glass-card">
-                        <!-- Audio item 1 -->
-                        <div class="audio-item active-audio" data-src="assets/sample_1.mp3">
-                            <div class="play-state-icon">
-                                <div class="bars-animation">
-                                    <span></span><span></span><span></span>
-                                </div>
-                            </div>
-                            <div class="audio-details">
-                                <h3>Module 1: The Foundation Block</h3>
-                                <p>Unlocking the ancient symbolism in modern monetary and banking structures.</p>
-                            </div>
-                            <span class="audio-duration">12:45</span>
-                        </div>
-
-                        <!-- Audio item 2 -->
-                        <div class="audio-item" data-src="assets/sample_2.mp3">
-                            <div class="play-state-icon">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                            </div>
-                            <div class="audio-details">
-                                <h3>Module 2: Building the Corporate Vessel</h3>
-                                <p>Structuring your business registry filings and operating agreements as shields.</p>
-                            </div>
-                            <span class="audio-duration">18:10</span>
-                        </div>
-
-                        <!-- Audio item 3 -->
-                        <div class="audio-item" data-src="assets/sample_3.mp3">
-                            <div class="play-state-icon">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                            </div>
-                            <div class="audio-details">
-                                <h3>Module 3: Treasury & Liquidity Alignment</h3>
-                                <p>Mapping Cash flows to wealth algorithms and establishing sovereign reserves.</p>
-                            </div>
-                            <span class="audio-duration">22:30</span>
-                        </div>
-                    </div>
-
-                    <!-- Mini player HUD -->
-                    <div class="player-hud glass-card">
-                        <div class="hud-info">
-                            <span class="now-playing-label">Now Playing</span>
-                            <h4 id="hud-track-title">Module 1: The Foundation Block</h4>
-                        </div>
-                        <div class="hud-controls">
-                            <button class="hud-btn" id="play-btn">
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-            </section>
+      <!-- Dashboard Sidebar -->
+      <aside class="portal-sidebar glass-card">
+        <div class="user-profile">
+          <div class="profile-avatar">T</div>
+          <div class="profile-info">
+            <h4 data-i18n="portal_sovereign">Sovereign Entity</h4>
+            <p class="profile-status" data-i18n="portal_status">Status: Active</p>
+          </div>
         </div>
-    </main>
 
-    <!-- Footer -->
-    <footer class="glass-effect" style="margin-top: 5rem; padding: 3rem 0; border-top: 1px solid var(--c-border-subtle);">
-        <div class="footer-bottom" style="text-align: center; color: var(--c-text-muted); font-size: 0.85rem;">
-            <p>&copy; 2026 LEGACY GROVE CODEX LLC. All Rights Reserved. Sovereign System Platform.</p>
+        <nav class="portal-tabs">
+          <button class="tab-btn active" data-target="sovereignty-module">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span data-i18n="portal_sovereignty">Sovereignty Matrix</span>
+          </button>
+          <button class="tab-btn" data-target="maat-module">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            <span data-i18n="portal_maat">Ma'at Laws Explorer</span>
+          </button>
+          <button class="tab-btn" data-target="masterclass-module">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+            <span data-i18n="portal_masterclass">Masterclass Audio</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="alignment-meter-container">
+            <div class="meter-header">
+              <span data-i18n="portal_sovereignty_score">Sovereignty Score</span>
+              <span id="meter-score">0%</span>
+            </div>
+            <div class="meter-bar-bg">
+              <div class="meter-bar-fill" id="meter-fill" style="width: 0%;"></div>
+            </div>
+          </div>
         </div>
-    </footer>
+      </aside>
 
-    <!-- Portal Script logic (updated to handle 5 steps = 100%) -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Tab switching logic
-            const tabButtons = document.querySelectorAll('.tab-btn');
-            const modules = document.querySelectorAll('.module-panel');
+      <!-- Dashboard Content Panels -->
+      <section class="portal-content">
 
-            tabButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    tabButtons.forEach(t => t.classList.remove('active'));
-                    modules.forEach(m => m.classList.remove('active-panel'));
-                    
-                    btn.classList.add('active');
-                    const target = btn.getAttribute('data-target');
-                    document.getElementById(target).classList.add('active-panel');
-                });
-            });
+        <!-- MODULE 1: SOVEREIGNTY MATRIX -->
+        <div id="sovereignty-module" class="module-panel active-panel">
+          <div class="module-header">
+            <span class="module-subtitle" data-i18n="portal_sovereignty_pillar">Pillar I: Operations & Compliance</span>
+            <h2 data-i18n="portal_sovereignty">Corporate Sovereignty Matrix</h2>
+            <p data-i18n="portal_sovereignty_desc">Complete these federal, state, and private alignment checkpoints to formalize your corporate vessel and protect its assets. <strong style="color: var(--c-gold-bright);" data-i18n="portal_sovereignty_hint">Government contracting ready? Check step 5.</strong></p>
+          </div>
 
-            // Corporate Sovereignty Matrix - Score Calculation (5 steps * 20% = 100%)
-            const checkboxes = document.querySelectorAll('.matrix-checkbox');
-            const scoreDisplay = document.getElementById('meter-score');
-            const fillBar = document.getElementById('meter-fill');
+          <div class="matrix-grid">
+            <!-- Step 1 -->
+            <label class="matrix-card glass-card">
+              <input type="checkbox" class="matrix-checkbox" data-score="20" />
+              <div class="checkbox-visual">
+                <div class="check-dot"></div>
+              </div>
+              <div class="matrix-card-content">
+                <div class="matrix-badge" data-i18n="portal_step1_badge">State Registration</div>
+                <h3 data-i18n="portal_step1_title">Establish LLC/Entity</h3>
+                <p data-i18n="portal_step1_desc">File Articles of Organization with your State's Department of State (e.g., NYS DOS ID #7761343).</p>
+              </div>
+            </label>
 
-            function updateScore() {
-                let score = 0;
-                checkboxes.forEach(box => {
-                    if (box.checked) {
-                        score += parseInt(box.getAttribute('data-score'));
-                    }
-                });
-                // Cap at 100
-                if (score > 100) score = 100;
-                scoreDisplay.textContent = score + '%';
-                fillBar.style.width = score + '%';
-                localStorage.setItem('lgc_sovereignty_score', score);
-                
-                // Keep checkboxes checked states
-                const checkedStates = Array.from(checkboxes).map(box => box.checked);
-                localStorage.setItem('lgc_checked_states', JSON.stringify(checkedStates));
-            }
+            <!-- Step 2 -->
+            <label class="matrix-card glass-card">
+              <input type="checkbox" class="matrix-checkbox" data-score="20" />
+              <div class="checkbox-visual">
+                <div class="check-dot"></div>
+              </div>
+              <div class="matrix-card-content">
+                <div class="matrix-badge" data-i18n="portal_step2_badge">Federal Identifier</div>
+                <h3 data-i18n="portal_step2_title">Secure Employer ID (EIN)</h3>
+                <p data-i18n="portal_step2_desc">Request and acquire a unique 9-digit IRS Federal tax number for bank accounts and operations.</p>
+              </div>
+            </label>
 
-            // Restore checklist states
-            const storedStates = JSON.parse(localStorage.getItem('lgc_checked_states'));
-            if(storedStates) {
-                checkboxes.forEach((box, i) => {
-                    box.checked = storedStates[i] || false;
-                });
-            }
-            updateScore();
+            <!-- Step 3 -->
+            <label class="matrix-card glass-card">
+              <input type="checkbox" class="matrix-checkbox" data-score="20" />
+              <div class="checkbox-visual">
+                <div class="check-dot"></div>
+              </div>
+              <div class="matrix-card-content">
+                <div class="matrix-badge" data-i18n="portal_step3_badge">System Procurement</div>
+                <h3 data-i18n="portal_step3_title">Obtain SAM / UEI</h3>
+                <p data-i18n="portal_step3_desc">Acquire your Unique Entity Identifier (UEI) registration to authorize you for federal-level contracts.</p>
+              </div>
+            </label>
 
-            checkboxes.forEach(box => {
-                box.addEventListener('change', updateScore);
-            });
+            <!-- Step 4 -->
+            <label class="matrix-card glass-card">
+              <input type="checkbox" class="matrix-checkbox" data-score="20" />
+              <div class="checkbox-visual">
+                <div class="check-dot"></div>
+              </div>
+              <div class="matrix-card-content">
+                <div class="matrix-badge" data-i18n="portal_step4_badge">Operational Security</div>
+                <h3 data-i18n="portal_step4_title">Draft Corporate Resolution</h3>
+                <p data-i18n="portal_step4_desc">Formally record board appointments, CEO and Secretary roles, and specify financial accounts protocol.</p>
+              </div>
+            </label>
 
-            // Ma'at Laws Explorer List
-            const laws = [
-                { num: 1, text: "I have not committed sin.", interp: "Operating with absolute transparency, avoiding hidden transaction schemes, and guaranteeing that your corporate operations build rather than deplete community trust." },
-                { num: 2, text: "I have not committed robbery with violence.", interp: "Rejecting predatory pricing methods, exploitative partnership structures, or aggressively coercing contractors or employees." },
-                { num: 3, text: "I have not stolen.", interp: "Respecting and protecting intellectual properties, crediting original authors, and providing honest value-for-value exchange in commerce." },
-                { num: 4, text: "I have not slain men or women.", interp: "Avoiding products, services, or investments that actively cause health degeneration or mental harms to customer demographics." },
-                { num: 5, text: "I have not stolen food.", interp: "Refusing to withhold fair compensation or basic resources from workers, ensuring their primary support systems remain intact." },
-                { num: 6, text: "I have not defrauded offerings.", interp: "Ensuring tax reporting, filing, and legal compliance structures are kept completely correct and verified without forgery." }
-            ];
+            <!-- Step 5: Federal Ready -->
+            <label class="matrix-card glass-card" style="border-color: rgba(255, 215, 0, 0.5);">
+              <input type="checkbox" class="matrix-checkbox" data-score="20" id="federal-check" />
+              <div class="checkbox-visual">
+                <div class="check-dot"></div>
+              </div>
+              <div class="matrix-card-content">
+                <div class="matrix-badge" style="background: var(--c-gold-bright); color: #000;" data-i18n="portal_step5_badge">Federal Ready</div>
+                <h3 data-i18n="portal_step5_title">Activate Government Contracting</h3>
+                <p data-i18n="portal_step5_desc">Legacy Grove Codex LLC is registered in SAM.gov with UEI D43ZB3D7QTW1 and aligned with FedRAMP &amp; NIST 800‑53 controls. We are positioned to respond to RFPs and sole‑source opportunities.
+                  <br /><a href="tash.html" style="color: var(--c-gold-bright); text-decoration: underline;" data-i18n="portal_step5_cta">Explore TASH for Defense →</a>
+                </p>
+              </div>
+            </label>
+          </div>
+        </div>
 
-            let currentLawIndex = 0;
-            const lawNumberEl = document.getElementById('law-number');
-            const lawTextEl = document.getElementById('law-text');
-            const lawInterpEl = document.getElementById('law-interpretation');
-            const prevLawBtn = document.getElementById('prev-law');
-            const nextLawBtn = document.getElementById('next-law');
-            const journalTextarea = document.getElementById('journal-note');
-            const saveStatusEl = document.getElementById('journal-save-status');
+        <!-- MODULE 2: MA'AT LAWS EXPLORER -->
+        <div id="maat-module" class="module-panel">
+          <div class="module-header">
+            <span class="module-subtitle" data-i18n="portal_maat_pillar">Pillar II: Spiritual Science</span>
+            <h2 data-i18n="portal_maat">42 Laws of Ma'at Alignment</h2>
+            <p data-i18n="portal_maat_desc">Explore modern business interpretations of the Kemetic Laws of Alignment. Track your reflection notes to maintain organizational integrity.</p>
+          </div>
 
-            function renderLaw() {
-                const law = laws[currentLawIndex];
-                lawNumberEl.textContent = `Law ${law.num} of 42`;
-                lawTextEl.textContent = `"${law.text}"`;
-                lawInterpEl.textContent = law.interp;
+          <!-- Interactive Slider/Card View -->
+          <div class="maat-explorer-card glass-card">
+            <div class="maat-selector-header">
+              <button class="arrow-btn" id="prev-law">&larr;</button>
+              <div class="maat-number-display">
+                <span class="law-num-title" data-i18n="portal_maat_title">Declarations of Ma'at</span>
+                <h3 id="law-number" data-i18n="portal_maat_label">Law 1 of 42</h3>
+              </div>
+              <button class="arrow-btn" id="next-law">&rarr;</button>
+            </div>
 
-                // Load journal entry
-                const journalEntries = JSON.parse(localStorage.getItem('lgc_maat_journal')) || {};
-                journalTextarea.value = journalEntries[law.num] || '';
-            }
+            <div class="law-card-body">
+              <div class="law-hieroglyph-glow"></div>
+              <h4 id="law-text">"I have not committed sin."</h4>
+              <p class="law-interpretation-title" data-i18n="portal_maat_interpretation_title">Modern Corporate Sovereignty Interpretation:</p>
+              <p id="law-interpretation" class="law-interpretation-text">
+                Operating with absolute transparency, avoiding hidden transaction schemes, and guaranteeing that your corporate operations build rather than deplete community trust.
+              </p>
 
-            journalTextarea.addEventListener('input', () => {
-                const journalEntries = JSON.parse(localStorage.getItem('lgc_maat_journal')) || {};
-                const currentLaw = laws[currentLawIndex];
-                journalEntries[currentLaw.num] = journalTextarea.value;
-                localStorage.setItem('lgc_maat_journal', JSON.stringify(journalEntries));
-                
-                saveStatusEl.textContent = "Saving changes...";
-                setTimeout(() => {
-                    saveStatusEl.textContent = "Saved to local system.";
-                }, 800);
-            });
+              <div class="journal-input-section">
+                <label for="journal-note" data-i18n="portal_journal">Sovereign Integrity Journal Entry:</label>
+                <textarea id="journal-note" data-i18n-placeholder="portal_journal_placeholder" placeholder="Reflect on how your business aligned with this principle today... (autosaves in dashboard)"></textarea>
+                <div class="journal-status" id="journal-save-status" data-i18n="portal_journal_status">All inputs stored locally.</div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-            prevLawBtn.addEventListener('click', () => {
-                if (currentLawIndex > 0) {
-                    currentLawIndex--;
-                    renderLaw();
-                }
-            });
+        <!-- MODULE 3: MASTERCLASS AUDIO PREVIEW -->
+        <div id="masterclass-module" class="module-panel">
+          <div class="module-header">
+            <span class="module-subtitle" data-i18n="portal_masterclass_pillar">Pillar III: Enterprise & Mastery</span>
+            <h2 data-i18n="portal_masterclass">Citadel Masterclass Modules</h2>
+            <p data-i18n="portal_masterclass_desc">Preview training session modules designed by principal architect TASH-Raheem Joyner on structuring corporate operations.</p>
+          </div>
 
-            nextLawBtn.addEventListener('click', () => {
-                if (currentLawIndex < laws.length - 1) {
-                    currentLawIndex++;
-                    renderLaw();
-                }
-            });
+          <div class="audio-playlist glass-card">
+            <!-- Audio item 1 -->
+            <div class="audio-item active-audio" data-src="assets/sample_1.mp3">
+              <div class="play-state-icon">
+                <div class="bars-animation">
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+              <div class="audio-details">
+                <h3 data-i18n="portal_audio1">Module 1: The Foundation Block</h3>
+                <p data-i18n="portal_audio1_desc">Unlocking the ancient symbolism in modern monetary and banking structures.</p>
+              </div>
+              <span class="audio-duration">12:45</span>
+            </div>
 
-            renderLaw();
+            <!-- Audio item 2 -->
+            <div class="audio-item" data-src="assets/sample_2.mp3">
+              <div class="play-state-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <div class="audio-details">
+                <h3 data-i18n="portal_audio2">Module 2: Building the Corporate Vessel</h3>
+                <p data-i18n="portal_audio2_desc">Structuring your business registry filings and operating agreements as shields.</p>
+              </div>
+              <span class="audio-duration">18:10</span>
+            </div>
 
-            // Audio Player simulation
-            const playBtn = document.getElementById('play-btn');
-            const hudTrackTitle = document.getElementById('hud-track-title');
-            const audioItems = document.querySelectorAll('.audio-item');
-            let isPlaying = false;
+            <!-- Audio item 3 -->
+            <div class="audio-item" data-src="assets/sample_3.mp3">
+              <div class="play-state-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <div class="audio-details">
+                <h3 data-i18n="portal_audio3">Module 3: Treasury & Liquidity Alignment</h3>
+                <p data-i18n="portal_audio3_desc">Mapping Cash flows to wealth algorithms and establishing sovereign reserves.</p>
+              </div>
+              <span class="audio-duration">22:30</span>
+            </div>
+          </div>
 
-            playBtn.addEventListener('click', () => {
-                isPlaying = !isPlaying;
-                if(isPlaying) {
-                    playBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>`;
-                } else {
-                    playBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
-                }
-            });
+          <!-- Mini player HUD -->
+          <div class="player-hud glass-card">
+            <div class="hud-info">
+              <span class="now-playing-label" data-i18n="portal_now_playing">Now Playing</span>
+              <h4 id="hud-track-title" data-i18n="portal_audio1">Module 1: The Foundation Block</h4>
+            </div>
+            <div class="hud-controls">
+              <button class="hud-btn" id="play-btn">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
 
-            audioItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    audioItems.forEach(ai => {
-                        ai.classList.remove('active-audio');
-                        const iconWrapper = ai.querySelector('.play-state-icon');
-                        iconWrapper.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
-                    });
-                    
-                    item.classList.add('active-audio');
-                    const title = item.querySelector('.audio-details h3').textContent;
-                    hudTrackTitle.textContent = title;
-                    
-                    const stateIcon = item.querySelector('.play-state-icon');
-                    stateIcon.innerHTML = `<div class="bars-animation"><span></span><span></span><span></span></div>`;
-                    
-                    isPlaying = true;
-                    playBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>`;
-                });
-            });
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="glass-effect" style="margin-top: 5rem; padding: 3rem 0; border-top: 1px solid var(--c-border-subtle);">
+    <div class="footer-bottom" style="text-align: center; color: var(--c-text-muted); font-size: 0.85rem;">
+      <p>
+        <span data-i18n="footer_copyright">&copy; 2026 LEGACY GROVE CODEX LLC. All Rights Reserved. Sovereign System Platform.</span>
+      </p>
+    </div>
+  </footer>
+
+  <!-- ================================================================ -->
+  <!-- PORTAL SCRIPTS (Preserved with translation support)              -->
+  <!-- ================================================================ -->
+  <script src="translations.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // ---- Tab switching logic ----
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const modules = document.querySelectorAll('.module-panel');
+
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+          tabButtons.forEach(t => t.classList.remove('active'));
+          modules.forEach(m => m.classList.remove('active-panel'));
+
+          this.classList.add('active');
+          const target = this.getAttribute('data-target');
+          document.getElementById(target).classList.add('active-panel');
         });
-    </script>
-<!-- ===== MULTILANGUAGE SUPPORT ===== -->
-<script src="translations.js"></script>
+      });
+
+      // ---- Corporate Sovereignty Matrix - Score Calculation (5 steps * 20% = 100%) ----
+      const checkboxes = document.querySelectorAll('.matrix-checkbox');
+      const scoreDisplay = document.getElementById('meter-score');
+      const fillBar = document.getElementById('meter-fill');
+
+      function updateScore() {
+        let score = 0;
+        checkboxes.forEach(box => {
+          if (box.checked) {
+            score += parseInt(box.getAttribute('data-score'));
+          }
+        });
+        if (score > 100) score = 100;
+        scoreDisplay.textContent = score + '%';
+        fillBar.style.width = score + '%';
+        localStorage.setItem('lgc_sovereignty_score', score);
+
+        const checkedStates = Array.from(checkboxes).map(box => box.checked);
+        localStorage.setItem('lgc_checked_states', JSON.stringify(checkedStates));
+      }
+
+      // Restore checklist states
+      const storedStates = JSON.parse(localStorage.getItem('lgc_checked_states'));
+      if (storedStates) {
+        checkboxes.forEach((box, i) => {
+          box.checked = storedStates[i] || false;
+        });
+      }
+      updateScore();
+
+      checkboxes.forEach(box => {
+        box.addEventListener('change', updateScore);
+      });
+
+      // ---- Ma'at Laws Explorer ----
+      const laws = [
+        { num: 1, text: "I have not committed sin.", interp: "Operating with absolute transparency, avoiding hidden transaction schemes, and guaranteeing that your corporate operations build rather than deplete community trust." },
+        { num: 2, text: "I have not committed robbery with violence.", interp: "Rejecting predatory pricing methods, exploitative partnership structures, or aggressively coercing contractors or employees." },
+        { num: 3, text: "I have not stolen.", interp: "Respecting and protecting intellectual properties, crediting original authors, and providing honest value-for-value exchange in commerce." },
+        { num: 4, text: "I have not slain men or women.", interp: "Avoiding products, services, or investments that actively cause health degeneration or mental harms to customer demographics." },
+        { num: 5, text: "I have not stolen food.", interp: "Refusing to withhold fair compensation or basic resources from workers, ensuring their primary support systems remain intact." },
+        { num: 6, text: "I have not defrauded offerings.", interp: "Ensuring tax reporting, filing, and legal compliance structures are kept completely correct and verified without forgery." }
+      ];
+
+      let currentLawIndex = 0;
+      const lawNumberEl = document.getElementById('law-number');
+      const lawTextEl = document.getElementById('law-text');
+      const lawInterpEl = document.getElementById('law-interpretation');
+      const prevLawBtn = document.getElementById('prev-law');
+      const nextLawBtn = document.getElementById('next-law');
+      const journalTextarea = document.getElementById('journal-note');
+      const saveStatusEl = document.getElementById('journal-save-status');
+
+      function renderLaw() {
+        const law = laws[currentLawIndex];
+        lawNumberEl.textContent = `Law ${law.num} of 42`;
+        lawTextEl.textContent = `"${law.text}"`;
+        lawInterpEl.textContent = law.interp;
+
+        const journalEntries = JSON.parse(localStorage.getItem('lgc_maat_journal')) || {};
+        journalTextarea.value = journalEntries[law.num] || '';
+      }
+
+      journalTextarea.addEventListener('input', function() {
+        const journalEntries = JSON.parse(localStorage.getItem('lgc_maat_journal')) || {};
+        const currentLaw = laws[currentLawIndex];
+        journalEntries[currentLaw.num] = this.value;
+        localStorage.setItem('lgc_maat_journal', JSON.stringify(journalEntries));
+        saveStatusEl.textContent = "Saving changes...";
+        setTimeout(() => {
+          saveStatusEl.textContent = "Saved to local system.";
+        }, 800);
+      });
+
+      prevLawBtn.addEventListener('click', function() {
+        if (currentLawIndex > 0) {
+          currentLawIndex--;
+          renderLaw();
+        }
+      });
+
+      nextLawBtn.addEventListener('click', function() {
+        if (currentLawIndex < laws.length - 1) {
+          currentLawIndex++;
+          renderLaw();
+        }
+      });
+
+      renderLaw();
+
+      // ---- Audio Player simulation ----
+      const playBtn = document.getElementById('play-btn');
+      const hudTrackTitle = document.getElementById('hud-track-title');
+      const audioItems = document.querySelectorAll('.audio-item');
+      let isPlaying = false;
+
+      playBtn.addEventListener('click', function() {
+        isPlaying = !isPlaying;
+        if (isPlaying) {
+          this.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>`;
+        } else {
+          this.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+        }
+      });
+
+      audioItems.forEach(item => {
+        item.addEventListener('click', function() {
+          audioItems.forEach(ai => {
+            ai.classList.remove('active-audio');
+            const iconWrapper = ai.querySelector('.play-state-icon');
+            iconWrapper.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+          });
+
+          this.classList.add('active-audio');
+          const title = this.querySelector('.audio-details h3').textContent;
+          hudTrackTitle.textContent = title;
+
+          const stateIcon = this.querySelector('.play-state-icon');
+          stateIcon.innerHTML = `<div class="bars-animation"><span></span><span></span><span></span></div>`;
+
+          isPlaying = true;
+          playBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>`;
+        });
+      });
+    });
+  </script>
+
 </body>
 </html>

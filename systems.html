@@ -1,29 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<select id="language-switcher" class="lang-select" aria-label="Language selector">
-  <option value="en">EN</option>
-  <option value="es">ES</option>
-  <option value="fr">FR</option>
-  <option value="ar">AR</option>
-  <option value="de">DE</option>
-</select>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="The Legacy Grove Codex open‑source ecosystem – TASH, Codex Portal, Digital Vault Blueprint, and more. Sovereign systems for the future." />
   <title>Systems | Legacy Grove Codex</title>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
-    /* ----- RESET & BASE ----- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: #080A0E;
       color: #E8EDF2;
@@ -32,59 +18,32 @@
       overflow-x: hidden;
     }
 
-    /* ----- AMBIENT BACKGROUND ----- */
-    .bg-grid {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image:
-        linear-gradient(rgba(16, 185, 129, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(16, 185, 129, 0.02) 1px, transparent 1px);
-      background-size: 60px 60px;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .bg-glow {
+    .ambient-glow {
       position: fixed;
       border-radius: 50%;
       filter: blur(150px);
-      opacity: 0.08;
+      opacity: 0.06;
       z-index: 0;
       pointer-events: none;
     }
-    .bg-glow.gold {
-      width: 700px;
-      height: 700px;
-      background: #FFD700;
-      top: -200px;
-      right: -200px;
-    }
-    .bg-glow.emerald {
-      width: 600px;
-      height: 600px;
-      background: #10B981;
-      bottom: -150px;
-      left: -150px;
-    }
+    .glow-emerald { width: 600px; height: 600px; background: #10B981; bottom: -200px; left: -200px; }
+    .glow-gold { width: 600px; height: 600px; background: #FFD700; top: -200px; right: -200px; }
 
-    /* ----- MAIN CONTAINER ----- */
     .container {
       position: relative;
       z-index: 1;
       max-width: 1200px;
       margin: 0 auto;
       padding: 1.5rem 2rem 3rem 2rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* ----- NAVIGATION (Glass) ----- */
     .navbar {
-      background: rgba(8, 10, 14, 0.75);
+      background: rgba(8,10,14,0.75);
       backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255,255,255,0.05);
       border-radius: 1.5rem;
       padding: 0.7rem 2rem;
       margin-bottom: 3rem;
@@ -93,72 +52,39 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 1rem;
-      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
     }
+    .logo { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; }
+    .logo-symbol { width: 40px; height: 40px; flex-shrink: 0; }
+    .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+    .brand-name { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1rem; color: #E8EDF2; letter-spacing: 0.5px; }
+    .brand-legal { font-size: 0.6rem; color: #9AA6B2; letter-spacing: 2px; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
+    .nav-links a { color: #9AA6B2; text-decoration: none; font-size: 0.8rem; font-weight: 500; transition: color 0.3s; letter-spacing: 0.5px; position: relative; }
+    .nav-links a:hover { color: #FFD700; }
+    .nav-links a.active { color: #FFD700; }
+    .nav-links a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: #FFD700; border-radius: 2px; }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      text-decoration: none;
-    }
-
-    .logo-symbol {
-      width: 40px;
-      height: 40px;
-      flex-shrink: 0;
-    }
-
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
-    }
-    .brand-name {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 800;
-      font-size: 1rem;
+    .nav-actions { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+    .lang-select {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 50px;
       color: #E8EDF2;
-      letter-spacing: 0.5px;
+      padding: 0.4rem 2.2rem 0.4rem 1.2rem;
+      font-size: 0.7rem;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239AA6B2'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.8rem center;
+      background-size: 10px 6px;
+      transition: border-color 0.3s;
     }
-    .brand-legal {
-      font-size: 0.6rem;
-      color: #9AA6B2;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .nav-links a {
-      color: #9AA6B2;
-      text-decoration: none;
-      font-size: 0.8rem;
-      font-weight: 500;
-      transition: color 0.3s;
-      letter-spacing: 0.5px;
-      position: relative;
-    }
-    .nav-links a:hover {
-      color: #FFD700;
-    }
-    .nav-links a.active {
-      color: #FFD700;
-    }
-    .nav-links a.active::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: #FFD700;
-      border-radius: 2px;
-    }
+    .lang-select:hover { border-color: #FFD700; }
+    .lang-select option { background: #0A0C10; color: #E8EDF2; }
 
     .nav-actions .btn {
       display: inline-block;
@@ -170,163 +96,40 @@
       letter-spacing: 1px;
       text-decoration: none;
       transition: all 0.3s;
-      border: 1px solid rgba(16, 185, 129, 0.3);
+      border: 1px solid rgba(16,185,129,0.3);
       color: #10B981;
-      background: rgba(16, 185, 129, 0.06);
+      background: rgba(16,185,129,0.06);
     }
-    .nav-actions .btn:hover {
-      background: #10B981;
-      color: #080A0E;
-      box-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
-    }
+    .nav-actions .btn:hover { background: #10B981; color: #080A0E; box-shadow: 0 0 30px rgba(16,185,129,0.2); }
 
-    /* ----- HERO SECTION ----- */
-    .hero {
-      padding: 2rem 0 3rem 0;
-      border-bottom: 1px solid rgba(255, 215, 0, 0.06);
-      margin-bottom: 3rem;
-    }
+    .hero { padding: 2rem 0 3rem 0; border-bottom: 1px solid rgba(255,215,0,0.06); margin-bottom: 3rem; }
+    .hero-badge { display: inline-block; padding: 0.2rem 1.2rem; border-radius: 50px; font-size: 0.65rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; background: rgba(255,215,0,0.06); color: #FFD700; border: 1px solid rgba(255,215,0,0.12); margin-bottom: 1rem; }
+    .hero-title { font-family: 'Outfit', sans-serif; font-size: clamp(2.8rem, 5vw, 4.5rem); font-weight: 900; line-height: 1.05; letter-spacing: -2px; margin-bottom: 0.5rem; }
+    .hero-title .gold { background: linear-gradient(135deg, #FFD700, #B8860B); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-title .sub { font-size: 1rem; font-weight: 400; color: #9AA6B2; letter-spacing: 1px; display: block; margin-top: 0.2rem; -webkit-text-fill-color: #9AA6B2; }
+    .hero-description { font-size: 1.05rem; color: #9AA6B2; line-height: 1.8; max-width: 700px; margin-top: 0.5rem; }
 
-    .hero-badge {
-      display: inline-block;
-      padding: 0.2rem 1.2rem;
-      border-radius: 50px;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      background: rgba(255, 215, 0, 0.06);
-      color: #FFD700;
-      border: 1px solid rgba(255, 215, 0, 0.12);
-      margin-bottom: 1rem;
-    }
+    .hero-meta { display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.03); }
+    .hero-meta-item { display: flex; flex-direction: column; }
+    .hero-meta-item .label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: #4A5568; }
+    .hero-meta-item .value { font-weight: 600; font-size: 1rem; color: #E8EDF2; font-family: 'Outfit', sans-serif; }
+    .hero-meta-item .value .emerald { color: #10B981; }
+    .hero-meta-item .value .gold { color: #FFD700; }
 
-    .hero-title {
-      font-family: 'Outfit', sans-serif;
-      font-size: clamp(2.8rem, 5vw, 4.5rem);
-      font-weight: 900;
-      line-height: 1.05;
-      letter-spacing: -2px;
-      margin-bottom: 0.5rem;
-    }
-    .hero-title .gold {
-      background: linear-gradient(135deg, #FFD700, #B8860B);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero-title .sub {
-      font-size: 1rem;
-      font-weight: 400;
-      color: #9AA6B2;
-      letter-spacing: 1px;
-      display: block;
-      margin-top: 0.2rem;
-      -webkit-text-fill-color: #9AA6B2;
-    }
+    .divider { display: flex; align-items: center; gap: 1.5rem; margin: 2rem 0 3rem 0; opacity: 0.3; }
+    .divider-line { height: 1px; flex: 1; background: linear-gradient(90deg, transparent, #FFD700, transparent); }
+    .divider-icon { color: #FFD700; font-size: 0.8rem; letter-spacing: 4px; }
 
-    .hero-description {
-      font-size: 1.05rem;
-      color: #9AA6B2;
-      line-height: 1.8;
-      max-width: 700px;
-      margin-top: 0.5rem;
-    }
+    .section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+    .section-header .num { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 2rem; color: rgba(255,215,0,0.08); line-height: 1; }
+    .section-header h2 { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 700; }
+    .section-header .badge { margin-left: auto; padding: 0.2rem 1rem; border-radius: 50px; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; background: rgba(16,185,129,0.1); color: #10B981; border: 1px solid rgba(16,185,129,0.15); }
 
-    .hero-meta {
-      display: flex;
-      gap: 2rem;
-      flex-wrap: wrap;
-      margin-top: 1.5rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.03);
-    }
-    .hero-meta-item {
-      display: flex;
-      flex-direction: column;
-    }
-    .hero-meta-item .label {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #4A5568;
-    }
-    .hero-meta-item .value {
-      font-weight: 600;
-      font-size: 1rem;
-      color: #E8EDF2;
-      font-family: 'Outfit', sans-serif;
-    }
-    .hero-meta-item .value .emerald {
-      color: #10B981;
-    }
-    .hero-meta-item .value .gold {
-      color: #FFD700;
-    }
-
-    /* ----- DIVIDER ----- */
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      margin: 2rem 0 3rem 0;
-      opacity: 0.3;
-    }
-    .divider-line {
-      height: 1px;
-      flex: 1;
-      background: linear-gradient(90deg, transparent, #FFD700, transparent);
-    }
-    .divider-icon {
-      color: #FFD700;
-      font-size: 0.8rem;
-      letter-spacing: 4px;
-    }
-
-    /* ----- SECTION HEADERS ----- */
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .section-header .num {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 800;
-      font-size: 2rem;
-      color: rgba(255, 215, 0, 0.08);
-      line-height: 1;
-    }
-    .section-header h2 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 700;
-    }
-    .section-header .badge {
-      margin-left: auto;
-      padding: 0.2rem 1rem;
-      border-radius: 50px;
-      font-size: 0.6rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      background: rgba(16, 185, 129, 0.1);
-      color: #10B981;
-      border: 1px solid rgba(16, 185, 129, 0.15);
-    }
-
-    /* ----- SYSTEM CARDS GRID ----- */
-    .systems-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-bottom: 3rem;
-    }
-
+    .systems-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
     .system-card {
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255,255,255,0.02);
       backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255,255,255,0.04);
       border-radius: 1.5rem;
       padding: 2rem 2rem 1.8rem 2rem;
       transition: all 0.4s;
@@ -335,138 +138,37 @@
       display: flex;
       flex-direction: column;
     }
-    .system-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background: linear-gradient(90deg, #10B981, #FFD700);
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-    .system-card:hover {
-      border-color: rgba(255, 215, 0, 0.15);
-      transform: translateY(-5px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-    }
-    .system-card:hover::before {
-      opacity: 1;
-    }
+    .system-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #10B981, #FFD700); opacity: 0; transition: opacity 0.4s; }
+    .system-card:hover { border-color: rgba(255,215,0,0.15); transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+    .system-card:hover::before { opacity: 1; }
+    .system-card .icon { font-size: 2.4rem; display: block; margin-bottom: 0.8rem; }
+    .system-card .status { display: inline-block; padding: 0.15rem 0.8rem; border-radius: 50px; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; background: rgba(16,185,129,0.1); color: #10B981; border: 1px solid rgba(16,185,129,0.12); margin-bottom: 0.8rem; align-self: flex-start; }
+    .system-card .status.beta { background: rgba(255,215,0,0.08); color: #FFD700; border-color: rgba(255,215,0,0.15); }
+    .system-card .status.planning { background: rgba(255,255,255,0.04); color: #4A5568; border-color: rgba(255,255,255,0.05); }
+    .system-card h3 { font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.4rem; color: #E8EDF2; }
+    .system-card p { font-size: 0.9rem; color: #9AA6B2; line-height: 1.7; flex-grow: 1; }
+    .system-card .link { margin-top: 1.2rem; display: inline-flex; align-items: center; gap: 0.5rem; color: #FFD700; text-decoration: none; font-weight: 600; font-size: 0.85rem; transition: gap 0.3s; }
+    .system-card .link:hover { gap: 0.8rem; }
+    .system-card .link .arrow { transition: transform 0.3s; }
+    .system-card .link:hover .arrow { transform: translateX(4px); }
 
-    .system-card .icon {
-      font-size: 2.4rem;
-      display: block;
-      margin-bottom: 0.8rem;
-    }
-    .system-card .status {
-      display: inline-block;
-      padding: 0.15rem 0.8rem;
-      border-radius: 50px;
-      font-size: 0.6rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      background: rgba(16, 185, 129, 0.1);
-      color: #10B981;
-      border: 1px solid rgba(16, 185, 129, 0.12);
-      margin-bottom: 0.8rem;
-      align-self: flex-start;
-    }
-    .system-card .status.beta {
-      background: rgba(255, 215, 0, 0.08);
-      color: #FFD700;
-      border-color: rgba(255, 215, 0, 0.15);
-    }
-    .system-card .status.planning {
-      background: rgba(255, 255, 255, 0.04);
-      color: #4A5568;
-      border-color: rgba(255, 255, 255, 0.05);
-    }
-    .system-card h3 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.3rem;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-      color: #E8EDF2;
-    }
-    .system-card p {
-      font-size: 0.9rem;
-      color: #9AA6B2;
-      line-height: 1.7;
-      flex-grow: 1;
-    }
-    .system-card .link {
-      margin-top: 1.2rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: #FFD700;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.85rem;
-      transition: gap 0.3s;
-    }
-    .system-card .link:hover {
-      gap: 0.8rem;
-    }
-    .system-card .link .arrow {
-      transition: transform 0.3s;
-    }
-    .system-card .link:hover .arrow {
-      transform: translateX(4px);
-    }
-
-    /* ----- ARCHITECTURE OVERVIEW ----- */
     .architecture-section {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.04);
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.04);
       border-radius: 2rem;
       padding: 2.5rem 3rem;
       margin-bottom: 3rem;
       text-align: center;
     }
-    .architecture-section h3 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #FFD700;
-      margin-bottom: 0.5rem;
-    }
-    .architecture-section p {
-      color: #9AA6B2;
-      font-size: 1rem;
-      line-height: 1.7;
-      max-width: 700px;
-      margin: 0 auto 0.5rem auto;
-    }
-    .architecture-badges {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.8rem;
-      margin-top: 1rem;
-      list-style: none;
-    }
-    .architecture-badges li {
-      background: rgba(255, 255, 255, 0.03);
-      padding: 0.3rem 1.2rem;
-      border-radius: 50px;
-      font-size: 0.7rem;
-      color: #9AA6B2;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-    }
-    .architecture-badges li .check {
-      color: #10B981;
-      font-weight: 700;
-      margin-right: 0.3rem;
-    }
+    .architecture-section h3 { font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 700; color: #FFD700; margin-bottom: 0.5rem; }
+    .architecture-section p { color: #9AA6B2; font-size: 1rem; line-height: 1.7; max-width: 700px; margin: 0 auto 0.5rem auto; }
+    .architecture-badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; margin-top: 1rem; list-style: none; }
+    .architecture-badges li { background: rgba(255,255,255,0.03); padding: 0.3rem 1.2rem; border-radius: 50px; font-size: 0.7rem; color: #9AA6B2; border: 1px solid rgba(255,255,255,0.04); }
+    .architecture-badges li .check { color: #10B981; font-weight: 700; margin-right: 0.3rem; }
 
-    /* ----- GOVERNMENT SECTION ----- */
     .government-section {
-      background: rgba(255, 215, 0, 0.02);
-      border: 1px solid rgba(255, 215, 0, 0.06);
+      background: rgba(255,215,0,0.02);
+      border: 1px solid rgba(255,215,0,0.06);
       border-radius: 2rem;
       padding: 2rem 2.5rem;
       margin-bottom: 3rem;
@@ -475,152 +177,51 @@
       gap: 2rem;
       align-items: center;
     }
-    .government-section h4 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #FFD700;
-      margin-bottom: 0.3rem;
-    }
-    .government-section p {
-      color: #9AA6B2;
-      font-size: 0.9rem;
-      line-height: 1.7;
-    }
-    .government-section .badge-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      list-style: none;
-      margin-top: 0.5rem;
-    }
-    .government-section .badge-list li {
-      background: rgba(255, 255, 255, 0.03);
-      padding: 0.2rem 1rem;
-      border-radius: 50px;
-      font-size: 0.7rem;
-      color: #9AA6B2;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-    }
-    .government-section .badge-list li .check {
-      color: #10B981;
-    }
-    .government-cta {
-      text-align: right;
-    }
-    .government-cta .btn {
-      display: inline-block;
-      padding: 0.6rem 1.8rem;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      text-decoration: none;
-      transition: all 0.3s;
-      border: 1px solid rgba(255, 215, 0, 0.25);
-      color: #FFD700;
-      background: rgba(255, 215, 0, 0.04);
-    }
-    .government-cta .btn:hover {
-      background: #FFD700;
-      color: #080A0E;
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.15);
-    }
+    .government-section h4 { font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 700; color: #FFD700; margin-bottom: 0.3rem; }
+    .government-section p { color: #9AA6B2; font-size: 0.9rem; line-height: 1.7; }
+    .government-section .badge-list { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; margin-top: 0.5rem; }
+    .government-section .badge-list li { background: rgba(255,255,255,0.03); padding: 0.2rem 1rem; border-radius: 50px; font-size: 0.7rem; color: #9AA6B2; border: 1px solid rgba(255,255,255,0.04); }
+    .government-section .badge-list li .check { color: #10B981; }
+    .government-cta { text-align: right; }
+    .government-cta .btn { display: inline-block; padding: 0.6rem 1.8rem; border-radius: 50px; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; transition: all 0.3s; border: 1px solid rgba(255,215,0,0.25); color: #FFD700; background: rgba(255,215,0,0.04); }
+    .government-cta .btn:hover { background: #FFD700; color: #080A0E; box-shadow: 0 0 30px rgba(255,215,0,0.15); }
 
-    /* ----- FOOTER ----- */
-    .footer {
-      margin-top: 4rem;
-      padding-top: 2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.03);
-      text-align: center;
-      font-size: 0.75rem;
-      color: #4A5568;
-    }
-    .footer span {
-      color: #9AA6B2;
-    }
-    .footer .address {
-      display: block;
-      color: #4A5568;
-      margin-top: 0.2rem;
-      font-size: 0.7rem;
-    }
-    .footer .address .principal {
-      color: #4A5568;
-    }
+    .footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; font-size: 0.75rem; color: #4A5568; }
+    .footer span { color: #9AA6B2; }
+    .footer .address { display: block; color: #4A5568; margin-top: 0.2rem; font-size: 0.7rem; }
+    .footer .address .principal { color: #4A5568; }
 
-    /* ----- RESPONSIVE ----- */
     @media (max-width: 900px) {
-      .government-section {
-        grid-template-columns: 1fr;
-        text-align: center;
-        padding: 1.5rem;
-      }
-      .government-cta {
-        text-align: center;
-      }
-      .government-section .badge-list {
-        justify-content: center;
-      }
+      .government-section { grid-template-columns: 1fr; text-align: center; padding: 1.5rem; }
+      .government-cta { text-align: center; }
+      .government-section .badge-list { justify-content: center; }
     }
-
     @media (max-width: 768px) {
-      .container {
-        padding: 1rem;
-      }
-      .navbar {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 1rem 1.5rem;
-        gap: 0.8rem;
-      }
-      .nav-links {
-        justify-content: center;
-        gap: 0.8rem;
-      }
-      .nav-actions {
-        text-align: center;
-      }
-      .hero {
-        padding: 1rem 0 2rem 0;
-      }
-      .hero-title {
-        font-size: 2.2rem;
-      }
-      .systems-grid {
-        grid-template-columns: 1fr;
-      }
-      .architecture-section {
-        padding: 1.5rem;
-      }
+      .container { padding: 1rem; }
+      .navbar { flex-direction: column; align-items: stretch; padding: 0.8rem 1.2rem; gap: 0.6rem; }
+      .nav-links { justify-content: center; gap: 0.6rem; }
+      .nav-links a { font-size: 0.7rem; }
+      .nav-actions { justify-content: center; flex-wrap: wrap; }
+      .hero { padding: 1rem 0 2rem 0; }
+      .hero-title { font-size: 2.2rem; }
+      .systems-grid { grid-template-columns: 1fr; }
+      .architecture-section { padding: 1.5rem; }
     }
-
     @media (max-width: 480px) {
-      .container {
-        padding: 0.8rem;
-      }
-      .nav-links a {
-        font-size: 0.7rem;
-      }
-      .hero-meta {
-        flex-direction: column;
-        gap: 0.5rem;
-      }
+      .container { padding: 0.6rem; }
+      .nav-links a { font-size: 0.6rem; }
+      .hero-meta { flex-direction: column; gap: 0.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ===== BACKGROUND ===== -->
-  <div class="bg-grid"></div>
-  <div class="bg-glow gold"></div>
-  <div class="bg-glow emerald"></div>
+  <div class="ambient-glow glow-emerald"></div>
+  <div class="ambient-glow glow-gold"></div>
 
-  <!-- ===== MAIN CONTAINER ===== -->
   <div class="container">
 
-    <!-- ===== NAVIGATION ===== -->
+    <!-- NAVIGATION -->
     <nav class="navbar">
       <a href="index.html" class="logo">
         <svg class="logo-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -637,188 +238,145 @@
       </a>
 
       <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="tash.html">TASH</a>
-        <a href="book.html">Book</a>
-        <a href="codex-portal.html">Codex Portal</a>
-        <a href="systems.html" class="active">Systems</a>
-        <a href="community.html">Community</a>
+        <a href="index.html" data-i18n="nav_home">Home</a>
+        <a href="tash.html" data-i18n="nav_tash">TASH</a>
+        <a href="book.html" data-i18n="nav_book">Book</a>
+        <a href="codex-portal.html" data-i18n="nav_portal">Codex Portal</a>
+        <a href="systems.html" class="active" data-i18n="nav_systems">Systems</a>
+        <a href="community.html" data-i18n="nav_community">Community</a>
       </div>
 
       <div class="nav-actions">
-        <a href="codex-portal.html" class="btn">Secure Access</a>
+        <select id="language-switcher" class="lang-select">
+          <option value="en">EN</option>
+          <option value="es">ES</option>
+          <option value="fr">FR</option>
+          <option value="ar">AR</option>
+          <option value="de">DE</option>
+        </select>
+        <a href="codex-portal.html" class="btn" data-i18n="nav_secure">Secure Access</a>
       </div>
     </nav>
 
-    <!-- ===== HERO: ECOSYSTEM COMMAND ===== -->
+    <!-- HERO -->
     <section class="hero">
-      <div class="hero-badge">✦ Open‑Source Ecosystem · Sovereign Systems</div>
-      <h1 class="hero-title">
-        The <span class="gold">Systems</span><br />
-        <span class="sub">Frameworks · Platforms · Intelligence</span>
-      </h1>
-      <p class="hero-description">
-        An evolving ecosystem of open‑source frameworks designed to bridge
-        mathematical abstraction and operational reality. From autonomous intelligence
-        to sovereign identity and digital estate preservation – our systems are built
-        to protect, adapt, and scale.
-      </p>
+      <div class="hero-badge" data-i18n="sys_badge">✦ Open‑Source Ecosystem · Sovereign Systems</div>
+      <h1 class="hero-title" data-i18n="sys_title">The <span class="gold">Systems</span><span class="sub" data-i18n="sys_subtitle">Frameworks · Platforms · Intelligence</span></h1>
+      <p class="hero-description" data-i18n="sys_desc">An evolving ecosystem of open‑source frameworks designed to bridge mathematical abstraction and operational reality. From autonomous intelligence to sovereign identity and digital estate preservation – our systems are built to protect, adapt, and scale.</p>
       <div class="hero-meta">
-        <div class="hero-meta-item">
-          <span class="label">Active Systems</span>
-          <span class="value"><span class="emerald">4</span></span>
-        </div>
-        <div class="hero-meta-item">
-          <span class="label">Open Source</span>
-          <span class="value"><span class="gold">100%</span></span>
-        </div>
-        <div class="hero-meta-item">
-          <span class="label">FedRAMP Aligned</span>
-          <span class="value"><span class="emerald">✓</span></span>
-        </div>
-        <div class="hero-meta-item">
-          <span class="label">UEI</span>
-          <span class="value" style="font-size:0.8rem; font-family:'Inter',monospace;">D43ZB3D7QTW1</span>
-        </div>
+        <div class="hero-meta-item"><span class="label" data-i18n="sys_active">Active Systems</span><span class="value"><span class="emerald" data-i18n="sys_active_value">4</span></span></div>
+        <div class="hero-meta-item"><span class="label" data-i18n="sys_opensource">Open Source</span><span class="value"><span class="gold" data-i18n="sys_opensource_value">100%</span></span></div>
+        <div class="hero-meta-item"><span class="label" data-i18n="sys_fedramp">FedRAMP Aligned</span><span class="value"><span class="emerald" data-i18n="sys_fedramp_value">✓</span></span></div>
+        <div class="hero-meta-item"><span class="label" data-i18n="tash_uei">UEI</span><span class="value" style="font-size:0.8rem;font-family:'Inter',monospace;">D43ZB3D7QTW1</span></div>
       </div>
     </section>
 
-    <!-- ===== DIVIDER ===== -->
-    <div class="divider">
-      <span class="divider-line"></span>
-      <span class="divider-icon">◆ ◆ ◆</span>
-      <span class="divider-line"></span>
-    </div>
+    <div class="divider"><span class="divider-line"></span><span class="divider-icon">◆ ◆ ◆</span><span class="divider-line"></span></div>
 
-    <!-- ===== SYSTEMS GRID ===== -->
+    <!-- SYSTEMS GRID -->
     <div class="section-header">
       <span class="num">01</span>
-      <h2>The Arsenal</h2>
-      <span class="badge">Active</span>
+      <h2 data-i18n="sys_arsenal">The Arsenal</h2>
+      <span class="badge" data-i18n="sys_arsenal_badge">Active</span>
     </div>
-
     <div class="systems-grid">
-
       <!-- TASH -->
       <div class="system-card">
-        <span class="icon">🧠</span>
-        <span class="status">Active</span>
-        <h3>TASH</h3>
-        <p><strong>Tactical Artificial System Hierarchy.</strong> A self‑writing, infinite‑scaling framework built on 10‑dimensional pyramid mathematics. Designed for real‑time intelligence, autonomous adaptation, and recursive data processing.</p>
-        <a href="tash.html" class="link">Explore TASH <span class="arrow">→</span></a>
+        <span class="icon">🧠</span><span class="status" data-i18n="sys_arsenal_badge">Active</span>
+        <h3 data-i18n="sys_tash">TASH</h3>
+        <p data-i18n="sys_tash_desc">Tactical Artificial System Hierarchy. A self‑writing, infinite‑scaling framework built on 10‑dimensional pyramid mathematics.</p>
+        <a href="tash.html" class="link" data-i18n="sys_tash_link">Explore TASH <span class="arrow">→</span></a>
       </div>
-
       <!-- Codex Portal -->
       <div class="system-card">
-        <span class="icon">🔐</span>
-        <span class="status">Active</span>
-        <h3>Codex Portal</h3>
-        <p><strong>Sovereign Identity &amp; Compliance.</strong> A modular framework for corporate vessel formation, federal alignment (SAM.gov, FedRAMP), and sovereign identity management. Includes the Sovereignty Matrix and Ma'at Laws Explorer.</p>
-        <a href="codex-portal.html" class="link">Enter Portal <span class="arrow">→</span></a>
+        <span class="icon">🔐</span><span class="status" data-i18n="sys_arsenal_badge">Active</span>
+        <h3 data-i18n="sys_portal">Codex Portal</h3>
+        <p data-i18n="sys_portal_desc">Sovereign Identity &amp; Compliance. A modular framework for corporate vessel formation, federal alignment, and sovereign identity management.</p>
+        <a href="codex-portal.html" class="link" data-i18n="sys_portal_link">Enter Portal <span class="arrow">→</span></a>
       </div>
-
       <!-- Digital Vault Blueprint -->
       <div class="system-card">
-        <span class="icon">📖</span>
-        <span class="status">Active</span>
-        <h3>Digital Vault Blueprint</h3>
-        <p><strong>Break‑Glass‑in‑Case‑of‑Emergency Estate Workbook.</strong> A fill‑in‑the‑blank dossier that consolidates your entire digital existence – passwords, crypto wallets, legal documents, and legacy notes – into one secure, actionable file.</p>
-        <a href="book.html" class="link">View the Vault <span class="arrow">→</span></a>
+        <span class="icon">📖</span><span class="status" data-i18n="sys_arsenal_badge">Active</span>
+        <h3 data-i18n="sys_vault">Digital Vault Blueprint</h3>
+        <p data-i18n="sys_vault_desc">Break‑Glass‑in‑Case‑of‑Emergency Estate Workbook. A fill‑in‑the‑blank dossier that consolidates your entire digital existence.</p>
+        <a href="book.html" class="link" data-i18n="sys_vault_link">View the Vault <span class="arrow">→</span></a>
       </div>
-
       <!-- Community / Network Nodes -->
       <div class="system-card">
-        <span class="icon">🌐</span>
-        <span class="status">Active</span>
-        <h3>Network Nodes</h3>
-        <p><strong>Sovereign Collaboration Circles.</strong> A framework for peer‑to‑peer alliance building, acoustic briefings, and defense‑grade knowledge sharing. Connects architects, entrepreneurs, and government partners.</p>
-        <a href="community.html" class="link">Join the Network <span class="arrow">→</span></a>
+        <span class="icon">🌐</span><span class="status" data-i18n="sys_arsenal_badge">Active</span>
+        <h3 data-i18n="sys_community">Network Nodes</h3>
+        <p data-i18n="sys_community_desc">Sovereign Collaboration Circles. A framework for peer‑to‑peer alliance building, acoustic briefings, and defense‑grade knowledge sharing.</p>
+        <a href="community.html" class="link" data-i18n="sys_community_link">Join the Network <span class="arrow">→</span></a>
       </div>
-
-      <!-- Coming Soon: TASH-Edge -->
+      <!-- TASH-Edge -->
       <div class="system-card">
-        <span class="icon">📡</span>
-        <span class="status beta">Beta</span>
-        <h3>TASH‑Edge</h3>
-        <p><strong>Autonomous Edge Intelligence.</strong> A lightweight, deployable version of TASH designed for IoT, field sensors, and tactical edge devices. Real‑time decision‑making without cloud dependency.</p>
-        <span style="color: #4A5568; font-size: 0.8rem; margin-top: 1rem;">Coming Q4 2026</span>
+        <span class="icon">📡</span><span class="status beta" data-i18n="sys_arsenal_badge">Beta</span>
+        <h3 data-i18n="sys_edge">TASH‑Edge</h3>
+        <p data-i18n="sys_edge_desc">Autonomous Edge Intelligence. A lightweight, deployable version of TASH designed for IoT, field sensors, and tactical edge devices.</p>
+        <span style="color:#4A5568;font-size:0.8rem;margin-top:1rem;" data-i18n="sys_edge_status">Coming Q4 2026</span>
       </div>
-
-      <!-- Coming Soon: Codex Vault API -->
+      <!-- Codex Vault API -->
       <div class="system-card">
-        <span class="icon">⚙️</span>
-        <span class="status planning">Planning</span>
-        <h3>Codex Vault API</h3>
-        <p><strong>Programmatic Estate Management.</strong> An API layer for the Digital Vault Blueprint – enabling automated account shutdown, asset transfer, and compliance reporting for institutional executors.</p>
-        <span style="color: #4A5568; font-size: 0.8rem; margin-top: 1rem;">Planning Phase</span>
+        <span class="icon">⚙️</span><span class="status planning" data-i18n="sys_arsenal_badge">Planning</span>
+        <h3 data-i18n="sys_api">Codex Vault API</h3>
+        <p data-i18n="sys_api_desc">Programmatic Estate Management. An API layer for the Digital Vault Blueprint – enabling automated account shutdown, asset transfer, and compliance reporting.</p>
+        <span style="color:#4A5568;font-size:0.8rem;margin-top:1rem;" data-i18n="sys_api_status">Planning Phase</span>
       </div>
     </div>
 
-    <!-- ===== DIVIDER ===== -->
-    <div class="divider">
-      <span class="divider-line"></span>
-      <span class="divider-icon">◆ ◆ ◆</span>
-      <span class="divider-line"></span>
-    </div>
+    <div class="divider"><span class="divider-line"></span><span class="divider-icon">◆ ◆ ◆</span><span class="divider-line"></span></div>
 
-    <!-- ===== ARCHITECTURE OVERVIEW ===== -->
+    <!-- ARCHITECTURE OVERVIEW -->
     <div class="section-header">
       <span class="num">02</span>
-      <h2>Architecture Overview</h2>
-      <span class="badge">Sovereign</span>
+      <h2 data-i18n="sys_arch_title">Architecture Overview</h2>
+      <span class="badge" data-i18n="sys_arch_badge">Sovereign</span>
     </div>
-
     <div class="architecture-section">
-      <h3>Built on the TASH Core</h3>
-      <p>
-        Every system in the Legacy Grove Codex ecosystem is built upon the foundational
-        principles of the TASH framework – 10‑dimensional pyramid mathematics, recursive
-        self‑optimization, and zero‑trust security. This shared architecture ensures
-        interoperability, resilience, and future‑proof scalability across all platforms.
-      </p>
+      <h3 data-i18n="sys_arch_heading">Built on the TASH Core</h3>
+      <p data-i18n="sys_arch_desc">Every system in the Legacy Grove Codex ecosystem is built upon the foundational principles of the TASH framework – 10‑dimensional pyramid mathematics, recursive self‑optimization, and zero‑trust security.</p>
       <ul class="architecture-badges">
-        <li><span class="check">✓</span> 10‑Dimensional Pyramid Core</li>
-        <li><span class="check">✓</span> Self‑writing / Adaptive Logic</li>
-        <li><span class="check">✓</span> Zero‑Trust by Default</li>
-        <li><span class="check">✓</span> Infinite Horizontal Scalability</li>
-        <li><span class="check">✓</span> FedRAMP &amp; NIST 800‑53 Aligned</li>
+        <li><span class="check">✓</span> <span data-i18n="sys_arch_badge1">10‑Dimensional Pyramid Core</span></li>
+        <li><span class="check">✓</span> <span data-i18n="sys_arch_badge2">Self‑writing / Adaptive Logic</span></li>
+        <li><span class="check">✓</span> <span data-i18n="sys_arch_badge3">Zero‑Trust by Default</span></li>
+        <li><span class="check">✓</span> <span data-i18n="sys_arch_badge4">Infinite Horizontal Scalability</span></li>
+        <li><span class="check">✓</span> <span data-i18n="sys_arch_badge5">FedRAMP &amp; NIST 800‑53 Aligned</span></li>
       </ul>
     </div>
 
-    <!-- ===== GOVERNMENT READINESS ===== -->
+    <!-- GOVERNMENT READINESS -->
     <div class="government-section">
       <div>
-        <h4>🇺🇸 Government &amp; Defense Ready</h4>
-        <p>
-          All systems in the Legacy Grove Codex ecosystem are designed to meet the
-          highest standards of data sovereignty, security, and operational transparency
-          required by U.S. government contracts. Registered in SAM.gov and aligned
-          with FedRAMP and NIST 800‑53 controls.
-        </p>
+        <h4 data-i18n="sys_gov_title">🇺🇸 Government &amp; Defense Ready</h4>
+        <p data-i18n="sys_gov_desc">All systems in the Legacy Grove Codex ecosystem are designed to meet the highest standards of data sovereignty, security, and operational transparency required by U.S. government contracts.</p>
         <ul class="badge-list">
-          <li><span class="check">✓</span> UEI: <strong style="color:#E8EDF2;">D43ZB3D7QTW1</strong></li>
-          <li><span class="check">✓</span> SAM.gov Registered</li>
-          <li><span class="check">✓</span> FedRAMP‑aligned</li>
+          <li><span class="check">✓</span> <span data-i18n="sys_gov_badge1">UEI: D43ZB3D7QTW1</span></li>
+          <li><span class="check">✓</span> <span data-i18n="sys_gov_badge2">SAM.gov Registered</span></li>
+          <li><span class="check">✓</span> <span data-i18n="sys_gov_badge3">FedRAMP‑aligned</span></li>
         </ul>
       </div>
       <div class="government-cta">
-        <a href="tash.html" class="btn">Explore TASH →</a>
-        <span style="display:block; font-size:0.65rem; color:#4A5568; margin-top:0.5rem;">GSA Schedule Available</span>
+        <a href="tash.html" class="btn" data-i18n="sys_gov_cta">Explore TASH →</a>
+        <span style="display:block;font-size:0.65rem;color:#4A5568;margin-top:0.5rem;" data-i18n="sys_gov_note">GSA Schedule Available</span>
       </div>
     </div>
 
-    <!-- ===== FOOTER ===== -->
+    <!-- FOOTER -->
     <footer class="footer">
       <p>
-        &copy; 2026 Legacy Grove Codex LLC &bull; <span>UEI D43ZB3D7QTW1</span> &bull; <span>EIN 41‑2653211</span>
+        <span data-i18n="footer_copyright">© 2026 Legacy Grove Codex LLC</span> &bull;
+        <span data-i18n="footer_uei">UEI D43ZB3D7QTW1</span> &bull;
+        <span data-i18n="footer_ein">EIN 41‑2653211</span>
         <span class="address">
-          <span class="principal">64 Sunken Garden Loop, Suite 3023, New York, NY 10035</span> &bull;
-          <span>555 Hutchinson River Parkway, Bronx, NY 10465</span>
+          <span class="principal" data-i18n="footer_address2">64 Sunken Garden Loop, Suite 3023, New York, NY 10035</span> &bull;
+          <span data-i18n="footer_address">555 Hutchinson River Parkway, Bronx, NY 10465</span>
         </span>
       </p>
     </footer>
 
   </div>
+
+  <script src="translations.js"></script>
 
 </body>
 </html>

@@ -5,57 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Legacy Grove Codex | Sovereign Systems</title>
 
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
-    /* ----- RESET ----- */
+    /* ----- RESET & BASE ----- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: #080A0E;
       color: #E8EDF2;
       font-family: 'Inter', sans-serif;
-      overflow: hidden;
-      height: 100vh;
-      width: 100vw;
-    }
-
-    /* ----- GATE OVERLAY ----- */
-    #gate-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 1000;
-      background: #080A0E;
-      display: block;
-      pointer-events: none;
-    }
-
-    /* ----- MAIN CONTENT ----- */
-    #main-content {
-      position: relative;
-      z-index: 1;
-      width: 100vw;
-      height: 100vh;
-      overflow-y: auto;
+      min-height: 100vh;
       overflow-x: hidden;
-      opacity: 0;
-      transition: opacity 1s ease 1.8s;
-      background: #080A0E;
     }
-    #main-content.reveal { opacity: 1; }
-
-    #main-content::-webkit-scrollbar { width: 6px; }
-    #main-content::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
-    #main-content::-webkit-scrollbar-thumb { background: #FFD700; border-radius: 3px; }
 
     .ambient-glow {
       position: fixed;
       border-radius: 50%;
       filter: blur(150px);
-      opacity: 0.08;
+      opacity: 0.06;
       z-index: 0;
       pointer-events: none;
     }
@@ -73,9 +40,9 @@
       flex-direction: column;
     }
 
-    /* ----- NAVIGATION (unchanged) ----- */
+    /* ----- NAVIGATION ----- */
     .navbar {
-      background: rgba(8,10,14,0.7);
+      background: rgba(8,10,14,0.75);
       backdrop-filter: blur(20px);
       border: 1px solid rgba(255,255,255,0.05);
       border-radius: 1.5rem;
@@ -100,7 +67,7 @@
     .nav-links a.active { color: #FFD700; }
     .nav-links a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: #FFD700; border-radius: 2px; }
 
-    .nav-actions { display: flex; align-items: center; gap: 0.8rem; }
+    .nav-actions { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
     .lang-select {
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.08);
@@ -152,10 +119,7 @@
       border: 1px solid rgba(255,215,0,0.12);
       margin-bottom: 1.5rem;
       align-self: center;
-      animation: pulse 3s ease-in-out infinite;
     }
-    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
-
     .hero-title {
       font-family: 'Outfit', sans-serif;
       font-size: clamp(3rem, 7vw, 6rem);
@@ -165,15 +129,11 @@
       margin-bottom: 0.5rem;
     }
     .hero-title .gold {
-      background: linear-gradient(135deg, #FFD700, #B8860B, #FFD700);
-      background-size: 200% 200%;
+      background: linear-gradient(135deg, #FFD700, #B8860B);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      animation: shimmer 4s ease-in-out infinite;
     }
-    @keyframes shimmer { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
-
     .hero-subtitle {
       font-size: clamp(1.1rem, 1.8vw, 1.5rem);
       color: #9AA6B2;
@@ -181,9 +141,7 @@
       margin: 0.5rem auto 2.5rem auto;
       line-height: 1.7;
       font-weight: 300;
-      min-height: 2.5rem;
     }
-
     .hero-cta { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
     .btn-primary {
       display: inline-block;
@@ -271,6 +229,7 @@
     .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; font-size: 0.7rem; color: #4A5568; }
     .footer span { color: #9AA6B2; }
     .footer .address { display: block; color: #4A5568; margin-top: 0.2rem; font-size: 0.65rem; }
+    .footer .address .principal { color: #4A5568; }
 
     @media (max-width: 768px) {
       .container { padding: 1rem; }
@@ -296,577 +255,130 @@
 </head>
 <body>
 
-  <!-- ================================================================ -->
-  <!-- ANCIENT GATE – CANVAS OVERLAY                                   -->
-  <!-- ================================================================ -->
-  <canvas id="gate-canvas"></canvas>
+  <div class="ambient-glow glow-emerald"></div>
+  <div class="ambient-glow glow-gold"></div>
 
-  <!-- ================================================================ -->
-  <!-- MAIN CONTENT                                                    -->
-  <!-- ================================================================ -->
-  <div id="main-content">
-    <div class="ambient-glow glow-emerald"></div>
-    <div class="ambient-glow glow-gold"></div>
+  <div class="container">
 
-    <div class="container">
-      <!-- NAVIGATION -->
-      <nav class="navbar">
-        <a href="index.html" class="logo">
-          <svg class="logo-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <polygon points="50,5 88.97,27.5 88.97,72.5 50,95 11.03,72.5 11.03,27.5" fill="none" stroke="#10B981" stroke-width="4" stroke-linejoin="round"/>
-            <circle cx="50" cy="50" r="14" fill="#FFD700" opacity="0.9">
-              <animate attributeName="r" values="14;16;14" dur="3s" repeatCount="indefinite" />
-            </circle>
-            <path d="M50 25 L50 40 M35 60 L45 50 M65 60 L55 50" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
-          </svg>
-          <div class="brand-text">
-            <span class="brand-name">Legacy Grove</span>
-            <span class="brand-legal">LGC LLC</span>
-          </div>
-        </a>
-        <div class="nav-links">
-          <a href="index.html" class="active" data-i18n="nav_home">Home</a>
-          <a href="tash.html" data-i18n="nav_tash">TASH</a>
-          <a href="book.html" data-i18n="nav_book">Book</a>
-          <a href="codex-portal.html" data-i18n="nav_portal">Codex Portal</a>
-          <a href="systems.html" data-i18n="nav_systems">Systems</a>
-          <a href="community.html" data-i18n="nav_community">Community</a>
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar">
+      <a href="index.html" class="logo">
+        <svg class="logo-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="50,5 88.97,27.5 88.97,72.5 50,95 11.03,72.5 11.03,27.5" fill="none" stroke="#10B981" stroke-width="4" stroke-linejoin="round"/>
+          <circle cx="50" cy="50" r="14" fill="#FFD700" opacity="0.9">
+            <animate attributeName="r" values="14;16;14" dur="3s" repeatCount="indefinite" />
+          </circle>
+          <path d="M50 25 L50 40 M35 60 L45 50 M65 60 L55 50" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <div class="brand-text">
+          <span class="brand-name">Legacy Grove</span>
+          <span class="brand-legal">LGC LLC</span>
         </div>
-        <div class="nav-actions">
-          <select id="language-switcher" class="lang-select">
-            <option value="en">EN</option>
-            <option value="es">ES</option>
-            <option value="fr">FR</option>
-            <option value="ar">AR</option>
-            <option value="de">DE</option>
-          </select>
-          <a href="codex-portal.html" class="btn" data-i18n="nav_secure">Secure Access</a>
-        </div>
-      </nav>
+      </a>
 
-      <!-- HERO -->
-      <section class="hero">
-        <div class="hero-badge" data-i18n="hero_badge">✦ Sovereign Systems Platform</div>
-        <h1 class="hero-title" data-i18n="hero_title">Legacy Grove <br /><span class="gold">Codex</span></h1>
-        <p class="hero-subtitle" data-i18n="hero_subtitle">Engineered Intelligence · Sovereign Systems · Bridging mathematical abstraction and operational reality.</p>
-        <div class="hero-cta">
-          <a href="tash.html" class="btn-primary gold" data-i18n="cta_explore">Explore TASH</a>
-          <a href="codex-portal.html" class="btn-outline" data-i18n="cta_enter">Enter Codex Portal</a>
-        </div>
-      </section>
-
-      <div class="divider"><span class="divider-line"></span><span class="divider-icon">◆</span><span class="divider-line"></span></div>
-
-      <!-- PHILOSOPHY -->
-      <div class="philosophy-card">
-        <h2 data-i18n="philosophy_title">Core <span class="gold">Philosophy</span></h2>
-        <p data-i18n="philosophy_text">We build open‑source frameworks that bridge the gap between mathematical abstraction and operational reality. Our systems are designed to evolve, adapt, and protect the data they govern.</p>
+      <div class="nav-links">
+        <a href="index.html" class="active" data-i18n="nav_home">Home</a>
+        <a href="tash.html" data-i18n="nav_tash">TASH</a>
+        <a href="book.html" data-i18n="nav_book">Book</a>
+        <a href="codex-portal.html" data-i18n="nav_portal">Codex Portal</a>
+        <a href="systems.html" data-i18n="nav_systems">Systems</a>
+        <a href="community.html" data-i18n="nav_community">Community</a>
       </div>
 
-      <!-- GOVERNMENT -->
-      <div class="government-section">
-        <div class="government-content">
-          <h3 data-i18n="gov_title"><span>🇺🇸</span> FedRAMP &amp; Government‑Ready Solutions</h3>
-          <p data-i18n="gov_text">Legacy Grove Codex LLC is registered and compliant for federal procurement. Our systems are engineered to meet the highest standards of data sovereignty, security, and operational transparency required by U.S. government contracts.</p>
-          <ul class="government-badge-list">
-            <li><span class="check">✓</span> <span data-i18n="gov_badge1">UEI: D43ZB3D7QTW1</span></li>
-            <li><span class="check">✓</span> <span data-i18n="gov_badge2">SAM.gov Registered</span></li>
-            <li><span class="check">✓</span> <span data-i18n="gov_badge3">FedRAMP‑aligned Security</span></li>
-          </ul>
-        </div>
-        <div class="government-cta">
-          <a href="tash.html" class="btn" data-i18n="gov_cta">Explore TASH for Government →</a>
-          <span class="badge-uei" data-i18n="gov_uei">UEI D43ZB3D7QTW1</span>
-        </div>
+      <div class="nav-actions">
+        <select id="language-switcher" class="lang-select">
+          <option value="en">EN</option>
+          <option value="es">ES</option>
+          <option value="fr">FR</option>
+          <option value="ar">AR</option>
+          <option value="de">DE</option>
+        </select>
+        <a href="codex-portal.html" class="btn" data-i18n="nav_secure">Secure Access</a>
       </div>
+    </nav>
 
-      <!-- ECOSYSTEM -->
-      <h3 style="font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:600;margin-bottom:1rem;text-align:center;" data-i18n="eco_title">Explore Our <span style="color:#FFD700;">Ecosystem</span></h3>
-      <div class="ecosystem">
-        <a href="tash.html" class="ecosystem-card"><span class="icon">🧠</span><h4 data-i18n="eco_tash">TASH</h4><p data-i18n="eco_tash_desc">Tactical Artificial System Hierarchy</p><span class="arrow">→</span></a>
-        <a href="book.html" class="ecosystem-card"><span class="icon">📖</span><h4 data-i18n="eco_book">The Codex Book</h4><p data-i18n="eco_book_desc">Digital Vault Blueprint &amp; Framework</p><span class="arrow">→</span></a>
-        <a href="codex-portal.html" class="ecosystem-card"><span class="icon">🔐</span><h4 data-i18n="eco_portal">Codex Portal</h4><p data-i18n="eco_portal_desc">Sovereign Identity &amp; Compliance</p><span class="arrow">→</span></a>
-        <a href="community.html" class="ecosystem-card"><span class="icon">🌐</span><h4 data-i18n="eco_community">Community Hub</h4><p data-i18n="eco_community_desc">Network Nodes &amp; Alliance Circles</p><span class="arrow">→</span></a>
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+      <div class="hero-badge" data-i18n="hero_badge">✦ Sovereign Systems Platform</div>
+      <h1 class="hero-title" data-i18n="hero_title">Legacy Grove <br /><span class="gold">Codex</span></h1>
+      <p class="hero-subtitle" data-i18n="hero_subtitle">Engineered Intelligence · Sovereign Systems · Bridging mathematical abstraction and operational reality.</p>
+      <div class="hero-cta">
+        <a href="tash.html" class="btn-primary gold" data-i18n="cta_explore">Explore TASH</a>
+        <a href="codex-portal.html" class="btn-outline" data-i18n="cta_enter">Enter Codex Portal</a>
       </div>
+    </section>
 
-      <footer class="footer">
-        <p><span data-i18n="footer_copyright">© 2026 Legacy Grove Codex LLC</span> &bull; <span data-i18n="footer_uei">UEI D43ZB3D7QTW1</span> &bull; <span data-i18n="footer_ein">EIN 41‑2653211</span>
-        <span class="address" data-i18n="footer_address">555 Hutchinson River Parkway, Bronx, NY 10465</span></p>
-      </footer>
+    <div class="divider"><span class="divider-line"></span><span class="divider-icon">◆</span><span class="divider-line"></span></div>
+
+    <!-- ===== PHILOSOPHY ===== -->
+    <div class="philosophy-card">
+      <h2 data-i18n="philosophy_title">Core <span class="gold">Philosophy</span></h2>
+      <p data-i18n="philosophy_text">We build open‑source frameworks that bridge the gap between mathematical abstraction and operational reality. Our systems are designed to evolve, adapt, and protect the data they govern.</p>
     </div>
+
+    <!-- ===== GOVERNMENT ===== -->
+    <div class="government-section">
+      <div class="government-content">
+        <h3 data-i18n="gov_title"><span>🇺🇸</span> FedRAMP &amp; Government‑Ready Solutions</h3>
+        <p data-i18n="gov_text">Legacy Grove Codex LLC is registered and compliant for federal procurement. Our systems are engineered to meet the highest standards of data sovereignty, security, and operational transparency required by U.S. government contracts.</p>
+        <ul class="government-badge-list">
+          <li><span class="check">✓</span> <span data-i18n="gov_badge1">UEI: D43ZB3D7QTW1</span></li>
+          <li><span class="check">✓</span> <span data-i18n="gov_badge2">SAM.gov Registered</span></li>
+          <li><span class="check">✓</span> <span data-i18n="gov_badge3">FedRAMP‑aligned Security</span></li>
+        </ul>
+      </div>
+      <div class="government-cta">
+        <a href="tash.html" class="btn" data-i18n="gov_cta">Explore TASH for Government →</a>
+        <span class="badge-uei" data-i18n="gov_uei">UEI D43ZB3D7QTW1</span>
+      </div>
+    </div>
+
+    <!-- ===== ECOSYSTEM ===== -->
+    <h3 style="font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:600;margin-bottom:1rem;text-align:center;" data-i18n="eco_title">Explore Our <span style="color:#FFD700;">Ecosystem</span></h3>
+    <div class="ecosystem">
+      <a href="tash.html" class="ecosystem-card">
+        <span class="icon">🧠</span>
+        <h4 data-i18n="eco_tash">TASH</h4>
+        <p data-i18n="eco_tash_desc">Tactical Artificial System Hierarchy</p>
+        <span class="arrow">→</span>
+      </a>
+      <a href="book.html" class="ecosystem-card">
+        <span class="icon">📖</span>
+        <h4 data-i18n="eco_book">The Codex Book</h4>
+        <p data-i18n="eco_book_desc">Digital Vault Blueprint &amp; Framework</p>
+        <span class="arrow">→</span>
+      </a>
+      <a href="codex-portal.html" class="ecosystem-card">
+        <span class="icon">🔐</span>
+        <h4 data-i18n="eco_portal">Codex Portal</h4>
+        <p data-i18n="eco_portal_desc">Sovereign Identity &amp; Compliance</p>
+        <span class="arrow">→</span>
+      </a>
+      <a href="community.html" class="ecosystem-card">
+        <span class="icon">🌐</span>
+        <h4 data-i18n="eco_community">Community Hub</h4>
+        <p data-i18n="eco_community_desc">Network Nodes &amp; Alliance Circles</p>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+      <p>
+        <span data-i18n="footer_copyright">© 2026 Legacy Grove Codex LLC</span> &bull;
+        <span data-i18n="footer_uei">UEI D43ZB3D7QTW1</span> &bull;
+        <span data-i18n="footer_ein">EIN 41‑2653211</span>
+        <span class="address">
+          <span class="principal" data-i18n="footer_address2">64 Sunken Garden Loop, Suite 3023, New York, NY 10035</span> &bull;
+          <span data-i18n="footer_address">555 Hutchinson River Parkway, Bronx, NY 10465</span>
+        </span>
+      </p>
+    </footer>
+
   </div>
 
-  <!-- ================================================================ -->
-  <!-- SCRIPTS                                                         -->
-  <!-- ================================================================ -->
+  <!-- ===== MULTILANGUAGE SUPPORT ===== -->
   <script src="translations.js"></script>
-  <script>
-    // TRANSLATION ENGINE (minimal)
-    (function() {
-      function getUserLanguage() {
-        const saved = localStorage.getItem('lgc_language');
-        if (saved && translations[saved]) return saved;
-        const lang = (navigator.language || 'en').split('-')[0];
-        return translations[lang] ? lang : 'en';
-      }
-      function applyTranslations(lang) {
-        const t = translations[lang]; if (!t) return;
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-          const key = el.getAttribute('data-i18n');
-          if (t[key] !== undefined) {
-            el.innerHTML = t[key].includes('<') ? t[key] : t[key];
-          }
-        });
-        const switcher = document.getElementById('language-switcher');
-        if (switcher) switcher.value = lang;
-        localStorage.setItem('lgc_language', lang);
-      }
-      const lang = getUserLanguage();
-      applyTranslations(lang);
-      document.addEventListener('DOMContentLoaded', function() {
-        const switcher = document.getElementById('language-switcher');
-        if (switcher) {
-          switcher.value = getUserLanguage();
-          switcher.addEventListener('change', function() {
-            if (translations[this.value]) applyTranslations(this.value);
-          });
-        }
-      });
-    })();
-  </script>
-
-  <!-- ================================================================ -->
-  <!-- ANCIENT GATE – FAST + MYSTICAL                                 -->
-  <!-- ================================================================ -->
-  <script>
-    (function() {
-      const canvas = document.getElementById('gate-canvas');
-      const ctx = canvas.getContext('2d');
-      const mainContent = document.getElementById('main-content');
-
-      let W, H, startTime = performance.now(), animFrame;
-      let gateProgress = 0; // 0 = closed, 1 = fully open
-      let phase = 0; // 0=init, 1=opening, 2=burst, 3=fade
-      let burstParticles = [];
-      let runeParticles = [];
-
-      function resize() {
-        W = canvas.width = window.innerWidth;
-        H = canvas.height = window.innerHeight;
-      }
-      window.addEventListener('resize', resize);
-      resize();
-
-      // Ancient symbols (Eye of Horus, Ankh, Djed, Was, Shen)
-      const ancientSymbols = ['𓂀', '𓋹', '𓊽', '𓋴', '𓈖', '𓃥', '𓅃', '𓆣', '𓁹', '𓂋'];
-
-      // Starfield
-      const stars = [];
-      for (let i = 0; i < 200; i++) {
-        stars.push({
-          x: Math.random() * W,
-          y: Math.random() * H,
-          r: Math.random() * 1.2 + 0.3,
-          a: Math.random() * 0.6 + 0.2,
-          speed: 0.002 + Math.random() * 0.004
-        });
-      }
-
-      // Rune particles (float around the gate)
-      for (let i = 0; i < 30; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const radius = 0.3 + Math.random() * 0.5;
-        runeParticles.push({
-          symbol: ancientSymbols[Math.floor(Math.random() * ancientSymbols.length)],
-          angle: angle,
-          radius: radius,
-          speed: 0.002 + Math.random() * 0.004,
-          size: 12 + Math.random() * 10,
-          opacity: 0.1 + Math.random() * 0.2,
-          wobble: Math.random() * Math.PI * 2
-        });
-      }
-
-      function drawAncientGate(p) {
-        const cx = W / 2;
-        const cy = H / 2 - 10;
-        const baseW = Math.min(W, H) * 0.40;
-        const baseH = baseW * 1.5;
-        const spread = p * baseW * 1.0;
-
-        const lx = cx - spread / 2;
-        const rx = cx + spread / 2;
-
-        // === ANCIENT STONE TEXTURE (subtle) ===
-        for (let i = 0; i < 20; i++) {
-          const x = cx + (Math.random() - 0.5) * baseW * 1.2;
-          const y = cy + (Math.random() - 0.5) * baseH * 1.2;
-          const size = 2 + Math.random() * 8;
-          ctx.fillStyle = `rgba(255,215,0,${0.01 + Math.random() * 0.02})`;
-          ctx.fillRect(x, y, size, size);
-        }
-
-        // === OUTER BORDER (ancient temple arch) ===
-        ctx.strokeStyle = `rgba(255,215,0,${0.08 + p * 0.04})`;
-        ctx.lineWidth = 2;
-        ctx.strokeRect(cx - baseW * 0.6, cy - baseH * 0.6, baseW * 1.2, baseH * 1.2);
-
-        // === RUNIC BORDER (top and bottom) ===
-        const runeCount = 16;
-        for (let i = 0; i < runeCount; i++) {
-          const t = i / runeCount;
-          const x = cx - baseW * 0.55 + t * baseW * 1.1;
-          const y1 = cy - baseH * 0.55;
-          const y2 = cy + baseH * 0.55;
-          const sym = ancientSymbols[i % ancientSymbols.length];
-          ctx.font = `${10 + p * 4}px 'Segoe UI', 'Arial Unicode MS', sans-serif`;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillStyle = `rgba(255,215,0,${0.05 + p * 0.04})`;
-          ctx.fillText(sym, x, y1 - 8);
-          ctx.fillText(sym, x, y2 + 8);
-        }
-
-        // === GLOW RING (sacred circle) ===
-        const ringRadius = baseW * 0.52 * (1 + p * 0.05);
-        const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, ringRadius);
-        grad.addColorStop(0, `rgba(255,215,0,${0.02 + p * 0.03})`);
-        grad.addColorStop(0.5, `rgba(255,215,0,${0.01 + p * 0.02})`);
-        grad.addColorStop(1, 'rgba(255,215,0,0)');
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.arc(cx, cy, ringRadius, 0, Math.PI * 2);
-        ctx.fill();
-
-        // === RADIAL ENERGY LINES (like ancient ray carvings) ===
-        for (let i = 0; i < 24; i++) {
-          const angle = (i / 24) * Math.PI * 2 + p * 0.2;
-          const r1 = ringRadius * 0.35;
-          const r2 = ringRadius * (0.85 + Math.sin(p * 8 + i * 0.5) * 0.05);
-          ctx.beginPath();
-          ctx.moveTo(cx + Math.cos(angle) * r1, cy + Math.sin(angle) * r1);
-          ctx.lineTo(cx + Math.cos(angle) * r2, cy + Math.sin(angle) * r2);
-          ctx.strokeStyle = `rgba(255,215,0,${0.03 + p * 0.03})`;
-          ctx.lineWidth = 0.8;
-          ctx.stroke();
-        }
-
-        // === LEFT PYRAMID HALF (ancient stone slab) ===
-        const lTopX = lx;
-        const lTopY = cy - baseH * 0.45;
-        const lBotX = lx;
-        const lBotY = cy + baseH * 0.45;
-        const lOuterX = cx - baseW * 0.45 - spread / 2;
-
-        const lGrad = ctx.createLinearGradient(lOuterX, cy, cx, cy);
-        lGrad.addColorStop(0, `rgba(180,140,80,${0.04 + p * 0.02})`);
-        lGrad.addColorStop(0.5, `rgba(255,215,0,${0.02 + p * 0.01})`);
-        lGrad.addColorStop(1, 'rgba(255,215,0,0)');
-
-        ctx.beginPath();
-        ctx.moveTo(lTopX, lTopY);
-        ctx.lineTo(lOuterX, lBotY);
-        ctx.lineTo(lBotX, lBotY);
-        ctx.closePath();
-        ctx.fillStyle = lGrad;
-        ctx.fill();
-        ctx.strokeStyle = `rgba(255,215,0,${0.12 + p * 0.08})`;
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-
-        // Inner lines (ancient carvings)
-        for (let i = 1; i < 10; i++) {
-          const t = i / 10;
-          const y = lTopY + t * (lBotY - lTopY);
-          const xLeft = lOuterX + t * (lBotY - lTopY) * 0.4;
-          const xRight = lTopX + t * (lBotY - lTopY) * 0.08;
-          ctx.beginPath();
-          ctx.moveTo(xLeft, y);
-          ctx.lineTo(xRight, y);
-          ctx.strokeStyle = `rgba(255,215,0,${0.04 + p * 0.03})`;
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-        }
-
-        // === RIGHT PYRAMID HALF ===
-        const rTopX = rx;
-        const rTopY = cy - baseH * 0.45;
-        const rBotX = rx;
-        const rBotY = cy + baseH * 0.45;
-        const rOuterX = cx + baseW * 0.45 + spread / 2;
-
-        const rGrad = ctx.createLinearGradient(rOuterX, cy, cx, cy);
-        rGrad.addColorStop(0, `rgba(180,140,80,${0.04 + p * 0.02})`);
-        rGrad.addColorStop(0.5, `rgba(255,215,0,${0.02 + p * 0.01})`);
-        rGrad.addColorStop(1, 'rgba(255,215,0,0)');
-
-        ctx.beginPath();
-        ctx.moveTo(rTopX, rTopY);
-        ctx.lineTo(rOuterX, rBotY);
-        ctx.lineTo(rBotX, rBotY);
-        ctx.closePath();
-        ctx.fillStyle = rGrad;
-        ctx.fill();
-        ctx.strokeStyle = `rgba(255,215,0,${0.12 + p * 0.08})`;
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-
-        for (let i = 1; i < 10; i++) {
-          const t = i / 10;
-          const y = rTopY + t * (rBotY - rTopY);
-          const xLeft = rTopX + t * (rBotY - rTopY) * 0.08;
-          const xRight = rOuterX - t * (rBotY - rTopY) * 0.4;
-          ctx.beginPath();
-          ctx.moveTo(xLeft, y);
-          ctx.lineTo(xRight, y);
-          ctx.strokeStyle = `rgba(255,215,0,${0.04 + p * 0.03})`;
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-        }
-
-        // === EYE OF HORUS / ALL-SEEING EYE (center) ===
-        const eyeSize = 18 + p * 8;
-        const eyeGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, eyeSize * 4);
-        eyeGlow.addColorStop(0, `rgba(255,215,0,${0.25 + p * 0.15})`);
-        eyeGlow.addColorStop(0.3, `rgba(255,215,0,${0.08 + p * 0.04})`);
-        eyeGlow.addColorStop(1, 'rgba(255,215,0,0)');
-        ctx.fillStyle = eyeGlow;
-        ctx.beginPath();
-        ctx.arc(cx, cy, eyeSize * 4, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Eye shape (almond)
-        ctx.shadowColor = 'rgba(255,215,0,0.4)';
-        ctx.shadowBlur = 40;
-        ctx.beginPath();
-        ctx.ellipse(cx, cy, eyeSize * 1.1, eyeSize * 0.6, 0, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,215,0,${0.15 + p * 0.1})`;
-        ctx.fill();
-        ctx.strokeStyle = `rgba(255,215,0,${0.3 + p * 0.15})`;
-        ctx.lineWidth = 2;
-        ctx.stroke();
-
-        // Inner pupil
-        ctx.shadowBlur = 60;
-        ctx.beginPath();
-        ctx.arc(cx, cy, eyeSize * 0.35, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,215,0,${0.5 + p * 0.2})`;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-
-        // Eye of Horus markings (teardrop and eyebrow)
-        ctx.strokeStyle = `rgba(255,215,0,${0.15 + p * 0.1})`;
-        ctx.lineWidth = 1.5;
-        // Teardrop (left)
-        ctx.beginPath();
-        ctx.moveTo(cx - eyeSize * 0.9, cy + eyeSize * 0.1);
-        ctx.quadraticCurveTo(cx - eyeSize * 0.6, cy + eyeSize * 1.0, cx - eyeSize * 0.3, cy + eyeSize * 0.2);
-        ctx.stroke();
-        // Eyebrow (right)
-        ctx.beginPath();
-        ctx.moveTo(cx + eyeSize * 0.9, cy - eyeSize * 0.6);
-        ctx.quadraticCurveTo(cx + eyeSize * 0.5, cy - eyeSize * 1.0, cx - eyeSize * 0.1, cy - eyeSize * 0.7);
-        ctx.stroke();
-
-        // === FLOATING RUNES (around the eye) ===
-        for (let i = 0; i < 8; i++) {
-          const angle = (i / 8) * Math.PI * 2 + p * 0.5;
-          const r = eyeSize * 1.9 + Math.sin(p * 6 + i) * 4;
-          const sym = ancientSymbols[i % ancientSymbols.length];
-          ctx.font = `${12 + p * 4}px 'Segoe UI', 'Arial Unicode MS', sans-serif`;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillStyle = `rgba(255,215,0,${0.06 + p * 0.04})`;
-          ctx.fillText(sym, cx + Math.cos(angle) * r, cy + Math.sin(angle) * r);
-        }
-
-        return { cx, cy, baseW, baseH, spread };
-      }
-
-      // === BURST PARTICLES (gold + emerald) ===
-      function createBurst(count, cx, cy, speed) {
-        for (let i = 0; i < count; i++) {
-          const angle = Math.random() * Math.PI * 2;
-          const spd = speed * (0.3 + Math.random() * 0.7);
-          burstParticles.push({
-            x: cx + (Math.random() - 0.5) * 20,
-            y: cy + (Math.random() - 0.5) * 20,
-            vx: Math.cos(angle) * spd,
-            vy: Math.sin(angle) * spd,
-            life: 1,
-            decay: 0.003 + Math.random() * 0.006,
-            size: 2 + Math.random() * 4,
-            color: Math.random() > 0.6 ? '#10B981' : '#FFD700'
-          });
-        }
-        // Add some ancient symbol burst
-        for (let i = 0; i < 15; i++) {
-          const angle = Math.random() * Math.PI * 2;
-          const spd = speed * (0.2 + Math.random() * 0.5);
-          burstParticles.push({
-            x: cx + (Math.random() - 0.5) * 20,
-            y: cy + (Math.random() - 0.5) * 20,
-            vx: Math.cos(angle) * spd,
-            vy: Math.sin(angle) * spd,
-            life: 1,
-            decay: 0.002 + Math.random() * 0.004,
-            size: 16 + Math.random() * 12,
-            color: '#FFD700',
-            symbol: ancientSymbols[Math.floor(Math.random() * ancientSymbols.length)]
-          });
-        }
-      }
-
-      function updateBurst() {
-        for (let i = burstParticles.length - 1; i >= 0; i--) {
-          const p = burstParticles[i];
-          p.x += p.vx;
-          p.y += p.vy;
-          p.vx *= 0.99;
-          p.vy *= 0.99;
-          p.life -= p.decay;
-          if (p.life <= 0) burstParticles.splice(i, 1);
-        }
-      }
-
-      function drawBurst() {
-        for (const p of burstParticles) {
-          ctx.globalAlpha = p.life;
-          if (p.symbol) {
-            ctx.font = `${p.size * p.life}px 'Segoe UI', 'Arial Unicode MS', sans-serif`;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillStyle = p.color;
-            ctx.fillText(p.symbol, p.x, p.y);
-          } else {
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size * p.life * 0.8, 0, Math.PI * 2);
-            ctx.fillStyle = p.color;
-            ctx.fill();
-          }
-        }
-        ctx.globalAlpha = 1;
-      }
-
-      // === ANIMATION LOOP ===
-      function animate(time) {
-        const dt = (time - startTime) / 1000;
-        startTime = time;
-
-        // Phase control (FAST: opens in ~1.2 seconds)
-        if (phase === 0 && dt > 0.2) {
-          phase = 1;
-        }
-        if (phase === 1) {
-          gateProgress += dt * 0.85; // Faster: 0.6 → 0.85
-          if (gateProgress >= 1) {
-            gateProgress = 1;
-            phase = 2;
-            const g = drawAncientGate(1);
-            createBurst(350, g.cx, g.cy, 7);
-            createBurst(180, g.cx - 80, g.cy - 60, 5);
-            createBurst(180, g.cx + 80, g.cy + 60, 5);
-            setTimeout(() => {
-              mainContent.classList.add('reveal');
-            }, 300);
-            setTimeout(() => {
-              phase = 3;
-            }, 800);
-          }
-        }
-        if (phase === 2) {
-          updateBurst();
-          if (burstParticles.length < 20 && phase === 2) {
-            setTimeout(() => { phase = 3; }, 200);
-          }
-        }
-        if (phase === 3) {
-          canvas.style.transition = 'opacity 0.8s ease';
-          canvas.style.opacity = '0';
-          setTimeout(() => {
-            canvas.style.display = 'none';
-          }, 1000);
-          if (animFrame) cancelAnimationFrame(animFrame);
-        }
-
-        // === DRAW ===
-        ctx.clearRect(0, 0, W, H);
-
-        // Stars
-        for (const star of stars) {
-          star.a += star.speed;
-          const alpha = 0.2 + Math.sin(star.a) * 0.15 + 0.15;
-          ctx.beginPath();
-          ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255,255,255,${alpha})`;
-          ctx.fill();
-        }
-
-        if (phase < 3 || canvas.style.opacity !== '0') {
-          drawAncientGate(gateProgress);
-        }
-
-        if (phase >= 2) drawBurst();
-
-        // === TEXT: INITIALIZING → OPENING → ACCESS GRANTED ===
-        if (phase < 3) {
-          const text = phase === 0 ? '⚡ INITIALIZING' :
-                       phase === 1 ? '𓂀 OPENING VAULT' :
-                       phase === 2 ? '◈ ACCESS GRANTED ◈' : '';
-          ctx.font = '600 13px Inter, sans-serif';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'bottom';
-          const alpha = phase === 0 ? 0.5 : phase === 1 ? 0.7 : 1;
-          ctx.fillStyle = `rgba(255,215,0,${alpha * 0.35})`;
-          ctx.fillText(text, W / 2, H - 50);
-
-          // Progress dots (ancient style)
-          const dotCount = 16;
-          const dotSize = 4;
-          const dotGap = 8;
-          const totalWidth = dotCount * (dotSize + dotGap) - dotGap;
-          const startX = (W - totalWidth) / 2;
-          const dotsFilled = Math.floor(gateProgress * dotCount);
-          for (let i = 0; i < dotCount; i++) {
-            const x = startX + i * (dotSize + dotGap);
-            const y = H - 30;
-            ctx.beginPath();
-            ctx.arc(x, y, dotSize / 2, 0, Math.PI * 2);
-            if (i < dotsFilled) {
-              ctx.fillStyle = `rgba(255,215,0,${0.7 + Math.sin(time / 150 + i * 0.5) * 0.2})`;
-            } else {
-              ctx.fillStyle = 'rgba(255,255,255,0.06)';
-            }
-            ctx.fill();
-            // Ancient dot border
-            ctx.strokeStyle = `rgba(255,215,0,${i < dotsFilled ? 0.1 : 0.03})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
-
-        if (phase < 3 || canvas.style.opacity !== '0') {
-          animFrame = requestAnimationFrame(animate);
-        }
-      }
-
-      animFrame = requestAnimationFrame(animate);
-
-      window.addEventListener('resize', () => {
-        resize();
-        stars.length = 0;
-        for (let i = 0; i < 200; i++) {
-          stars.push({
-            x: Math.random() * W,
-            y: Math.random() * H,
-            r: Math.random() * 1.2 + 0.3,
-            a: Math.random() * 0.6 + 0.2,
-            speed: 0.002 + Math.random() * 0.004
-          });
-        }
-      });
-    })();
-  </script>
 
 </body>
 </html>

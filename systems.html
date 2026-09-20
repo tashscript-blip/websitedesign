@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="The Legacy Grove Codex open‑source ecosystem – TASH, Codex Portal, Digital Vault Blueprint, and more. Sovereign systems for the future." />
+  <meta name="description" content="The Legacy Grove Codex open-source ecosystem – TASH v4.5.0, EmergeOS, Seeker's Bridge, Unity Games, and the Adaptive Ceremonial Interface. Sovereign systems for the future." />
   <title>Systems | Legacy Grove Codex</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
+    /* ----- RESET & BASE ----- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: #080A0E;
@@ -40,6 +41,7 @@
       flex-direction: column;
     }
 
+    /* ----- NAVIGATION ----- */
     .navbar {
       background: rgba(8,10,14,0.75);
       backdrop-filter: blur(20px);
@@ -59,6 +61,7 @@
     .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
     .brand-name { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1rem; color: #E8EDF2; letter-spacing: 0.5px; }
     .brand-legal { font-size: 0.6rem; color: #9AA6B2; letter-spacing: 2px; text-transform: uppercase; }
+
     .nav-links { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
     .nav-links a { color: #9AA6B2; text-decoration: none; font-size: 0.8rem; font-weight: 500; transition: color 0.3s; letter-spacing: 0.5px; position: relative; }
     .nav-links a:hover { color: #FFD700; }
@@ -102,9 +105,29 @@
     }
     .nav-actions .btn:hover { background: #10B981; color: #080A0E; box-shadow: 0 0 30px rgba(16,185,129,0.2); }
 
+    /* ----- HERO ----- */
     .hero { padding: 2rem 0 3rem 0; border-bottom: 1px solid rgba(255,215,0,0.06); margin-bottom: 3rem; }
-    .hero-badge { display: inline-block; padding: 0.2rem 1.2rem; border-radius: 50px; font-size: 0.65rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; background: rgba(255,215,0,0.06); color: #FFD700; border: 1px solid rgba(255,215,0,0.12); margin-bottom: 1rem; }
-    .hero-title { font-family: 'Outfit', sans-serif; font-size: clamp(2.8rem, 5vw, 4.5rem); font-weight: 900; line-height: 1.05; letter-spacing: -2px; margin-bottom: 0.5rem; }
+    .hero-badge {
+      display: inline-block;
+      padding: 0.2rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: rgba(255,215,0,0.06);
+      color: #FFD700;
+      border: 1px solid rgba(255,215,0,0.12);
+      margin-bottom: 1rem;
+    }
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 0.5rem;
+    }
     .hero-title .gold { background: linear-gradient(135deg, #FFD700, #B8860B); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .hero-title .sub { font-size: 1rem; font-weight: 400; color: #9AA6B2; letter-spacing: 1px; display: block; margin-top: 0.2rem; -webkit-text-fill-color: #9AA6B2; }
     .hero-description { font-size: 1.05rem; color: #9AA6B2; line-height: 1.8; max-width: 700px; margin-top: 0.5rem; }
@@ -120,12 +143,15 @@
     .divider-line { height: 1px; flex: 1; background: linear-gradient(90deg, transparent, #FFD700, transparent); }
     .divider-icon { color: #FFD700; font-size: 0.8rem; letter-spacing: 4px; }
 
+    /* ----- SECTION HEADERS ----- */
     .section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
     .section-header .num { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 2rem; color: rgba(255,215,0,0.08); line-height: 1; }
     .section-header h2 { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 700; }
     .section-header .badge { margin-left: auto; padding: 0.2rem 1rem; border-radius: 50px; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; background: rgba(16,185,129,0.1); color: #10B981; border: 1px solid rgba(16,185,129,0.15); }
 
+    /* ----- SYSTEMS GRID ----- */
     .systems-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+
     .system-card {
       background: rgba(255,255,255,0.02);
       backdrop-filter: blur(8px);
@@ -145,6 +171,7 @@
     .system-card .status { display: inline-block; padding: 0.15rem 0.8rem; border-radius: 50px; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; background: rgba(16,185,129,0.1); color: #10B981; border: 1px solid rgba(16,185,129,0.12); margin-bottom: 0.8rem; align-self: flex-start; }
     .system-card .status.beta { background: rgba(255,215,0,0.08); color: #FFD700; border-color: rgba(255,215,0,0.15); }
     .system-card .status.planning { background: rgba(255,255,255,0.04); color: #4A5568; border-color: rgba(255,255,255,0.05); }
+    .system-card .status.new { background: rgba(255,215,0,0.15); color: #FFD700; border-color: rgba(255,215,0,0.3); font-weight: 700; }
     .system-card h3 { font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.4rem; color: #E8EDF2; }
     .system-card p { font-size: 0.9rem; color: #9AA6B2; line-height: 1.7; flex-grow: 1; }
     .system-card .link { margin-top: 1.2rem; display: inline-flex; align-items: center; gap: 0.5rem; color: #FFD700; text-decoration: none; font-weight: 600; font-size: 0.85rem; transition: gap 0.3s; }
@@ -152,6 +179,7 @@
     .system-card .link .arrow { transition: transform 0.3s; }
     .system-card .link:hover .arrow { transform: translateX(4px); }
 
+    /* ----- ARCHITECTURE OVERVIEW ----- */
     .architecture-section {
       background: rgba(255,255,255,0.02);
       border: 1px solid rgba(255,255,255,0.04);
@@ -166,6 +194,7 @@
     .architecture-badges li { background: rgba(255,255,255,0.03); padding: 0.3rem 1.2rem; border-radius: 50px; font-size: 0.7rem; color: #9AA6B2; border: 1px solid rgba(255,255,255,0.04); }
     .architecture-badges li .check { color: #10B981; font-weight: 700; margin-right: 0.3rem; }
 
+    /* ----- GOVERNMENT SECTION ----- */
     .government-section {
       background: rgba(255,215,0,0.02);
       border: 1px solid rgba(255,215,0,0.06);
@@ -185,12 +214,15 @@
     .government-cta { text-align: right; }
     .government-cta .btn { display: inline-block; padding: 0.6rem 1.8rem; border-radius: 50px; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; transition: all 0.3s; border: 1px solid rgba(255,215,0,0.25); color: #FFD700; background: rgba(255,215,0,0.04); }
     .government-cta .btn:hover { background: #FFD700; color: #080A0E; box-shadow: 0 0 30px rgba(255,215,0,0.15); }
+    .government-cta .note { display: block; font-size: 0.65rem; color: #4A5568; margin-top: 0.5rem; }
 
+    /* ----- FOOTER ----- */
     .footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; font-size: 0.75rem; color: #4A5568; }
     .footer span { color: #9AA6B2; }
     .footer .address { display: block; color: #4A5568; margin-top: 0.2rem; font-size: 0.7rem; }
     .footer .address .principal { color: #4A5568; }
 
+    /* ----- RESPONSIVE ----- */
     @media (max-width: 900px) {
       .government-section { grid-template-columns: 1fr; text-align: center; padding: 1.5rem; }
       .government-cta { text-align: center; }
@@ -221,7 +253,7 @@
 
   <div class="container">
 
-    <!-- NAVIGATION -->
+    <!-- ===== NAVIGATION ===== -->
     <nav class="navbar">
       <a href="index.html" class="logo">
         <svg class="logo-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -244,7 +276,7 @@
         <a href="codex-portal.html" data-i18n="nav_portal">Codex Portal</a>
         <a href="systems.html" class="active" data-i18n="nav_systems">Systems</a>
         <a href="community.html" data-i18n="nav_community">Community</a>
-	<a href="trust.html" data-i18n="nav_trust">Trust</a>
+        <a href="trust.html" data-i18n="nav_trust">Trust</a>
       </div>
 
       <div class="nav-actions">
@@ -259,80 +291,143 @@
       </div>
     </nav>
 
-    <!-- HERO -->
+    <!-- ===== HERO ===== -->
     <section class="hero">
       <div class="hero-badge" data-i18n="sys_badge">✦ Open‑Source Ecosystem · Sovereign Systems</div>
       <h1 class="hero-title" data-i18n="sys_title">The <span class="gold">Systems</span><span class="sub" data-i18n="sys_subtitle">Frameworks · Platforms · Intelligence</span></h1>
       <p class="hero-description" data-i18n="sys_desc">An evolving ecosystem of open‑source frameworks designed to bridge mathematical abstraction and operational reality. From autonomous intelligence to sovereign identity and digital estate preservation – our systems are built to protect, adapt, and scale.</p>
       <div class="hero-meta">
-        <div class="hero-meta-item"><span class="label" data-i18n="sys_active">Active Systems</span><span class="value"><span class="emerald" data-i18n="sys_active_value">4</span></span></div>
-        <div class="hero-meta-item"><span class="label" data-i18n="sys_opensource">Open Source</span><span class="value"><span class="gold" data-i18n="sys_opensource_value">100%</span></span></div>
-        <div class="hero-meta-item"><span class="label" data-i18n="sys_fedramp">FedRAMP Aligned</span><span class="value"><span class="emerald" data-i18n="sys_fedramp_value">✓</span></span></div>
-        <div class="hero-meta-item"><span class="label" data-i18n="tash_uei">UEI</span><span class="value" style="font-size:0.8rem;font-family:'Inter',monospace;">D43ZB3D7QTW1</span></div>
+        <div class="hero-meta-item">
+          <span class="label" data-i18n="sys_active">Active Systems</span>
+          <span class="value"><span class="emerald" data-i18n="sys_active_value">8</span></span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="label" data-i18n="sys_opensource">Open Source</span>
+          <span class="value"><span class="gold" data-i18n="sys_opensource_value">100%</span></span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="label" data-i18n="sys_fedramp">FedRAMP Aligned</span>
+          <span class="value"><span class="emerald" data-i18n="sys_fedramp_value">✓</span></span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="label" data-i18n="tash_meta_uei">UEI</span>
+          <span class="value" style="font-size:0.8rem;font-family:monospace;">D43ZB3D7QTW1</span>
+        </div>
       </div>
     </section>
 
     <div class="divider"><span class="divider-line"></span><span class="divider-icon">◆ ◆ ◆</span><span class="divider-line"></span></div>
 
-    <!-- SYSTEMS GRID -->
+    <!-- ===== SYSTEMS GRID ===== -->
     <div class="section-header">
       <span class="num">01</span>
       <h2 data-i18n="sys_arsenal">The Arsenal</h2>
       <span class="badge" data-i18n="sys_arsenal_badge">Active</span>
     </div>
+
     <div class="systems-grid">
+
       <!-- TASH -->
       <div class="system-card">
-        <span class="icon">🧠</span><span class="status" data-i18n="sys_arsenal_badge">Active</span>
+        <span class="icon">🧠</span>
+        <span class="status" data-i18n="sys_arsenal_badge">Active</span>
         <h3 data-i18n="sys_tash">TASH</h3>
-        <p data-i18n="sys_tash_desc">Tactical Artificial System Hierarchy. A self‑writing, infinite‑scaling framework built on 10‑dimensional pyramid mathematics.</p>
+        <p data-i18n="sys_tash_desc">Open-source compliance infrastructure for autonomous AI systems. Eight independent Python modules. 124 tests passing. MIT licensed.</p>
         <a href="tash.html" class="link" data-i18n="sys_tash_link">Explore TASH <span class="arrow">→</span></a>
       </div>
+
+      <!-- EmergeOS -->
+      <div class="system-card">
+        <span class="icon">🌌</span>
+        <span class="status new" data-i18n="sys_arsenal_badge">Active</span>
+        <h3 data-i18n="sys_emergeos">EmergeOS</h3>
+        <p data-i18n="sys_emergeos_desc">The emergent operating system layer. Where autonomous modules coordinate to produce adaptive, self-organizing behavior.</p>
+        <a href="https://github.com/tashscript-blip/TASH" target="_blank" class="link" data-i18n="sys_emergeos_link">Explore on GitHub <span class="arrow">→</span></a>
+      </div>
+
+      <!-- Seeker's Bridge -->
+      <div class="system-card">
+        <span class="icon">🌉</span>
+        <span class="status new" data-i18n="sys_arsenal_badge">Active</span>
+        <h3 data-i18n="sys_seeker">Seeker's Bridge</h3>
+        <p data-i18n="sys_seeker_desc">A guided journey through the Seven Keys — the design philosophy that gives compliance tooling a soul.</p>
+        <a href="https://github.com/tashscript-blip/TASH" target="_blank" class="link" data-i18n="sys_seeker_link">Walk the Bridge <span class="arrow">→</span></a>
+      </div>
+
+      <!-- Unity Games -->
+      <div class="system-card">
+        <span class="icon">🎮</span>
+        <span class="status new" data-i18n="sys_arsenal_badge">Active</span>
+        <h3 data-i18n="sys_unity">Unity Games</h3>
+        <p data-i18n="sys_unity_desc">Interactive engagement layer. Learning, narrative, and mastery through play — built on the TASH core.</p>
+        <a href="https://github.com/tashscript-blip/TASH" target="_blank" class="link" data-i18n="sys_unity_link">Play <span class="arrow">→</span></a>
+      </div>
+
+      <!-- ACI Dashboard -->
+      <div class="system-card">
+        <span class="icon">🏛️</span>
+        <span class="status new" data-i18n="sys_arsenal_badge">Active</span>
+        <h3 data-i18n="sys_aci">Adaptive Ceremonial Interface</h3>
+        <p data-i18n="sys_aci_desc">The ACI dashboard — a Flask-powered UI exposing all eight compliance domains with live posture data.</p>
+        <a href="https://github.com/tashscript-blip/TASH" target="_blank" class="link" data-i18n="sys_aci_link">Open Dashboard <span class="arrow">→</span></a>
+      </div>
+
       <!-- Codex Portal -->
       <div class="system-card">
-        <span class="icon">🔐</span><span class="status" data-i18n="sys_arsenal_badge">Active</span>
+        <span class="icon">🔐</span>
+        <span class="status" data-i18n="sys_arsenal_badge">Active</span>
         <h3 data-i18n="sys_portal">Codex Portal</h3>
         <p data-i18n="sys_portal_desc">Sovereign Identity &amp; Compliance. A modular framework for corporate vessel formation, federal alignment, and sovereign identity management.</p>
         <a href="codex-portal.html" class="link" data-i18n="sys_portal_link">Enter Portal <span class="arrow">→</span></a>
       </div>
+
       <!-- Digital Vault Blueprint -->
       <div class="system-card">
-        <span class="icon">📖</span><span class="status" data-i18n="sys_arsenal_badge">Active</span>
+        <span class="icon">📖</span>
+        <span class="status" data-i18n="sys_arsenal_badge">Active</span>
         <h3 data-i18n="sys_vault">Digital Vault Blueprint</h3>
         <p data-i18n="sys_vault_desc">Break‑Glass‑in‑Case‑of‑Emergency Estate Workbook. A fill‑in‑the‑blank dossier that consolidates your entire digital existence.</p>
         <a href="book.html" class="link" data-i18n="sys_vault_link">View the Vault <span class="arrow">→</span></a>
       </div>
-      <!-- Community / Network Nodes -->
+
+      <!-- Network Nodes -->
       <div class="system-card">
-        <span class="icon">🌐</span><span class="status" data-i18n="sys_arsenal_badge">Active</span>
+        <span class="icon">🌐</span>
+        <span class="status" data-i18n="sys_arsenal_badge">Active</span>
         <h3 data-i18n="sys_community">Network Nodes</h3>
         <p data-i18n="sys_community_desc">Sovereign Collaboration Circles. A framework for peer‑to‑peer alliance building, acoustic briefings, and defense‑grade knowledge sharing.</p>
         <a href="community.html" class="link" data-i18n="sys_community_link">Join the Network <span class="arrow">→</span></a>
       </div>
-      <!-- TASH-Edge -->
+
+      <!-- TASH-Edge (Coming Soon) -->
       <div class="system-card">
-        <span class="icon">📡</span><span class="status beta" data-i18n="sys_arsenal_badge">Beta</span>
+        <span class="icon">📡</span>
+        <span class="status beta" data-i18n="sys_arsenal_badge">Beta</span>
         <h3 data-i18n="sys_edge">TASH‑Edge</h3>
         <p data-i18n="sys_edge_desc">Autonomous Edge Intelligence. A lightweight, deployable version of TASH designed for IoT, field sensors, and tactical edge devices.</p>
         <span style="color:#4A5568;font-size:0.8rem;margin-top:1rem;" data-i18n="sys_edge_status">Coming Q4 2026</span>
       </div>
-      <!-- Codex Vault API -->
+
+      <!-- Codex Vault API (Planning) -->
       <div class="system-card">
-        <span class="icon">⚙️</span><span class="status planning" data-i18n="sys_arsenal_badge">Planning</span>
+        <span class="icon">⚙️</span>
+        <span class="status planning" data-i18n="sys_arsenal_badge">Planning</span>
         <h3 data-i18n="sys_api">Codex Vault API</h3>
         <p data-i18n="sys_api_desc">Programmatic Estate Management. An API layer for the Digital Vault Blueprint – enabling automated account shutdown, asset transfer, and compliance reporting.</p>
         <span style="color:#4A5568;font-size:0.8rem;margin-top:1rem;" data-i18n="sys_api_status">Planning Phase</span>
       </div>
+
     </div>
 
     <div class="divider"><span class="divider-line"></span><span class="divider-icon">◆ ◆ ◆</span><span class="divider-line"></span></div>
 
-    <!-- ARCHITECTURE OVERVIEW -->
+    <!-- ===== ARCHITECTURE OVERVIEW ===== -->
     <div class="section-header">
       <span class="num">02</span>
       <h2 data-i18n="sys_arch_title">Architecture Overview</h2>
       <span class="badge" data-i18n="sys_arch_badge">Sovereign</span>
     </div>
+
     <div class="architecture-section">
       <h3 data-i18n="sys_arch_heading">Built on the TASH Core</h3>
       <p data-i18n="sys_arch_desc">Every system in the Legacy Grove Codex ecosystem is built upon the foundational principles of the TASH framework – 10‑dimensional pyramid mathematics, recursive self‑optimization, and zero‑trust security.</p>
@@ -345,7 +440,7 @@
       </ul>
     </div>
 
-    <!-- GOVERNMENT READINESS -->
+    <!-- ===== GOVERNMENT READINESS ===== -->
     <div class="government-section">
       <div>
         <h4 data-i18n="sys_gov_title">🇺🇸 Government &amp; Defense Ready</h4>
@@ -358,11 +453,11 @@
       </div>
       <div class="government-cta">
         <a href="tash.html" class="btn" data-i18n="sys_gov_cta">Explore TASH →</a>
-        <span style="display:block;font-size:0.65rem;color:#4A5568;margin-top:0.5rem;" data-i18n="sys_gov_note">GSA Schedule Available</span>
+        <span class="note" data-i18n="sys_gov_note">GSA Schedule Available</span>
       </div>
     </div>
 
-    <!-- FOOTER -->
+    <!-- ===== FOOTER ===== -->
     <footer class="footer">
       <p>
         <span data-i18n="footer_copyright">© 2026 Legacy Grove Codex LLC</span> &bull;
@@ -377,6 +472,7 @@
 
   </div>
 
+  <!-- ===== MULTILANGUAGE SUPPORT ===== -->
   <script src="translations.js"></script>
 
 </body>

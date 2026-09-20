@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="TASH – Tactical Artificial System Hierarchy. A self-writing, infinite-scaling framework for defense, intelligence, and sovereign systems." />
+  <meta name="description" content="TASH — Open-source compliance infrastructure for autonomous AI systems. Eight compliance modules. 124 tests passing. MIT licensed. Legacy Grove Codex LLC." />
   <title>TASH | Tactical Artificial System Hierarchy</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <style>
-    /* RESET */
+    /* ----- RESET & BASE ----- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: #080A0E;
@@ -41,7 +41,7 @@
       flex-direction: column;
     }
 
-    /* NAVIGATION */
+    /* ----- NAVIGATION ----- */
     .navbar {
       background: rgba(8,10,14,0.75);
       backdrop-filter: blur(20px);
@@ -61,6 +61,7 @@
     .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
     .brand-name { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1rem; color: #E8EDF2; letter-spacing: 0.5px; }
     .brand-legal { font-size: 0.6rem; color: #9AA6B2; letter-spacing: 2px; text-transform: uppercase; }
+
     .nav-links { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
     .nav-links a { color: #9AA6B2; text-decoration: none; font-size: 0.8rem; font-weight: 500; transition: color 0.3s; letter-spacing: 0.5px; position: relative; }
     .nav-links a:hover { color: #FFD700; }
@@ -83,7 +84,6 @@
       background-repeat: no-repeat;
       background-position: right 0.8rem center;
       background-size: 10px 6px;
-      transition: border-color 0.3s;
     }
     .lang-select:hover { border-color: #FFD700; }
     .lang-select option { background: #0A0C10; color: #E8EDF2; }
@@ -104,21 +104,33 @@
     }
     .nav-actions .btn:hover { background: #10B981; color: #080A0E; box-shadow: 0 0 30px rgba(16,185,129,0.2); }
 
-    /* HERO */
+    /* ----- HERO ----- */
     .hero { padding: 2rem 0 3rem 0; border-bottom: 1px solid rgba(255,215,0,0.06); margin-bottom: 3rem; }
     .hero-badge {
-      display: inline-block;
-      padding: 0.2rem 1.2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.3rem 1.2rem;
       border-radius: 50px;
       font-size: 0.65rem;
       font-weight: 700;
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      background: rgba(255,215,0,0.06);
-      color: #FFD700;
-      border: 1px solid rgba(255,215,0,0.12);
+      background: rgba(16,185,129,0.08);
+      color: #10B981;
+      border: 1px solid rgba(16,185,129,0.15);
       margin-bottom: 1rem;
     }
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10B981;
+      box-shadow: 0 0 8px #10B981;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
     .hero-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start; }
     .hero-title {
       font-family: 'Outfit', sans-serif;
@@ -129,8 +141,9 @@
       margin-bottom: 0.5rem;
     }
     .hero-title .gold { background: linear-gradient(135deg, #FFD700, #B8860B); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-title .sub { font-size: 1rem; font-weight: 400; color: #9AA6B2; letter-spacing: 1px; display: block; margin-top: 0.2rem; -webkit-text-fill-color: #9AA6B2; }
-    .hero-description { font-size: 1.05rem; color: #9AA6B2; line-height: 1.8; max-width: 600px; margin-top: 0.5rem; }
+    .hero-title .sub { font-size: 1rem; font-weight: 400; color: #9AA6B2; letter-spacing: 1px; display: block; margin-top: 0.3rem; -webkit-text-fill-color: #9AA6B2; }
+    .hero-description { font-size: 1.05rem; color: #9AA6B2; line-height: 1.8; max-width: 620px; margin-top: 1rem; }
+    .hero-description strong { color: #E8EDF2; }
 
     .hero-meta {
       background: rgba(255,255,255,0.02);
@@ -139,92 +152,223 @@
       padding: 1.5rem 2rem;
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      gap: 0.7rem;
     }
     .hero-meta-item { display: flex; justify-content: space-between; align-items: center; padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
     .hero-meta-item:last-child { border-bottom: none; }
     .hero-meta-item .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #4A5568; }
-    .hero-meta-item .value { font-weight: 600; font-size: 0.9rem; color: #E8EDF2; font-family: 'Outfit', sans-serif; }
+    .hero-meta-item .value { font-weight: 600; font-size: 0.85rem; color: #E8EDF2; font-family: 'Outfit', sans-serif; text-align: right; }
     .hero-meta-item .value .emerald { color: #10B981; }
     .hero-meta-item .value .gold { color: #FFD700; }
 
-    .divider { display: flex; align-items: center; gap: 1.5rem; margin: 2rem 0 3rem 0; opacity: 0.3; }
-    .divider-line { height: 1px; flex: 1; background: linear-gradient(90deg, transparent, #FFD700, transparent); }
-    .divider-icon { color: #FFD700; font-size: 0.8rem; letter-spacing: 4px; }
+    /* ----- BUTTONS ----- */
+    .btn-primary {
+      display: inline-block;
+      padding: 0.8rem 2.2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      text-decoration: none;
+      transition: all 0.3s;
+      background: linear-gradient(135deg, #FFD700, #B8860B);
+      color: #080A0E;
+      box-shadow: 0 0 40px rgba(255,215,0,0.15);
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 0 60px rgba(255,215,0,0.3); }
+    .btn-outline {
+      display: inline-block;
+      padding: 0.8rem 2.2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: 1px solid rgba(16,185,129,0.3);
+      color: #10B981;
+      background: transparent;
+    }
+    .btn-outline:hover { background: rgba(16,185,129,0.08); transform: translateY(-3px); }
 
-    .section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+    /* ----- SECTION HEADERS ----- */
+    .section-header { display: flex; align-items: center; gap: 1rem; margin: 2rem 0 1.5rem 0; }
     .section-header .num { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 2rem; color: rgba(255,215,0,0.08); line-height: 1; }
     .section-header h2 { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 700; }
     .section-header .badge { margin-left: auto; padding: 0.2rem 1rem; border-radius: 50px; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; background: rgba(16,185,129,0.1); color: #10B981; border: 1px solid rgba(16,185,129,0.15); }
 
-    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
-    .feature-card {
+    /* ----- MODULE GRID (8 Modules) ----- */
+    .modules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; margin-bottom: 3rem; }
+    .module-card {
       background: rgba(255,255,255,0.02);
       backdrop-filter: blur(8px);
       border: 1px solid rgba(255,255,255,0.04);
       border-radius: 1.5rem;
-      padding: 2rem 1.8rem;
+      padding: 1.6rem 1.6rem 1.4rem 1.6rem;
       transition: all 0.4s;
       position: relative;
       overflow: hidden;
     }
-    .feature-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #10B981, #FFD700); opacity: 0; transition: opacity 0.4s; }
-    .feature-card:hover { border-color: rgba(255,215,0,0.15); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
-    .feature-card:hover::before { opacity: 1; }
-    .feature-card .icon { font-size: 1.8rem; display: block; margin-bottom: 0.8rem; }
-    .feature-card h3 { font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem; color: #E8EDF2; }
-    .feature-card p { font-size: 0.9rem; color: #9AA6B2; line-height: 1.6; }
+    .module-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #10B981, #FFD700); opacity: 0; transition: opacity 0.4s; }
+    .module-card:hover { border-color: rgba(255,215,0,0.15); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+    .module-card:hover::before { opacity: 1; }
+    .module-card .icon { font-size: 1.6rem; display: block; margin-bottom: 0.6rem; }
+    .module-card .module-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: #4A5568; background: rgba(255,255,255,0.04); padding: 0.15rem 0.5rem; border-radius: 4px; display: inline-block; margin-bottom: 0.6rem; }
+    .module-card h3 { font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; color: #E8EDF2; }
+    .module-card p { font-size: 0.85rem; color: #9AA6B2; line-height: 1.6; }
+    .module-card .tests { display: inline-flex; align-items: center; gap: 0.3rem; margin-top: 0.8rem; font-size: 0.7rem; color: #10B981; font-weight: 600; }
 
-    .defense-section {
+    /* ----- PLATFORM TABLE ----- */
+    .platform-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 1.5rem;
+      overflow: hidden;
+      margin-bottom: 3rem;
+    }
+    .platform-table th {
+      text-align: left;
+      padding: 0.9rem 1.5rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #4A5568;
+      background: rgba(255,255,255,0.03);
+      font-weight: 600;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .platform-table td {
+      padding: 0.9rem 1.5rem;
+      font-size: 0.9rem;
+      color: #9AA6B2;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .platform-table tr:last-child td { border-bottom: none; }
+    .platform-table td:first-child { font-weight: 600; color: #E8EDF2; }
+    .platform-table td .emerald { color: #10B981; font-weight: 600; }
+    .platform-table td .gold { color: #FFD700; font-weight: 600; }
+    .platform-table td code { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #FFD700; background: rgba(255,215,0,0.05); padding: 0.1rem 0.4rem; border-radius: 4px; }
+
+    /* ----- QUICK START TERMINAL ----- */
+    .terminal {
+      background: #05070A;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 1.5rem;
+      padding: 1.5rem 1.8rem;
+      margin-bottom: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .terminal::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 28px;
+      background: rgba(255,255,255,0.02);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .terminal-dots { position: absolute; top: 9px; left: 15px; display: flex; gap: 6px; z-index: 1; }
+    .terminal-dots span { width: 10px; height: 10px; border-radius: 50%; }
+    .terminal-dots .r { background: #FF6B6B; }
+    .terminal-dots .y { background: #FFD700; }
+    .terminal-dots .g { background: #10B981; }
+    .terminal-title { position: absolute; top: 5px; left: 50%; transform: translateX(-50%); font-size: 0.65rem; color: #4A5568; z-index: 1; }
+    .terminal pre {
+      margin-top: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.9;
+      color: #E8EDF2;
+      overflow-x: auto;
+    }
+    .terminal pre .comment { color: #4A5568; }
+    .terminal pre .cmd { color: #10B981; }
+    .terminal pre .arg { color: #FFD700; }
+
+    /* ----- AUDIENCE CARDS ----- */
+    .audience-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 3rem; }
+    .audience-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 1.5rem;
+      padding: 2rem 2rem 1.8rem 2rem;
+      transition: all 0.4s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .audience-card:hover { border-color: rgba(255,215,0,0.2); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+    .audience-card .icon { font-size: 2rem; display: block; margin-bottom: 0.8rem; }
+    .audience-card h3 { font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .audience-card p { font-size: 0.9rem; color: #9AA6B2; line-height: 1.7; }
+    .audience-card .arrow { display: inline-block; margin-top: 0.8rem; color: #FFD700; font-weight: 600; font-size: 0.85rem; }
+
+    /* ----- ECOSYSTEM (Broader TASH Ecosystem) ----- */
+    .eco-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; margin-bottom: 3rem; }
+    .eco-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 1.5rem;
+      padding: 1.6rem 1.5rem;
+      transition: all 0.4s;
+    }
+    .eco-card:hover { border-color: rgba(16,185,129,0.2); transform: translateY(-3px); }
+    .eco-card .icon { font-size: 1.8rem; display: block; margin-bottom: 0.6rem; }
+    .eco-card h4 { font-family: 'Outfit', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .eco-card p { font-size: 0.82rem; color: #9AA6B2; line-height: 1.6; }
+
+    /* ----- FEDERAL READINESS ----- */
+    .fed-section {
       background: rgba(255,215,0,0.02);
-      border: 1px solid rgba(255,215,0,0.06);
+      border: 1px solid rgba(255,215,0,0.08);
       border-radius: 2rem;
       padding: 2.5rem 3rem;
       margin-bottom: 3rem;
       display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 2.5rem;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 2rem;
       align-items: center;
     }
-    .defense-section:hover { border-color: rgba(255,215,0,0.15); background: rgba(255,215,0,0.03); }
-    .defense-content h3 { font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 700; color: #FFD700; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
-    .defense-content p { color: #9AA6B2; font-size: 0.95rem; line-height: 1.7; margin-bottom: 1rem; }
-    .defense-badges { display: flex; flex-wrap: wrap; gap: 0.8rem; list-style: none; }
-    .defense-badges li { background: rgba(255,255,255,0.03); padding: 0.3rem 1.2rem; border-radius: 50px; font-size: 0.7rem; color: #9AA6B2; border: 1px solid rgba(255,255,255,0.04); display: flex; align-items: center; gap: 0.4rem; }
-    .defense-badges li .check { color: #10B981; font-weight: 700; }
-    .defense-cta { text-align: right; }
-    .defense-cta .btn { display: inline-block; padding: 0.7rem 2rem; border-radius: 50px; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; transition: all 0.3s; border: 1px solid rgba(255,215,0,0.25); color: #FFD700; background: rgba(255,215,0,0.04); }
-    .defense-cta .btn:hover { background: #FFD700; color: #080A0E; box-shadow: 0 0 40px rgba(255,215,0,0.15); }
-    .defense-cta .meta { display: block; font-size: 0.65rem; color: #4A5568; margin-top: 0.5rem; letter-spacing: 1px; }
+    .fed-section h3 { font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 700; color: #FFD700; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+    .fed-section p { color: #9AA6B2; font-size: 0.95rem; line-height: 1.7; margin-bottom: 1rem; }
+    .fed-badges { display: flex; flex-wrap: wrap; gap: 0.6rem; list-style: none; }
+    .fed-badges li { background: rgba(255,255,255,0.03); padding: 0.3rem 1rem; border-radius: 50px; font-size: 0.7rem; color: #9AA6B2; border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 0.4rem; }
+    .fed-badges li .check { color: #10B981; font-weight: 700; }
+    .fed-cta { text-align: right; }
+    .fed-cta .btn-primary { display: inline-block; }
 
-    .repo-card {
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.04);
-      border-radius: 1.5rem;
-      padding: 2rem 2.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      transition: all 0.4s;
+    /* ----- CTA FOOTER ----- */
+    .final-cta {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: rgba(255,215,0,0.02);
+      border: 1px solid rgba(255,215,0,0.08);
+      border-radius: 2rem;
+      margin-bottom: 3rem;
     }
-    .repo-card:hover { border-color: rgba(16,185,129,0.15); }
-    .repo-card .info h4 { font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.2rem; }
-    .repo-card .info p { font-size: 0.85rem; color: #9AA6B2; }
-    .repo-card .btn { display: inline-block; padding: 0.7rem 2rem; border-radius: 50px; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; transition: all 0.3s; background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); color: #10B981; }
-    .repo-card .btn:hover { background: #10B981; color: #080A0E; box-shadow: 0 0 30px rgba(16,185,129,0.15); }
+    .final-cta h3 { font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .final-cta p { color: #9AA6B2; font-size: 1rem; max-width: 600px; margin: 0 auto 1.5rem auto; line-height: 1.7; }
+    .final-cta .btn-group { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
 
-    .footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; font-size: 0.75rem; color: #4A5568; }
+    /* ----- FOOTER ----- */
+    .footer { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; font-size: 0.75rem; color: #4A5568; }
     .footer span { color: #9AA6B2; }
-    .footer .address { display: block; color: #4A5568; margin-top: 0.2rem; font-size: 0.7rem; }
-    .footer .address .principal { color: #4A5568; }
+    .footer .address { display: block; color: #4A5568; margin-top: 0.3rem; font-size: 0.7rem; }
 
+    /* ----- RESPONSIVE ----- */
     @media (max-width: 900px) {
       .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .defense-section { grid-template-columns: 1fr; text-align: center; padding: 1.5rem; }
-      .defense-cta { text-align: center; }
-      .defense-badges { justify-content: center; }
+      .fed-section { grid-template-columns: 1fr; text-align: center; padding: 1.8rem; }
+      .fed-cta { text-align: center; }
+      .fed-badges { justify-content: center; }
+      .audience-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 768px) {
       .container { padding: 1rem; }
@@ -233,13 +377,13 @@
       .nav-links a { font-size: 0.7rem; }
       .nav-actions { justify-content: center; flex-wrap: wrap; }
       .hero { padding: 1rem 0 2rem 0; }
-      .repo-card { flex-direction: column; text-align: center; }
+      .final-cta .btn-group { flex-direction: column; align-items: center; }
     }
     @media (max-width: 480px) {
       .container { padding: 0.6rem; }
       .nav-links a { font-size: 0.6rem; }
       .hero-title { font-size: 2.2rem; }
-      .features-grid { grid-template-columns: 1fr; }
+      .modules-grid { grid-template-columns: 1fr; }
       .hero-meta { padding: 1rem; }
     }
   </style>
@@ -251,7 +395,7 @@
 
   <div class="container">
 
-    <!-- NAVIGATION -->
+    <!-- ===== NAVIGATION ===== -->
     <nav class="navbar">
       <a href="index.html" class="logo">
         <svg class="logo-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -274,7 +418,7 @@
         <a href="codex-portal.html" data-i18n="nav_portal">Codex Portal</a>
         <a href="systems.html" data-i18n="nav_systems">Systems</a>
         <a href="community.html" data-i18n="nav_community">Community</a>
-	<a href="trust.html" data-i18n="nav_trust">Trust</a>
+        <a href="trust.html" data-i18n="nav_trust">Trust</a>
       </div>
 
       <div class="nav-actions">
@@ -289,80 +433,303 @@
       </div>
     </nav>
 
-    <!-- HERO -->
+    <!-- ===== HERO ===== -->
     <section class="hero">
-      <div class="hero-badge" data-i18n="tash_badge">✦ Strategic Asset · Sovereign System</div>
+      <div class="hero-badge">
+        <span class="status-dot"></span>
+        <span data-i18n="tash_hero_badge">MIT Licensed · 124 Tests Passing · CI Green</span>
+      </div>
+
       <div class="hero-grid">
         <div>
-          <h1 class="hero-title" data-i18n="tash_title">TASH<span class="sub" data-i18n="tash_tagline">Self‑writing · Infinite‑scaling · Pyramid Mathematics</span></h1>
-          <p class="hero-description" data-i18n="tash_desc">An open‑software framework engineered for real‑time intelligence, autonomous adaptation, and recursive data processing. Built on a 10‑dimensional pyramid architecture, it evolves its own codebase to meet the demands of the most complex operational environments.</p>
+          <h1 class="hero-title" data-i18n="tash_title">
+            TASH
+            <span class="sub" data-i18n="tash_subtitle">Tactical Artificial System Hierarchy</span>
+          </h1>
+          <p class="hero-description" data-i18n="tash_description">
+            <strong>Open-source compliance infrastructure for autonomous AI systems.</strong>
+            A Python platform that helps organizations deploy autonomous AI agents in regulated
+            environments. Ships as <strong>eight independent compliance modules</strong> —
+            from tamper-evident audit ledgers to supply chain integrity — each with its own
+            tests and a runnable demo. Everything is local-first, MIT-licensed, and runs with
+            plain Python.
+          </p>
+          <div style="display:flex; gap:0.8rem; flex-wrap:wrap; margin-top:1.5rem;">
+            <a href="https://github.com/tashscript-blip/TASH" target="_blank" class="btn-primary" data-i18n="tash_cta_github">View on GitHub</a>
+            <a href="#quickstart" class="btn-outline" data-i18n="tash_cta_quickstart">Quick Start</a>
+          </div>
         </div>
+
         <div class="hero-meta">
-          <div class="hero-meta-item"><span class="label" data-i18n="tash_classification">Classification</span><span class="value"><span class="gold" data-i18n="tash_class_value">SOVEREIGN</span></span></div>
-          <div class="hero-meta-item"><span class="label" data-i18n="tash_arch">Architecture</span><span class="value" data-i18n="tash_arch_value">10‑Dimensional Pyramid</span></div>
-          <div class="hero-meta-item"><span class="label" data-i18n="tash_scale">Scalability</span><span class="value"><span class="emerald" data-i18n="tash_scale_value">Infinite</span></span></div>
-          <div class="hero-meta-item"><span class="label" data-i18n="tash_compliance">Compliance</span><span class="value"><span class="gold" data-i18n="tash_compliance_value">FedRAMP · NIST 800‑53</span></span></div>
-          <div class="hero-meta-item"><span class="label" data-i18n="tash_uei">UEI</span><span class="value" style="font-size:0.8rem;font-family:'Inter',monospace;">D43ZB3D7QTW1</span></div>
+          <div class="hero-meta-item">
+            <span class="label" data-i18n="tash_meta_version">Version</span>
+            <span class="value"><span class="gold">v4.5.0</span></span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="label" data-i18n="tash_meta_license">License</span>
+            <span class="value"><span class="emerald">MIT</span></span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="label" data-i18n="tash_meta_python">Python</span>
+            <span class="value">3.11 · 3.12 · 3.13</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="label" data-i18n="tash_meta_tests">Tests Passing</span>
+            <span class="value"><span class="emerald">124</span></span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="label" data-i18n="tash_meta_standards">Standards</span>
+            <span class="value">NIST AI RMF · OWASP</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="label" data-i18n="tash_meta_uei">UEI</span>
+            <span class="value" style="font-size:0.75rem; font-family:'JetBrains Mono',monospace;">D43ZB3D7QTW1</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <div class="divider"><span class="divider-line"></span><span class="divider-icon">◆ ◆ ◆</span><span class="divider-line"></span></div>
-
-    <!-- FEATURES -->
+    <!-- ===== EIGHT COMPLIANCE MODULES ===== -->
     <div class="section-header">
       <span class="num">01</span>
-      <h2 data-i18n="tash_capabilities">Core Capabilities</h2>
-      <span class="badge" data-i18n="tash_cap_badge">Active</span>
-    </div>
-    <div class="features-grid">
-      <div class="feature-card"><span class="icon">🧊</span><h3 data-i18n="tash_feature1">10‑Dimensional Pyramid Architecture</h3><p data-i18n="tash_feature1_desc">Multi‑layered decision nodes that process complexity across ten dimensions of operational data.</p></div>
-      <div class="feature-card"><span class="icon">⚡</span><h3 data-i18n="tash_feature2">Self‑writing Codebase</h3><p data-i18n="tash_feature2_desc">Adapts logic and evolves its own code without human intervention – true autonomous intelligence.</p></div>
-      <div class="feature-card"><span class="icon">📡</span><h3 data-i18n="tash_feature3">Real‑time Data Integration</h3><p data-i18n="tash_feature3_desc">Ingests streams from sensors, APIs, and legacy systems with zero latency degradation.</p></div>
-      <div class="feature-card"><span class="icon">🌍</span><h3 data-i18n="tash_feature4">Infinite Horizontal Scalability</h3><p data-i18n="tash_feature4_desc">Distributes seamlessly across clusters – from edge devices to global data centers.</p></div>
+      <h2 data-i18n="tash_modules_title">The Eight Compliance Modules</h2>
+      <span class="badge" data-i18n="tash_modules_badge">96 Tests Passing</span>
     </div>
 
-    <div class="divider"><span class="divider-line"></span><span class="divider-icon">◆ ◆ ◆</span><span class="divider-line"></span></div>
+    <div class="modules-grid">
+      <div class="module-card">
+        <span class="icon">🛡️</span>
+        <span class="module-tag">governance</span>
+        <h3 data-i18n="trust_domain1_title">Governance &amp; Risk Orchestration</h3>
+        <p data-i18n="trust_domain1_desc">Risk decisions are systematically mapped to active technology controls.</p>
+        <span class="tests">● Risk register &amp; coverage</span>
+      </div>
 
-    <!-- GOVERNMENT & DEFENSE -->
+      <div class="module-card">
+        <span class="icon">🤖</span>
+        <span class="module-tag">ai_discovery</span>
+        <h3 data-i18n="trust_domain2_title">AI Discovery &amp; Security Posture</h3>
+        <p data-i18n="trust_domain2_desc">Continuous cataloging of all models and third‑party API integrations.</p>
+        <span class="tests">● NIST AI RMF posture score</span>
+      </div>
+
+      <div class="module-card">
+        <span class="icon">⚙️</span>
+        <span class="module-tag">agent_orchestration</span>
+        <h3 data-i18n="trust_domain3_title">Agent Orchestration &amp; Workflow Control</h3>
+        <p data-i18n="trust_domain3_desc">A deterministic registry bounding the task capabilities of Interactive Digital Companions under active human supervision.</p>
+        <span class="tests">● Supervisor registry</span>
+      </div>
+
+      <div class="module-card">
+        <span class="icon">🔐</span>
+        <span class="module-tag">lineage</span>
+        <h3 data-i18n="trust_domain4_title">DSPM &amp; Data Lineage</h3>
+        <p data-i18n="trust_domain4_desc">Automated, real‑time controls governing how sensitive datasets interact with AI endpoints.</p>
+        <span class="tests">● Content‑hash provenance chain</span>
+      </div>
+
+      <div class="module-card">
+        <span class="icon">🆔</span>
+        <span class="module-tag">identity</span>
+        <h3 data-i18n="trust_domain6_title">Identity &amp; Access Governance</h3>
+        <p data-i18n="trust_domain6_desc">Machine identity trails logging every automated system action.</p>
+        <span class="tests">● HMAC‑signed action trail</span>
+      </div>
+
+      <div class="module-card">
+        <span class="icon">⛓️</span>
+        <span class="module-tag">node5_runtime</span>
+        <h3 data-i18n="trust_domain7_title">Runtime Ledger</h3>
+        <p data-i18n="trust_domain7_desc">Continuous behavioral telemetry to instantly identify model drift or system anomalies.</p>
+        <span class="tests">● SHA‑256 hash chain</span>
+      </div>
+
+      <div class="module-card">
+        <span class="icon">🔗</span>
+        <span class="module-tag">supply_chain</span>
+        <h3 data-i18n="trust_domain8_title">Supply Chain Integrity</h3>
+        <p data-i18n="trust_domain8_desc">Rigorous tracing of all upstream updates, open‑source dependencies, and vendor security patches.</p>
+        <span class="tests">● Component fingerprinting</span>
+      </div>
+
+      <div class="module-card">
+        <span class="icon">📜</span>
+        <span class="module-tag">digital_legacy</span>
+        <h3 data-i18n="trust_domain5_title">Verifiable Digital Legacy</h3>
+        <p data-i18n="trust_domain5_desc">Verifiable validation of training data origins to establish immutable compliance audits.</p>
+        <span class="tests">● Digital deeds &amp; succession</span>
+      </div>
+    </div>
+
+    <!-- ===== PLATFORM AT A GLANCE ===== -->
     <div class="section-header">
       <span class="num">02</span>
-      <h2 data-i18n="tash_gov_title">Government &amp; Defense Applications</h2>
-      <span class="badge" data-i18n="tash_gov_badge">FedRAMP Aligned</span>
+      <h2 data-i18n="tash_platform_title">The Platform At A Glance</h2>
     </div>
-    <div class="defense-section">
-      <div class="defense-content">
-        <h3 data-i18n="tash_gov_heading"><span>🛡️</span> Mission‑Critical Operations</h3>
-        <p data-i18n="tash_gov_desc">TASH is built to meet federal security and compliance standards from the ground up. It supports mission‑critical operations with zero‑trust architecture, petabyte‑scale handling, and full alignment with FedRAMP and NIST 800‑53 controls.</p>
-        <ul class="defense-badges">
-          <li><span class="check">✓</span> <span data-i18n="tash_gov_item1">Zero‑trust architecture – data never leaves your environment</span></li>
-          <li><span class="check">✓</span> <span data-i18n="tash_gov_item2">Petabyte‑scale handling – signals intelligence &amp; satellite data</span></li>
-          <li><span class="check">✓</span> <span data-i18n="tash_gov_item3">FedRAMP‑aligned controls – maps directly to NIST 800‑53</span></li>
+
+    <table class="platform-table">
+      <thead>
+        <tr>
+          <th data-i18n="tash_platform_col_layer">Layer</th>
+          <th data-i18n="tash_platform_col_contents">Contents</th>
+          <th data-i18n="tash_platform_col_status">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-i18n="tash_platform_compliance">Compliance Domains</td>
+          <td>8 modules (governance → digital_legacy)</td>
+          <td><span class="emerald">96 tests passing</span></td>
+        </tr>
+        <tr>
+          <td data-i18n="tash_platform_runtime">Runtime Ledger</td>
+          <td><code>node5_runtime</code> — SHA‑256 hash chain</td>
+          <td><span class="gold">Tamper‑evident</span></td>
+        </tr>
+        <tr>
+          <td data-i18n="tash_platform_dashboard">Web Dashboard</td>
+          <td><code>aci_dashboard</code> — Flask UI for all eight domains</td>
+          <td><span class="emerald">9 tests passing</span></td>
+        </tr>
+        <tr>
+          <td data-i18n="tash_platform_cli">CLI</td>
+          <td><code>tash</code> — narrative and governance commands</td>
+          <td><span class="gold">v4.5.0</span></td>
+        </tr>
+        <tr>
+          <td data-i18n="tash_platform_fed">Federal Readiness</td>
+          <td><code>docs/nasa_reddi_readiness.md</code></td>
+          <td><span class="emerald">Current</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ===== QUICK START ===== -->
+    <div class="section-header">
+      <span class="num">03</span>
+      <h2 data-i18n="tash_quickstart_title">Quick Start</h2>
+      <span class="badge" data-i18n="tash_quickstart_badge">Local‑first</span>
+    </div>
+
+    <div class="terminal" id="quickstart">
+      <div class="terminal-dots">
+        <span class="r"></span><span class="y"></span><span class="g"></span>
+      </div>
+      <span class="terminal-title">bash — tash</span>
+      <pre><span class="comment"># Clone and install</span>
+<span class="cmd">git clone</span> <span class="arg">https://github.com/tashscript-blip/TASH.git</span>
+<span class="cmd">cd</span> <span class="arg">TASH</span>
+<span class="cmd">pip install</span> <span class="arg">-e ".[dev]"</span>
+<span class="cmd">python -m pytest</span> <span class="arg">tests/ -q</span>
+
+<span class="comment"># Try any of the eight domain demos</span>
+<span class="cmd">python -m</span> <span class="arg">node5_runtime demo</span>       <span class="comment"># SHA‑256 hash‑chained action ledger</span>
+<span class="cmd">python -m</span> <span class="arg">lineage demo</span>              <span class="comment"># Content‑hash provenance chain</span>
+<span class="cmd">python -m</span> <span class="arg">agent_orchestration demo</span>  <span class="comment"># Authorization scope + audit report</span>
+<span class="cmd">python -m</span> <span class="arg">identity demo</span>             <span class="comment"># HMAC‑signed action trail</span>
+<span class="cmd">python -m</span> <span class="arg">governance demo</span>           <span class="comment"># Risk register and coverage</span>
+<span class="cmd">python -m</span> <span class="arg">ai_discovery demo</span>         <span class="comment"># NIST AI RMF posture score</span>
+<span class="cmd">python -m</span> <span class="arg">supply_chain demo</span>         <span class="comment"># Component fingerprint verification</span>
+<span class="cmd">python -m</span> <span class="arg">digital_legacy demo</span>       <span class="comment"># Digital deeds and succession</span>
+
+<span class="comment"># Launch the web dashboard</span>
+<span class="cmd">python -m</span> <span class="arg">aci_dashboard.app</span>
+<span class="comment"># → open http://127.0.0.1:5000</span></pre>
+    </div>
+
+    <!-- ===== TWO AUDIENCES ===== -->
+    <div class="section-header">
+      <span class="num">04</span>
+      <h2 data-i18n="tash_audience_title">Where To Start</h2>
+      <span class="badge" data-i18n="tash_audience_badge">Two Paths</span>
+    </div>
+
+    <div class="audience-grid">
+      <a href="https://github.com/tashscript-blip/TASH/blob/main/docs/technical_overview.md" target="_blank" class="audience-card">
+        <span class="icon">🔧</span>
+        <h3 data-i18n="tash_audience1_title">Technical &amp; Compliance Overview</h3>
+        <p data-i18n="tash_audience1_desc">For Engineers, Federal Reviewers, and Procurement. Module inventory, standards alignment (NIST AI RMF, OWASP Agentic Top 10, EU AI Act), test counts, CI status, federal entity credentials, and the NASA REDDI‑2026 readiness brief.</p>
+        <span class="arrow" data-i18n="tash_audience1_link">Read the technical overview →</span>
+      </a>
+
+      <a href="https://github.com/tashscript-blip/TASH/blob/main/docs/seeker_framework.md" target="_blank" class="audience-card">
+        <span class="icon">🌉</span>
+        <h3 data-i18n="tash_audience2_title">The Seeker's Framework</h3>
+        <p data-i18n="tash_audience2_desc">For Collaborators Curious About the Design. The design philosophy behind the platform — the Seven Keys, the Bridge, and why compliance tooling deserves a soul.</p>
+        <span class="arrow" data-i18n="tash_audience2_link">Read the Seeker's Framework →</span>
+      </a>
+    </div>
+
+    <!-- ===== BROADER ECOSYSTEM ===== -->
+    <div class="section-header">
+      <span class="num">05</span>
+      <h2 data-i18n="tash_eco_title">The Broader TASH Ecosystem</h2>
+      <span class="badge" data-i18n="tash_eco_badge">v4.0 Modules</span>
+    </div>
+
+    <div class="eco-grid">
+      <div class="eco-card">
+        <span class="icon">🌌</span>
+        <h4 data-i18n="tash_eco1_title">EmergeOS</h4>
+        <p data-i18n="tash_eco1_desc">The emergent operating system layer. Where autonomous modules coordinate to produce adaptive, self‑organizing behavior.</p>
+      </div>
+      <div class="eco-card">
+        <span class="icon">🌉</span>
+        <h4 data-i18n="tash_eco2_title">Seeker's Bridge</h4>
+        <p data-i18n="tash_eco2_desc">A guided journey through the Seven Keys — the design philosophy that gives compliance tooling a soul.</p>
+      </div>
+      <div class="eco-card">
+        <span class="icon">🎮</span>
+        <h4 data-i18n="tash_eco3_title">Unity Games</h4>
+        <p data-i18n="tash_eco3_desc">Interactive engagement layer. Learning, narrative, and mastery through play — built on the TASH core.</p>
+      </div>
+      <div class="eco-card">
+        <span class="icon">🏛️</span>
+        <h4 data-i18n="tash_eco4_title">Adaptive Ceremonial Interface</h4>
+        <p data-i18n="tash_eco4_desc">The ACI dashboard — a Flask‑powered UI exposing all eight compliance domains with live posture data.</p>
+      </div>
+    </div>
+
+    <!-- ===== FEDERAL READINESS ===== -->
+    <div class="fed-section">
+      <div>
+        <h3 data-i18n="tash_fed_title">🇺🇸 Federal &amp; Defense Ready</h3>
+        <p data-i18n="tash_fed_desc">
+          TASH ships with a NASA REDDI‑2026 readiness brief, active SAM.gov registration, and alignment
+          with the NIST AI Risk Management Framework, OWASP Agentic Top 10, and the EU AI Act.
+          Legacy Grove Codex LLC is a self‑certified Small Disadvantaged Business.
+        </p>
+        <ul class="fed-badges">
+          <li><span class="check">✓</span> <span data-i18n="tash_fed_badge1">UEI: D43ZB3D7QTW1</span></li>
+          <li><span class="check">✓</span> <span data-i18n="tash_fed_badge2">CAGE: 23DZ6</span></li>
+          <li><span class="check">✓</span> <span data-i18n="tash_fed_badge3">SAM.gov Active · expires Jul 25, 2027</span></li>
+          <li><span class="check">✓</span> <span data-i18n="tash_fed_badge4">NASA REDDI‑2026 Readiness Brief</span></li>
         </ul>
       </div>
-      <div class="defense-cta">
-        <a href="https://github.com/tashscript-blip/TASH" target="_blank" class="btn" data-i18n="tash_repo_btn">Explore Repository →</a>
-        <span class="meta" data-i18n="sys_gov_note">GSA Schedule Available</span>
+      <div class="fed-cta">
+        <a href="https://github.com/tashscript-blip/TASH/blob/main/docs/nasa_reddi_readiness.md" target="_blank" class="btn-primary" data-i18n="tash_fed_cta">View Readiness Brief →</a>
       </div>
     </div>
 
-    <!-- REPOSITORY CARD -->
-    <div class="repo-card">
-      <div class="info">
-        <h4 data-i18n="tash_repo">📂 Open Source Repository</h4>
-        <p data-i18n="tash_repo_desc">Access the complete TASH codebase. Contribute. Fork. Deploy.</p>
+    <!-- ===== FINAL CTA ===== -->
+    <div class="final-cta">
+      <h3 data-i18n="tash_final_title">Eight modules. One platform. MIT licensed.</h3>
+      <p data-i18n="tash_final_desc">Explore the codebase, run the demos, and evaluate the platform for your own autonomous AI deployments.</p>
+      <div class="btn-group">
+        <a href="https://github.com/tashscript-blip/TASH" target="_blank" class="btn-primary" data-i18n="tash_final_btn1">Explore on GitHub</a>
+        <a href="trust.html" class="btn-outline" data-i18n="tash_final_btn2">See Full Compliance Framework →</a>
       </div>
-      <a href="https://github.com/tashscript-blip/TASH" target="_blank" class="btn" data-i18n="tash_repo_btn">Explore Repository →</a>
     </div>
 
-    <!-- FOOTER -->
+    <!-- ===== FOOTER ===== -->
     <footer class="footer">
       <p>
-        <span data-i18n="footer_copyright">© 2026 Legacy Grove Codex LLC</span> &bull;
+        <span data-i18n="footer_copyright">© 2026 LEGACY GROVE CODEX LLC</span> &bull;
         <span data-i18n="footer_uei">UEI D43ZB3D7QTW1</span> &bull;
         <span data-i18n="footer_ein">EIN 41‑2653211</span>
         <span class="address">
-          <span class="principal" data-i18n="footer_address2">64 Sunken Garden Loop, Suite 3023, New York, NY 10035</span> &bull;
+          <span data-i18n="footer_address2">64 Sunken Garden Loop, Suite 3023, New York, NY 10035</span> &bull;
           <span data-i18n="footer_address">555 Hutchinson River Parkway, Bronx, NY 10465</span>
         </span>
       </p>
@@ -371,6 +738,5 @@
   </div>
 
   <script src="translations.js"></script>
-
 </body>
 </html>

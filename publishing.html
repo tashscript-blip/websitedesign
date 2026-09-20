@@ -9,6 +9,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
     <script src="script.js" defer></script>
+
+    <style>
+      .lang-select {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 50px;
+        color: #E8EDF2;
+        padding: 0.4rem 2.2rem 0.4rem 1.2rem;
+        font-size: 0.7rem;
+        font-family: 'Inter', sans-serif;
+        cursor: pointer;
+        outline: none;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239AA6B2'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.8rem center;
+        background-size: 10px 6px;
+        transition: border-color 0.3s;
+      }
+      .lang-select:hover { border-color: #FFD700; }
+      .lang-select option { background: #0A0C10; color: #E8EDF2; }
+      .nav-actions { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+    </style>
 </head>
 <body class="dark-theme">
     <div id="particles-js"></div>
@@ -46,16 +69,24 @@
             </div>
 
             <div class="nav-links">
-                <a href="index.html" class="hover-underline">Home</a>
-                <a href="book.html" class="hover-underline">The Book</a>
-                <a href="systems.html" class="hover-underline">Systems</a>
-                <a href="publishing.html" class="hover-underline active">Publishing</a>
-                <a href="contact.html" class="hover-underline">Contact</a>
-		<a href="trust.html" data-i18n="nav_trust">Trust</a>
+                <a href="index.html" class="hover-underline" data-i18n="nav_home">Home</a>
+                <a href="tash.html" class="hover-underline" data-i18n="nav_tash">TASH</a>
+                <a href="book.html" class="hover-underline" data-i18n="nav_book">Book</a>
+                <a href="codex-portal.html" class="hover-underline" data-i18n="nav_portal">Codex Portal</a>
+                <a href="systems.html" class="hover-underline" data-i18n="nav_systems">Systems</a>
+                <a href="community.html" class="hover-underline" data-i18n="nav_community">Community</a>
+                <a href="trust.html" class="hover-underline" data-i18n="nav_trust">Trust</a>
             </div>
 
             <div class="nav-actions">
-                <a href="contact.html" class="btn btn-primary glow-emerald">Secure Access</a>
+                <select id="language-switcher" class="lang-select">
+                    <option value="en">EN</option>
+                    <option value="es">ES</option>
+                    <option value="fr">FR</option>
+                    <option value="ar">AR</option>
+                    <option value="de">DE</option>
+                </select>
+                <a href="codex-portal.html" class="btn btn-primary glow-emerald" data-i18n="nav_secure">Secure Access</a>
             </div>
         </div>
     </nav>
@@ -65,11 +96,11 @@
             <div class="hero-vignette"></div>
             <div class="hero-content" style="max-width: 900px; margin: 0 auto; text-align: center;">
                 <div class="auth-badge" style="display: inline-flex; margin-bottom: 1.5rem;">
-                    <span class="pulse-dot"></span> Literary & Editorial Division
+                    <span class="pulse-dot"></span> Literary &amp; Editorial Division
                 </div>
                 <h1 class="hero-title reveal-text" style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1.5rem;">
                     Publishing <br>
-                    <span class="text-gradient-gold">& Codex Division</span>
+                    <span class="text-gradient-gold">&amp; Codex Division</span>
                 </h1>
                 <p class="hero-subtitle reveal-text delay-1" style="font-size: 1.15rem; line-height: 1.8; color: var(--c-text-muted); max-width: 750px; margin: 0 auto 2.5rem;">
                     Advancing creative world-building, speculative fiction series, and independent enterprise literature under Legacy Grove Codex LLC.
@@ -120,6 +151,7 @@
                     <strong>Employer ID Number (EIN):</strong> <br><span style="color: var(--c-text);">41-2653211</span><br>
                     <strong>New York State DOS ID:</strong> <br><span style="color: var(--c-text);">7761343</span><br>
                     <strong>Unique Entity Identifier (UEI):</strong> <br><span style="color: var(--c-text);">D43ZB3D7QTW1</span><br>
+                    <strong>CAGE Code:</strong> <br><span style="color: var(--c-text);">23DZ6</span><br>
                     <strong>Filer Email:</strong> <br><a href="mailto:traheem75th@gmail.com" style="color: var(--c-emerald); text-decoration: none;">traheem75th@gmail.com</a>
                 </div>
             </div>
@@ -129,7 +161,7 @@
                     <strong>Principal Office:</strong><br>
                     <span style="color: var(--c-text);">64 Sunken Garden Loop, Suite 3023<br>New York, NY 10035</span><br><br>
                     <strong>Mailing Address:</strong><br>
-                    <span style="color: var(--c-text);">64 Sunken Garden Loop, Suite 3023<br>New York, NY 10035</span>
+                    <span style="color: var(--c-text);">555 Hutchinson River Parkway<br>Bronx, NY 10465</span>
                 </div>
             </div>
         </div>
@@ -137,5 +169,7 @@
             <p>&copy; 2026 LEGACY GROVE CODEX LLC. All Rights Reserved. Sovereign System Platform.</p>
         </div>
     </footer>
+
+    <script src="translations.js"></script>
 </body>
 </html>

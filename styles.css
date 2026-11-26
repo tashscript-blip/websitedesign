@@ -20,7 +20,7 @@ h3{font-size:1.25rem}
 .eyebrow{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:700}
 .lede{font-size:1.15rem;color:#333a4a;max-width:68ch}
 .wrap{max-width:1020px;margin:0 auto;padding:0 20px}
-section{padding:64px 0;border-top:1px solid var(--line)}
+section{padding:64px 0;border-top:1px solid var(--line);scroll-margin-top:120px}
 section:first-of-type{border-top:0}
 
 /* Staging banner — staging only, remove at cutover */

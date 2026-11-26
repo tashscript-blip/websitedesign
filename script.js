@@ -46,6 +46,10 @@
       el.setAttribute('aria-pressed', el.getAttribute('data-state') === key ? 'true' : 'false');
     });
     if (waveField) waveField.setAttribute('data-state', key);
+    // The brief is composed below; keep it in sync so the site state shown
+    // in the brief is never stale. The work-order state itself stays ~ WAVE
+    // (intake) — see composeBrief.
+    if (typeof composeBrief === 'function') composeBrief();
   }
   document.querySelectorAll('[data-state]').forEach(function (el) {
     el.addEventListener('click', function () { setState(el.getAttribute('data-state')); });
@@ -98,9 +102,14 @@
   function val(el) { return el && el.value ? el.value.trim() : '—'; }
   function composeBrief() {
     if (!briefEl) return;
+    // Work-order state is fixed at intake: a brief always starts at ~ WAVE.
+    // The site console state is shown separately, so it is clear the console
+    // does not release a work order — +∞ Release is on the founder's call only.
+    var siteState = (typeof STATES !== 'undefined' && STATES[currentState]) ? STATES[currentState].pill : '—';
     briefEl.textContent =
       'WORK ORDER ' + workOrderNo + ' — LEGACY GROVE CODEX LLC\n' +
       'State: ~ WAVE (intake) · Route: ' + routeMap.wave + '\n' +
+      'Site console state: ' + siteState + ' (does not change this work order)\n' +
       'Tier: ' + val(fields.tier) + '\n' +
       'Who: ' + val(fields.who) + '\n' +
       'What: ' + val(fields.what) + '\n' +

@@ -99,6 +99,28 @@
   var briefEl = document.getElementById('brief-output');
   var routeMap = { 'wave': 'Absorb → Hold at Zero → Focus → Activate' };
 
+  // Draft persistence: a half-written brief survives a reload or a trip
+  // to Privacy/Terms and back. Stored in this browser only, never sent.
+  var DRAFT_KEY = 'lgc-wg-brief-v1';
+  function saveDraft() {
+    try {
+      var data = {};
+      Object.keys(fields).forEach(function (k) { if (fields[k]) data[k] = fields[k].value; });
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(data));
+    } catch (e) { /* storage unavailable — the brief still works, unsaved */ }
+  }
+  function restoreDraft() {
+    try {
+      var raw = localStorage.getItem(DRAFT_KEY);
+      if (!raw) return;
+      var data = JSON.parse(raw);
+      Object.keys(fields).forEach(function (k) {
+        if (fields[k] && typeof data[k] === 'string') fields[k].value = data[k];
+      });
+    } catch (e) { /* corrupt or unavailable draft — start blank */ }
+  }
+  restoreDraft();
+
   function val(el) { return el && el.value ? el.value.trim() : '—'; }
   function composeBrief() {
     if (!briefEl) return;
@@ -120,8 +142,12 @@
       'Send route: PLACEHOLDER — destination undecided. Do not send yet.';
   }
   Object.keys(fields).forEach(function (k) {
-    if (fields[k]) fields[k].addEventListener('input', composeBrief);
+    if (fields[k]) fields[k].addEventListener('input', function () { composeBrief(); saveDraft(); });
   });
+  // Save on every compose too, so tier pre-fill (which calls composeBrief)
+  // is also kept across a reload.
+  var _composeBrief = composeBrief;
+  composeBrief = function () { _composeBrief(); saveDraft(); };
   composeBrief();
 
   // Tier links: scroll to Service Desk and pre-fill the tier.
@@ -148,6 +174,15 @@
     } else if (copyStatus) {
       copyStatus.textContent = 'Clipboard not available in this browser — select the brief text and copy it manually.';
     }
+  });
+
+  // Clear the brief.
+  var clearBtn = document.getElementById('clear-brief');
+  if (clearBtn) clearBtn.addEventListener('click', function () {
+    Object.keys(fields).forEach(function (k) { if (fields[k]) fields[k].value = ''; });
+    try { localStorage.removeItem(DRAFT_KEY); } catch (e) { /* ignore */ }
+    composeBrief();
+    if (copyStatus) copyStatus.textContent = 'Brief cleared.';
   });
 
   // Prevent any accidental submit: there is no send destination yet.

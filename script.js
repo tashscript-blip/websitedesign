@@ -1,4 +1,4 @@
-// Legacy Grove Codex — Quantumized staging, Phase 2
+// Legacy Grove Codex — Quantumized build
 // No external dependencies. All state is local to this page.
 (function () {
   'use strict';

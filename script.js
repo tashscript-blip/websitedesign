@@ -1,116 +1,147 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Particles JS
-    if(window.particlesJS) {
-        particlesJS('particles-js', {
-          "particles": {
-            "number": {
-              "value": 40,
-              "density": { "enable": true, "value_area": 800 }
-            },
-            "color": { "value": ["#10B981", "#FFD700", "#059669"] },
-            "shape": { "type": "circle" },
-            "opacity": {
-              "value": 0.3,
-              "random": true,
-              "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false }
-            },
-            "size": {
-              "value": 3,
-              "random": true,
-              "anim": { "enable": true, "speed": 2, "size_min": 0.1, "sync": false }
-            },
-            "line_linked": {
-              "enable": true,
-              "distance": 150,
-              "color": "#10B981",
-              "opacity": 0.15,
-              "width": 1
-            },
-            "move": {
-              "enable": true,
-              "speed": 1,
-              "direction": "none",
-              "random": true,
-              "straight": false,
-              "out_mode": "out",
-              "bounce": false,
-            }
-          },
-          "interactivity": {
-            "detect_on": "canvas",
-            "events": {
-              "onhover": { "enable": true, "mode": "grab" },
-              "onclick": { "enable": true, "mode": "push" },
-              "resize": true
-            },
-            "modes": {
-              "grab": { "distance": 140, "line_linked": { "opacity": 0.5 } },
-              "push": { "particles_nb": 2 }
-            }
-          },
-          "retina_detect": true
-        });
+// Legacy Grove Codex — Quantumized staging, Phase 2
+// No external dependencies. All state is local to this page.
+(function () {
+  'use strict';
+
+  // --- Quantum clock: live local time ---
+  var clockEl = document.getElementById('quantum-clock');
+  function tickClock() {
+    if (!clockEl) return;
+    var now = new Date();
+    clockEl.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
+
+  // --- Four states ---
+  var STATES = {
+    '-inf': {
+      label: '−∞ Archive', pill: '−∞ archive',
+      desc: '−∞ ARCHIVE — preserved, not deleted. The previous Legacy Grove Codex site lives here.'
+    },
+    'wave': {
+      label: '~ Wave', pill: '~ wave',
+      desc: '~ WAVE — in progress, work in motion.'
+    },
+    'zero': {
+      label: '0 Hold at Zero', pill: '0 zero',
+      desc: '0 ZERO LOCK — the still point. Verified against the source and held — Zero is not empty, Zero is proven.'
+    },
+    'inf': {
+      label: '+∞ Release', pill: '+∞ released',
+      desc: '+∞ RELEASED — live, on the founder’s call alone. The only state that cannot be self-declared.'
     }
+  };
+  var currentState = 'zero';
+  var pillEl = document.getElementById('state-pill');
+  var descEl = document.getElementById('state-desc');
+  var waveField = document.getElementById('wave-field');
 
-    // Scroll Navbar Effect
-    const navbar = document.querySelector('.navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
+  function setState(key) {
+    if (!STATES[key]) return;
+    currentState = key;
+    if (pillEl) pillEl.textContent = STATES[key].pill;
+    if (descEl) descEl.textContent = STATES[key].desc;
+    document.querySelectorAll('[data-state]').forEach(function (el) {
+      el.setAttribute('aria-pressed', el.getAttribute('data-state') === key ? 'true' : 'false');
     });
+    if (waveField) waveField.setAttribute('data-state', key);
+  }
+  document.querySelectorAll('[data-state]').forEach(function (el) {
+    el.addEventListener('click', function () { setState(el.getAttribute('data-state')); });
+  });
+  setState('zero');
 
-    // Smooth Scrolling for Links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if(target) {
-                target.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
+  // --- Films: captioned placeholders (original generated clips not available as files) ---
+  // Each placeholder has a 10-second animated wave. Play/pause toggles the animation and timer.
+  document.querySelectorAll('.film').forEach(function (film) {
+    var btn = film.querySelector('.play-btn');
+    var timer = film.querySelector('.film-timer');
+    var visual = film.querySelector('.film-visual');
+    var seconds = 0, interval = null, playing = false;
+    function render() { if (timer) timer.textContent = '0:' + String(seconds).padStart(2, '0') + ' / 0:10'; }
+    function stop() {
+      playing = false;
+      if (interval) { clearInterval(interval); interval = null; }
+      if (btn) btn.textContent = '▶ Play';
+      if (visual) visual.classList.add('paused');
+    }
+    if (btn) btn.addEventListener('click', function () {
+      if (playing) { stop(); return; }
+      playing = true;
+      btn.textContent = '⏸ Pause';
+      if (visual) visual.classList.remove('paused');
+      interval = setInterval(function () {
+        seconds += 1;
+        if (seconds >= 10) { seconds = 0; stop(); return; }
+        render();
+      }, 1000);
     });
+    render();
+    if (visual) visual.classList.add('paused');
+  });
 
-    // Simple Intersection Observer for Animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px"
-    };
+  // --- Service Desk: tier pre-fill + live brief composer ---
+  var workOrderNo = 'WG-001';
+  var fields = {
+    tier: document.getElementById('f-tier'),
+    who: document.getElementById('f-who'),
+    what: document.getElementById('f-what'),
+    when: document.getElementById('f-when'),
+    where: document.getElementById('f-where'),
+    why: document.getElementById('f-why'),
+    how: document.getElementById('f-how')
+  };
+  var briefEl = document.getElementById('brief-output');
+  var routeMap = { 'wave': 'Absorb → Hold at Zero → Focus → Activate' };
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
+  function val(el) { return el && el.value ? el.value.trim() : '—'; }
+  function composeBrief() {
+    if (!briefEl) return;
+    briefEl.textContent =
+      'WORK ORDER ' + workOrderNo + ' — LEGACY GROVE CODEX LLC\n' +
+      'State: ~ WAVE (intake) · Route: ' + routeMap.wave + '\n' +
+      'Tier: ' + val(fields.tier) + '\n' +
+      'Who: ' + val(fields.who) + '\n' +
+      'What: ' + val(fields.what) + '\n' +
+      'When: ' + val(fields.when) + '\n' +
+      'Where: ' + val(fields.where) + '\n' +
+      'Why: ' + val(fields.why) + '\n' +
+      'How: ' + val(fields.how) + '\n' +
+      'Send route: PLACEHOLDER — destination undecided. Do not send yet.';
+  }
+  Object.keys(fields).forEach(function (k) {
+    if (fields[k]) fields[k].addEventListener('input', composeBrief);
+  });
+  composeBrief();
 
-    const pillarCards = document.querySelectorAll('.pillar-card');
-    pillarCards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = `all 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.1}s`;
-        
-        // Use a small timeout instead of observer to guarantee they show up
-        setTimeout(() => {
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-        }, 800 + (index * 150));
+  // Tier links: scroll to Service Desk and pre-fill the tier.
+  document.querySelectorAll('[data-tier]').forEach(function (link) {
+    link.addEventListener('click', function (ev) {
+      // Let the anchor scroll, then pre-fill.
+      var tier = link.getAttribute('data-tier');
+      setTimeout(function () {
+        if (fields.tier) { fields.tier.value = tier; composeBrief(); fields.tier.focus(); }
+      }, 50);
     });
+  });
 
-    // Animate Hero text on load
-    const reveals = document.querySelectorAll('.reveal-text');
-    reveals.forEach((el, index) => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
-        
-        setTimeout(() => {
-            el.style.opacity = '1';
-            el.style.transform = 'translateY(0)';
-        }, 100 + (index * 200));
-    });
-});
+  // Copy the brief.
+  var copyBtn = document.getElementById('copy-brief');
+  var copyStatus = document.getElementById('copy-status');
+  if (copyBtn) copyBtn.addEventListener('click', function () {
+    var text = briefEl ? briefEl.textContent : '';
+    function done() { if (copyStatus) copyStatus.textContent = 'Brief copied. Send route is still undecided — see the note below.'; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () {
+        if (copyStatus) copyStatus.textContent = 'Copy failed in this browser — select the brief text and copy it manually.';
+      });
+    } else if (copyStatus) {
+      copyStatus.textContent = 'Clipboard not available in this browser — select the brief text and copy it manually.';
+    }
+  });
+
+  // Prevent any accidental submit: there is no send destination yet.
+  var form = document.getElementById('desk-form');
+  if (form) form.addEventListener('submit', function (ev) { ev.preventDefault(); composeBrief(); });
+})();

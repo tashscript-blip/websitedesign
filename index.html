@@ -1,385 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Legacy Grove Codex | Sovereign Systems</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-
-  <style>
-    /* ----- RESET & BASE ----- */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: #080A0E;
-      color: #E8EDF2;
-      font-family: 'Inter', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    .ambient-glow {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(150px);
-      opacity: 0.06;
-      z-index: 0;
-      pointer-events: none;
-    }
-    .glow-emerald { width: 600px; height: 600px; background: #10B981; bottom: -200px; left: -200px; }
-    .glow-gold { width: 600px; height: 600px; background: #FFD700; top: -200px; right: -200px; }
-
-    .container {
-      position: relative;
-      z-index: 1;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1.5rem 2rem 3rem 2rem;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* ----- NAVIGATION ----- */
-    .navbar {
-      background: rgba(8,10,14,0.75);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.05);
-      border-radius: 1.5rem;
-      padding: 0.7rem 2rem;
-      margin-bottom: 2.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
-    }
-    .logo { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; }
-    .logo-symbol { width: 40px; height: 40px; flex-shrink: 0; }
-    .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
-    .brand-name { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1rem; color: #E8EDF2; letter-spacing: 0.5px; }
-    .brand-legal { font-size: 0.6rem; color: #9AA6B2; letter-spacing: 2px; text-transform: uppercase; }
-
-    .nav-links { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
-    .nav-links a { color: #9AA6B2; text-decoration: none; font-size: 0.8rem; font-weight: 500; transition: color 0.3s; letter-spacing: 0.5px; position: relative; }
-    .nav-links a:hover { color: #FFD700; }
-    .nav-links a.active { color: #FFD700; }
-    .nav-links a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: #FFD700; border-radius: 2px; }
-
-    .nav-actions { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
-    .lang-select {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 50px;
-      color: #E8EDF2;
-      padding: 0.4rem 2.2rem 0.4rem 1.2rem;
-      font-size: 0.7rem;
-      font-family: 'Inter', sans-serif;
-      cursor: pointer;
-      outline: none;
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239AA6B2'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 0.8rem center;
-      background-size: 10px 6px;
-      transition: border-color 0.3s;
-    }
-    .lang-select:hover { border-color: #FFD700; }
-    .lang-select option { background: #0A0C10; color: #E8EDF2; }
-
-    .nav-actions .btn {
-      display: inline-block;
-      padding: 0.5rem 1.5rem;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      text-decoration: none;
-      transition: all 0.3s;
-      border: 1px solid rgba(16,185,129,0.3);
-      color: #10B981;
-      background: rgba(16,185,129,0.06);
-    }
-    .nav-actions .btn:hover { background: #10B981; color: #080A0E; box-shadow: 0 0 30px rgba(16,185,129,0.2); }
-
-    /* ----- HERO ----- */
-    .hero { text-align: center; padding: 2rem 1rem 3rem 1rem; flex: 1; display: flex; flex-direction: column; justify-content: center; }
-    .hero-badge {
-      display: inline-block;
-      padding: 0.3rem 1.5rem;
-      border-radius: 50px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      background: rgba(255,215,0,0.06);
-      color: #FFD700;
-      border: 1px solid rgba(255,215,0,0.12);
-      margin-bottom: 1.5rem;
-      align-self: center;
-    }
-    .hero-title {
-      font-family: 'Outfit', sans-serif;
-      font-size: clamp(3rem, 7vw, 6rem);
-      font-weight: 900;
-      line-height: 1.05;
-      letter-spacing: -2px;
-      margin-bottom: 0.5rem;
-    }
-    .hero-title .gold {
-      background: linear-gradient(135deg, #FFD700, #B8860B);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero-subtitle {
-      font-size: clamp(1.1rem, 1.8vw, 1.5rem);
-      color: #9AA6B2;
-      max-width: 700px;
-      margin: 0.5rem auto 2.5rem auto;
-      line-height: 1.7;
-      font-weight: 300;
-    }
-    .hero-cta { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-    .btn-primary {
-      display: inline-block;
-      padding: 0.9rem 2.5rem;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      text-decoration: none;
-      transition: all 0.3s;
-      border: none;
-      cursor: pointer;
-    }
-    .btn-primary.gold {
-      background: linear-gradient(135deg, #FFD700, #B8860B);
-      color: #080A0E;
-      box-shadow: 0 0 40px rgba(255,215,0,0.15);
-    }
-    .btn-primary.gold:hover { transform: translateY(-3px); box-shadow: 0 0 60px rgba(255,215,0,0.3); }
-    .btn-outline {
-      display: inline-block;
-      padding: 0.9rem 2.5rem;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      text-decoration: none;
-      transition: all 0.3s;
-      border: 1px solid rgba(255,215,0,0.25);
-      color: #FFD700;
-      background: transparent;
-    }
-    .btn-outline:hover { background: rgba(255,215,0,0.06); transform: translateY(-3px); box-shadow: 0 0 40px rgba(255,215,0,0.08); }
-
-    .divider { display: flex; justify-content: center; align-items: center; gap: 1.5rem; margin: 2rem 0 3rem 0; opacity: 0.2; }
-    .divider-line { height: 1px; flex: 1; background: linear-gradient(90deg, transparent, #FFD700, transparent); max-width: 200px; }
-    .divider-icon { color: #FFD700; font-size: 1.2rem; }
-
-    .philosophy-card {
-      background: rgba(255,255,255,0.02);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.04);
-      border-radius: 2rem;
-      padding: 2.5rem 3rem;
-      margin-bottom: 2rem;
-      text-align: center;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.3);
-    }
-    .philosophy-card h2 { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 700; margin-bottom: 0.8rem; }
-    .philosophy-card h2 .gold { color: #FFD700; }
-    .philosophy-card p { color: #9AA6B2; font-size: 1.05rem; max-width: 750px; margin: 0 auto; line-height: 1.8; }
-
-    .government-section {
-      background: rgba(255,215,0,0.02);
-      border: 1px solid rgba(255,215,0,0.06);
-      border-radius: 2rem;
-      padding: 2rem 2.5rem;
-      margin-bottom: 2rem;
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 2rem;
-      align-items: center;
-    }
-    .government-section h3 { font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: #FFD700; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.5rem; }
-    .government-section p { color: #9AA6B2; font-size: 0.9rem; line-height: 1.7; margin-bottom: 0.8rem; }
-    .government-badge-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0.6rem; }
-    .government-badge-list li { background: rgba(255,255,255,0.03); padding: 0.2rem 1rem; border-radius: 50px; font-size: 0.7rem; color: #9AA6B2; border: 1px solid rgba(255,255,255,0.04); display: flex; align-items: center; gap: 0.3rem; }
-    .government-badge-list li .check { color: #10B981; font-weight: 700; }
-    .government-cta { text-align: right; }
-    .government-cta .btn { display: inline-block; padding: 0.6rem 1.8rem; border-radius: 50px; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; transition: all 0.3s; border: 1px solid rgba(255,215,0,0.25); color: #FFD700; background: rgba(255,215,0,0.04); }
-    .government-cta .btn:hover { background: #FFD700; color: #080A0E; box-shadow: 0 0 30px rgba(255,215,0,0.15); }
-    .government-cta .badge-uei { display: block; font-size: 0.6rem; color: #4A5568; margin-top: 0.4rem; letter-spacing: 1px; }
-
-    .ecosystem { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
-    .ecosystem-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 1.5rem; padding: 1.5rem 1.5rem; text-align: center; transition: all 0.4s; text-decoration: none; color: inherit; }
-    .ecosystem-card:hover { border-color: rgba(255,215,0,0.15); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
-    .ecosystem-card .icon { font-size: 2rem; display: block; margin-bottom: 0.6rem; }
-    .ecosystem-card h4 { font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 600; margin-bottom: 0.2rem; }
-    .ecosystem-card p { font-size: 0.75rem; color: #9AA6B2; line-height: 1.4; }
-    .ecosystem-card .arrow { display: inline-block; margin-top: 0.6rem; color: #FFD700; font-size: 0.8rem; transition: transform 0.3s; }
-    .ecosystem-card:hover .arrow { transform: translateX(4px); }
-
-    .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; font-size: 0.7rem; color: #4A5568; }
-    .footer span { color: #9AA6B2; }
-    .footer .address { display: block; color: #4A5568; margin-top: 0.2rem; font-size: 0.65rem; }
-    .footer .address .principal { color: #4A5568; }
-
-    @media (max-width: 768px) {
-      .container { padding: 1rem; }
-      .navbar { flex-direction: column; align-items: stretch; padding: 0.8rem 1.2rem; gap: 0.6rem; }
-      .nav-links { justify-content: center; gap: 0.6rem; }
-      .nav-links a { font-size: 0.7rem; }
-      .nav-actions { justify-content: center; flex-wrap: wrap; }
-      .government-section { grid-template-columns: 1fr; text-align: center; padding: 1.5rem; }
-      .government-cta { text-align: center; }
-      .government-badge-list { justify-content: center; }
-      .philosophy-card { padding: 1.5rem; }
-      .hero { padding: 1rem 0.5rem 2rem 0.5rem; }
-      .ecosystem { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 480px) {
-      .container { padding: 0.6rem; }
-      .nav-links a { font-size: 0.6rem; }
-      .ecosystem { grid-template-columns: 1fr; }
-      .btn-primary, .btn-outline { padding: 0.6rem 1.2rem; font-size: 0.7rem; }
-      .lang-select { font-size: 0.6rem; padding: 0.3rem 1.8rem 0.3rem 0.8rem; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Legacy Grove Codex — Sovereign Systems, Quantumized</title>
+<meta name="description" content="Legacy Grove Codex LLC — sovereign systems, quantumized. The Wealth Agency, the Quantum Method, and WG work orders via the Service Desk.">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<a class="skip-link" href="#top">Skip to content</a>
 
-  <div class="ambient-glow glow-emerald"></div>
-  <div class="ambient-glow glow-gold"></div>
-
-  <div class="container">
-
-    <!-- ===== NAVIGATION ===== -->
-    <nav class="navbar">
-      <a href="index.html" class="logo">
-        <svg class="logo-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="50,5 88.97,27.5 88.97,72.5 50,95 11.03,72.5 11.03,27.5" fill="none" stroke="#10B981" stroke-width="4" stroke-linejoin="round"/>
-          <circle cx="50" cy="50" r="14" fill="#FFD700" opacity="0.9">
-            <animate attributeName="r" values="14;16;14" dur="3s" repeatCount="indefinite" />
-          </circle>
-          <path d="M50 25 L50 40 M35 60 L45 50 M65 60 L55 50" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
-        </svg>
-        <div class="brand-text">
-          <span class="brand-name">Legacy Grove</span>
-          <span class="brand-legal">LGC LLC</span>
-        </div>
-      </a>
-
-      <div class="nav-links">
-        <a href="index.html" class="active" data-i18n="nav_home">Home</a>
-        <a href="tash.html" data-i18n="nav_tash">TASH</a>
-        <a href="book.html" data-i18n="nav_book">Book</a>
-        <a href="codex-portal.html" data-i18n="nav_portal">Codex Portal</a>
-        <a href="systems.html" data-i18n="nav_systems">Systems</a>
-        <a href="community.html" data-i18n="nav_community">Community</a>
-        <a href="trust.html" data-i18n="nav_trust">Trust</a>
-      </div>
-
-      <div class="nav-actions">
-        <select id="language-switcher" class="lang-select">
-          <option value="en">EN</option>
-          <option value="es">ES</option>
-          <option value="fr">FR</option>
-          <option value="ar">AR</option>
-          <option value="de">DE</option>
-        </select>
-        <a href="codex-portal.html" class="btn" data-i18n="nav_secure">Secure Access</a>
-      </div>
-    </nav>
-
-    <!-- ===== HERO ===== -->
-    <section class="hero">
-      <div class="hero-badge" data-i18n="hero_badge">✦ Sovereign Systems Platform</div>
-      <h1 class="hero-title" data-i18n="hero_title">Legacy Grove <br /><span class="gold">Codex</span></h1>
-      <p class="hero-subtitle" data-i18n="hero_subtitle">Engineered Intelligence · Sovereign Systems · Bridging mathematical abstraction and operational reality.</p>
-      <div class="hero-cta">
-        <a href="tash.html" class="btn-primary gold" data-i18n="cta_explore">Explore TASH</a>
-        <a href="codex-portal.html" class="btn-outline" data-i18n="cta_enter">Enter Codex Portal</a>
-      </div>
-    </section>
-
-    <div class="divider"><span class="divider-line"></span><span class="divider-icon">◆</span><span class="divider-line"></span></div>
-
-    <!-- ===== PHILOSOPHY ===== -->
-    <div class="philosophy-card">
-      <h2 data-i18n="philosophy_title">Core <span class="gold">Philosophy</span></h2>
-      <p data-i18n="philosophy_text">We build open‑source frameworks that bridge the gap between mathematical abstraction and operational reality. Our systems are designed to evolve, adapt, and protect the data they govern.</p>
-    </div>
-
-    <!-- ===== GOVERNMENT ===== -->
-    <div class="government-section">
-      <div class="government-content">
-        <h3 data-i18n="gov_title"><span>🇺🇸</span> FedRAMP &amp; Government‑Ready Solutions</h3>
-        <p data-i18n="gov_text">Legacy Grove Codex LLC is registered and compliant for federal procurement. Our systems are engineered to meet the highest standards of data sovereignty, security, and operational transparency required by U.S. government contracts.</p>
-        <ul class="government-badge-list">
-          <li><span class="check">✓</span> <span data-i18n="gov_badge1">UEI: D43ZB3D7QTW1</span></li>
-          <li><span class="check">✓</span> <span data-i18n="gov_badge2">SAM.gov Registered</span></li>
-          <li><span class="check">✓</span> <span data-i18n="gov_badge3">FedRAMP‑aligned Security</span></li>
-        </ul>
-      </div>
-      <div class="government-cta">
-        <a href="tash.html" class="btn" data-i18n="gov_cta">Explore TASH for Government →</a>
-        <span class="badge-uei" data-i18n="gov_uei">UEI D43ZB3D7QTW1</span>
-      </div>
-    </div>
-
-    <!-- ===== ECOSYSTEM ===== -->
-    <h3 style="font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:600;margin-bottom:1rem;text-align:center;" data-i18n="eco_title">Explore Our <span style="color:#FFD700;">Ecosystem</span></h3>
-    <div class="ecosystem">
-      <a href="tash.html" class="ecosystem-card">
-        <span class="icon">🧠</span>
-        <h4 data-i18n="eco_tash">TASH</h4>
-        <p data-i18n="eco_tash_desc">Open-source compliance infrastructure for autonomous AI systems</p>
-        <span class="arrow">→</span>
-      </a>
-      <a href="book.html" class="ecosystem-card">
-        <span class="icon">📖</span>
-        <h4 data-i18n="eco_book">The Codex Book</h4>
-        <p data-i18n="eco_book_desc">Digital Vault Blueprint &amp; Framework</p>
-        <span class="arrow">→</span>
-      </a>
-      <a href="codex-portal.html" class="ecosystem-card">
-        <span class="icon">🔐</span>
-        <h4 data-i18n="eco_portal">Codex Portal</h4>
-        <p data-i18n="eco_portal_desc">Sovereign Identity &amp; Compliance</p>
-        <span class="arrow">→</span>
-      </a>
-      <a href="community.html" class="ecosystem-card">
-        <span class="icon">🌐</span>
-        <h4 data-i18n="eco_community">Community Hub</h4>
-        <p data-i18n="eco_community_desc">Network Nodes &amp; Alliance Circles</p>
-        <span class="arrow">→</span>
-      </a>
-    </div>
-
-    <!-- ===== FOOTER ===== -->
-    <footer class="footer">
-      <p>
-        <span data-i18n="footer_copyright">© 2026 Legacy Grove Codex LLC</span> &bull;
-        <span data-i18n="footer_uei">UEI D43ZB3D7QTW1</span> &bull;
-        <span data-i18n="footer_ein">EIN 41‑2653211</span>
-        <span class="address">
-          <span class="principal" data-i18n="footer_address2">64 Sunken Garden Loop, Suite 3023, New York, NY 10035</span> &bull;
-          <span data-i18n="footer_address">555 Hutchinson River Parkway, Bronx, NY 10465</span>
-        </span>
-      </p>
-    </footer>
-
+<div class="staging-banner" role="note">
+  <div class="wrap">
+    <span><strong>STAGING — PHASE 2</strong> · Quantumized build, not the live site.</span>
+    <span>Films are labelled placeholders · Brief send route: destination undecided</span>
   </div>
+</div>
 
-  <!-- ===== MULTILANGUAGE SUPPORT ===== -->
-  <script src="translations.js"></script>
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top">Legacy Grove Codex</a>
+    <div class="clock" aria-label="Quantum clock, local time"><small>QUANTUM CLOCK — LOCAL TIME</small><span id="quantum-clock">--:--:--</span></div>
+    <span class="state-pill" id="state-pill" aria-live="polite">0 zero</span>
+    <nav aria-label="Sections">
+      <a href="#method">Method</a>
+      <a href="#howto">How-To</a>
+      <a href="#states">States</a>
+      <a href="#systems">Systems</a>
+      <a href="#wealth">Wealth Agency</a>
+      <a href="#desk">Service Desk</a>
+      <a href="#credentials">Credentials</a>
+    </nav>
+  </div>
+</header>
 
+<main id="top">
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="wrap">
+      <p class="eyebrow">Legacy Grove Codex LLC · New York</p>
+      <h1 id="hero-h">Sovereign systems, <span class="gold">quantumized.</span></h1>
+      <p class="lede">Engineered intelligence — open-source frameworks bridging mathematical abstraction and operational reality. This site is a fresh build from zero: the old code is archived, and everything here is held to one standard — verified, then released.</p>
+      <div class="hero-ctas">
+        <a class="btn gold" href="#wealth">The Wealth Agency</a>
+        <a class="btn outline" href="#desk">Open a work order</a>
+      </div>
+
+      <div class="wave-field" id="wave-field" data-state="zero">
+        <p>Animated wave field showing the current quantum state.</p>
+        <div class="wave-bars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <p class="wave-caption">The wave in motion, filed at −∞, flattened flat at 0, lifted only at +∞.</p>
+      </div>
+
+      <div class="console" aria-labelledby="console-h">
+        <h3 id="console-h">Quantum state console — set the state</h3>
+        <p class="state-desc" id="state-desc" aria-live="polite">0 ZERO LOCK — the still point. Verified against the source and held — Zero is not empty, Zero is proven.</p>
+        <div class="state-buttons">
+          <button type="button" class="state-btn" data-state="-inf" aria-pressed="false">−∞ Archive</button>
+          <button type="button" class="state-btn" data-state="wave" aria-pressed="false">~ Wave</button>
+          <button type="button" class="state-btn" data-state="zero" aria-pressed="true">0 Hold at Zero</button>
+          <button type="button" class="state-btn" data-state="inf" aria-pressed="false">+∞ Release</button>
+        </div>
+        <p>Try it: pick a state above — the top-bar pill, this description, and the wave field follow it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUANTUM METHOD -->
+  <section id="method" aria-labelledby="method-h">
+    <div class="wrap">
+      <p class="eyebrow">The Quantum Method</p>
+      <h2 id="method-h">Every build moves the same way</h2>
+      <p class="lede">Four moves, in order, no shortcuts. A system is not done when it looks done — it is done when it is verified and held at Zero. Systems that evolve, adapt, and protect the data they govern.</p>
+      <div class="method-grid">
+        <article class="card"><p class="move-no">MOVE 01 · ~</p><h3>Absorb</h3><p>Take in the full problem before anything is built.</p></article>
+        <article class="card"><p class="move-no">MOVE 02 · 0</p><h3>Hold at Zero</h3><p>Verified against the source, checked end to end, held there.</p></article>
+        <article class="card"><p class="move-no">MOVE 03 · ◎</p><h3>Focus</h3><p>Focus is the manager. One queue, one truth, one direction.</p></article>
+        <article class="card"><p class="move-no">MOVE 04 · +∞</p><h3>Activate</h3><p>Release once, on the founder’s call, only for work that held at Zero.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW-TO / FILMS -->
+  <section id="howto" aria-labelledby="howto-h">
+    <div class="wrap">
+      <p class="eyebrow">How-To · The Real Films</p>
+      <h2 id="howto-h">Watch how it works — four real films, 10 seconds each</h2>
+      <p class="lede">These are the actual films — real generated clips, silent, with the captions written under each one.</p>
+      <p><strong>Staging note:</strong> the original generated clips are not available as files, so each film below is a clearly-labelled captioned placeholder — an animated wave visual with the same captions and jump links, playable and pausable for 10 seconds. Replace each placeholder with the real clip before launch.</p>
+      <div class="film-grid">
+        <article class="film">
+          <div class="film-visual paused"><div class="wave-bars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+          <div class="film-body">
+            <h3>How to read −∞ / ~ / 0 / +∞</h3>
+            <p>Captions: the wave in motion, filed at −∞, flattened flat at 0, lifted only at +∞.</p>
+            <p class="film-meta"><button type="button" class="play-btn">▶ Play</button><span class="film-timer">0:00 / 0:10</span><span class="tag">Silent · 0:10</span><a href="#top">Try it in the State Console ↑</a></p>
+            <p class="placeholder-note">PLACEHOLDER FILM — animated wave visual, not the original clip.</p>
+          </div>
+        </article>
+        <article class="film">
+          <div class="film-visual paused"><div class="wave-bars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+          <div class="film-body">
+            <h3>What the quantum clock is telling you</h3>
+            <p>Captions: live local time, held to the same standard as everything else on this page.</p>
+            <p class="film-meta"><button type="button" class="play-btn">▶ Play</button><span class="film-timer">0:00 / 0:10</span><span class="tag">Silent · 0:10</span><a href="#top">See the live clock in the top bar ↑</a></p>
+            <p class="placeholder-note">PLACEHOLDER FILM — animated wave visual, not the original clip.</p>
+          </div>
+        </article>
+        <article class="film">
+          <div class="film-visual paused"><div class="wave-bars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+          <div class="film-body">
+            <h3>How a retainer starts</h3>
+            <p>Captions: Choose — Standing By $350, Agency Partner $750, or Fully Insulated $1,500 a month.</p>
+            <p class="film-meta"><button type="button" class="play-btn">▶ Play</button><span class="film-timer">0:00 / 0:10</span><span class="tag">Silent · 0:10</span><a href="#wealth">Go to the Wealth Agency ↓</a></p>
+            <p class="placeholder-note">PLACEHOLDER FILM — animated wave visual, not the original clip.</p>
+          </div>
+        </article>
+        <article class="film">
+          <div class="film-visual paused"><div class="wave-bars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+          <div class="film-body">
+            <h3>How to open a WG work order</h3>
+            <p>Captions: Frame it with 5W+How — who, what, when, where, why, how.</p>
+            <p class="film-meta"><button type="button" class="play-btn">▶ Play</button><span class="film-timer">0:00 / 0:10</span><span class="tag">Silent · 0:10</span><a href="#desk">Open one at the Service Desk ↓</a></p>
+            <p class="placeholder-note">PLACEHOLDER FILM — animated wave visual, not the original clip.</p>
+          </div>
+        </article>
+      </div>
+      <p>Four real 10-second films, each held at 0 — silent, captioned in text, playable on any device.</p>
+    </div>
+  </section>
+
+  <!-- FOUR STATES -->
+  <section id="states" aria-labelledby="states-h">
+    <div class="wrap">
+      <p class="eyebrow">The Four States</p>
+      <h2 id="states-h">Everything here carries a state</h2>
+      <p class="lede">Pick a card — it sets the state console too.</p>
+      <div class="states-grid">
+        <button type="button" class="card state-card" data-state="-inf" aria-pressed="false"><span class="state-symbol">−∞</span><h3>Archive</h3><p>Preserved, not deleted; the previous Legacy Grove Codex site lives here.</p></button>
+        <button type="button" class="card state-card" data-state="wave" aria-pressed="false"><span class="state-symbol">~</span><h3>Wave</h3><p>In progress, work in motion.</p></button>
+        <button type="button" class="card state-card" data-state="zero" aria-pressed="true"><span class="state-symbol">0</span><h3>Locked at Zero</h3><p>Verified and held, the still point.</p></button>
+        <button type="button" class="card state-card" data-state="inf" aria-pressed="false"><span class="state-symbol">+∞</span><h3>Released</h3><p>Live, on the founder’s call alone, the only state that cannot be self-declared.</p></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SYSTEMS -->
+  <section id="systems" aria-labelledby="systems-h">
+    <div class="wrap">
+      <p class="eyebrow">Systems</p>
+      <h2 id="systems-h">The Codex systems, restated</h2>
+      <p class="lede">The systems return as ideas rebuilt clean — not as their old code. Each card carries its honest state.</p>
+      <div class="systems-grid">
+        <article class="card system-card"><p class="system-state">~ Wave</p><h3>TASH</h3><p>Open-source compliance infrastructure for autonomous AI systems. Depth — version, modules, and GitHub quick start — is kept on the linked TASH page (link to be confirmed in Phase 3).</p></article>
+        <article class="card system-card"><p class="system-state">~ Wave</p><h3>WaveOS</h3><p>Wave-based OS concept, computing on electromagnetic waves.</p></article>
+        <article class="card system-card"><p class="system-state">0 Locked at Zero</p><h3>Boss Software</h3><p>Sole controller — one queue, one truth, one verification gate.</p></article>
+        <article class="card system-card"><p class="system-state">0 Locked at Zero</p><h3>AgentTop</h3><p>Computer built for agency — intent in, verified work out, offline by design.</p></article>
+        <article class="card system-card"><p class="system-state">~ Wave</p><h3>Codex Portal</h3><p>Sovereign identity &amp; compliance. Portal link and status to be confirmed before launch — see the migration plan.</p></article>
+        <article class="card system-card"><p class="system-state">~ Wave</p><h3>The Book · Digital Vault</h3><p>Digital Vault Blueprint &amp; framework. New storefront and price display to be decided before launch — the proposal drops the old $49 storefront.</p></article>
+        <article class="card system-card"><p class="system-state">~ Wave</p><h3>Indego</h3><p>Tri-polar, of both halves and another.</p></article>
+        <article class="card system-card"><p class="system-state">+∞ Released — open for work orders</p><h3>Wealth Agency</h3><p>The economic engine inside Legacy Grove Codex LLC. <a href="#wealth">See the retainers ↓</a></p></article>
+        <article class="card system-card"><p class="system-state">−∞ Archived — preserved</p><h3>The Previous Site</h3><p>First legacygrovecodex.com build — translations engine, page structure, and all. Retired whole. Archive address to be decided.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- WEALTH AGENCY -->
+  <section id="wealth" aria-labelledby="wealth-h">
+    <div class="wrap">
+      <p class="eyebrow">Wealth Agency · Legacy Grove Codex LLC</p>
+      <h2 id="wealth-h">Wealth is the new focus</h2>
+      <h3>An agency that builds wealth — and delivers it.</h3>
+      <p class="lede">The Wealth Agency is the economic engine inside Legacy Grove Codex LLC. One test decides whether any of it counts — did physical wealth reach the owner? Cleared funds, owned assets, signed equity and IP. Anything else is unproven.</p>
+      <div class="tiers">
+        <article class="tier">
+          <h3>Standing By</h3>
+          <p class="price">$350 <small>/ month</small></p>
+          <ul><li>Agency on retainer</li><li>Service Desk + numbered work orders</li><li>Priority over unretained requests</li><li>Scope confirmed in writing per work order</li></ul>
+          <p><a class="btn outline" href="#desk" data-tier="Standing By — $350/mo">Start with Standing By</a></p>
+        </article>
+        <article class="tier featured">
+          <h3>Agency Partner</h3>
+          <p class="price">$750 <small>/ month</small></p>
+          <ul><li>Everything in Standing By</li><li>Greater build capacity</li><li>Higher priority</li></ul>
+          <p><a class="btn outline" href="#desk" data-tier="Agency Partner — $750/mo">Start with Agency Partner</a></p>
+        </article>
+        <article class="tier">
+          <h3>Fully Insulated</h3>
+          <p class="price">$1,500 <small>/ month</small></p>
+          <ul><li>Everything in Agency Partner</li><li>Agency fully insulated around your work</li><li>First call on build capacity</li></ul>
+          <p><a class="btn outline" href="#desk" data-tier="Fully Insulated — $1,500/mo">Start with Fully Insulated</a></p>
+        </article>
+      </div>
+      <h3>Three work lanes</h3>
+      <div class="lanes"><span class="lane">Software Builds</span><span class="lane">Wave Systems</span><span class="lane">Continuity Systems</span></div>
+      <p>Lane pricing is not published beyond the retainers in the proposal — pricing follows the brief, unless decided otherwise before launch.</p>
+      <h3>How it works</h3>
+      <ol class="steps">
+        <li>Choose a tier.</li>
+        <li>Open a work order at the Service Desk.</li>
+        <li>Scope confirmed in writing per work order.</li>
+        <li>Verified delivery, held at Zero before release.</li>
+      </ol>
+      <p>Government contracting is a separate engagement from the retainer lanes — see <a href="#credentials">Credentials</a>.</p>
+    </div>
+  </section>
+
+  <!-- SERVICE DESK -->
+  <section id="desk" aria-labelledby="desk-h">
+    <div class="wrap">
+      <p class="eyebrow">Service Desk</p>
+      <h2 id="desk-h">Open a work order</h2>
+      <p class="lede">Every engagement starts as a numbered WG work order, framed the Agent 5W way — Who, What, When, Where, Why, and How. Fill it in and the brief composes itself, ready to copy and send.</p>
+      <form id="desk-form" class="desk-form" action="#" method="get">
+        <div><label for="f-tier">Tier</label><select id="f-tier" name="tier"><option value="">— Choose a tier —</option><option>Standing By — $350/mo</option><option>Agency Partner — $750/mo</option><option>Fully Insulated — $1,500/mo</option></select></div>
+        <div><label for="f-who">Who</label><input id="f-who" name="who" type="text" autocomplete="off"></div>
+        <div class="full"><label for="f-what">What</label><input id="f-what" name="what" type="text" autocomplete="off"></div>
+        <div><label for="f-when">When</label><input id="f-when" name="when" type="text" autocomplete="off"></div>
+        <div><label for="f-where">Where</label><input id="f-where" name="where" type="text" autocomplete="off"></div>
+        <div class="full"><label for="f-why">Why</label><input id="f-why" name="why" type="text" autocomplete="off"></div>
+        <div class="full"><label for="f-how">How</label><textarea id="f-how" name="how" rows="3"></textarea></div>
+      </form>
+      <h3>Your brief — live</h3>
+      <div class="brief" id="brief-output" aria-live="polite">WORK ORDER WG-001 — LEGACY GROVE CODEX LLC</div>
+      <p><button type="button" class="btn" id="copy-brief">Copy the brief</button> <span id="copy-status" role="status"></span></p>
+      <div class="send-note">
+        <strong>Send route — PLACEHOLDER, destination undecided.</strong>
+        <p>Do not invent a destination here. The proposed design said only “copy the composed brief and send it through legacygrovecodex.com” — that is circular, since that is the site itself. Before launch, decide: a form that submits somewhere monitored, a published email address, or both — then test it end to end with a real brief. Until then, this staging build composes and copies the brief only; it sends nothing anywhere.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WRITTEN CODEX -->
+  <section aria-labelledby="codex-h">
+    <div class="wrap">
+      <p class="eyebrow">The Written Codex</p>
+      <h2 id="codex-h">Kept, and rebuilt clean</h2>
+      <div class="method-grid">
+        <article class="card"><h3>The Book · Digital Vault</h3><p>In the quantumized build the Book returns without the old storefront’s dead ends. New storefront and price display to be decided before launch.</p></article>
+        <article class="card"><h3>Codex Portal</h3><p>A score that starts at zero is honest. A score that starts at zero unexplained is a bug. The rebuild explains the Portal status — link and status to be confirmed before launch.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREDENTIALS -->
+  <section id="credentials" aria-labelledby="cred-h">
+    <div class="wrap">
+      <p class="eyebrow">Credentials</p>
+      <h2 id="cred-h">The company, on record</h2>
+      <p class="lede">Legacy Grove Codex LLC is set up for government contracting as a lane of its own — separate from the retainer lanes.</p>
+      <dl class="cred-list">
+        <div class="card"><dt>Entity</dt><dd>Legacy Grove Codex LLC, Registered in New York</dd></div>
+        <div class="card"><dt>SAM.gov</dt><dd>Registered, Federal contracting registration active</dd></div>
+        <div class="card"><dt>UEI</dt><dd>D43ZB3D7QTW1</dd></div>
+        <div class="card"><dt>EIN</dt><dd>41-2653211</dd></div>
+        <div class="card"><dt>Positioning</dt><dd>FedRAMP-aligned · NIST 800-53 aligned — “aligned”, not “authorized”. Open-source frameworks bridging mathematical abstraction and operational reality.</dd></div>
+        <div class="card"><dt>Focus</dt><dd>The Wealth Agency — retainer lanes: Software Builds · Wave Systems · Continuity Systems</dd></div>
+      </dl>
+      <p><strong>Staging note:</strong> no postal address, phone, or email is shown here, matching the proposed design. The migration plan flags restoring at least one contact route and a legal footer (copyright, Privacy, Terms) as fix-before-launch — those are not added in this staging build, pending the parent’s decisions.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Legacy Grove Codex LLC · Sovereign Systems · New York</strong></p>
+    <p>−∞ archived · ~ in the wave · 0 held at Zero · +∞ released on the founder’s call</p>
+    <p><a href="https://legacygrovecodex.com/">legacygrovecodex.com</a></p>
+    <p>Staging build — Phase 2. Films are placeholders; brief send route undecided.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>

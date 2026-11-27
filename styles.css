@@ -81,6 +81,7 @@ section:first-of-type{border-top:0}
 .film-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:24px}
 @media (max-width:700px){.film-grid{grid-template-columns:1fr}}
 .film{background:var(--navy);color:#fff;border-radius:12px;overflow:hidden}
+.film video{display:block;width:100%;height:auto;background:#000}
 .film-visual{padding:20px}
 .film-visual .wave-bars{height:52px}
 .film-body{padding:0 20px 20px}

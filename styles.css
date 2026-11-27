@@ -1,4 +1,4 @@
-/* Legacy Grove Codex — Quantumized staging build, Phase 2
+/* Legacy Grove Codex — Quantumized build
    Light cream / navy / gold. Single page. No external assets. */
 :root{
   --cream:#f7f2e7; --cream-2:#efe8d6; --paper:#fffdf6;
@@ -22,12 +22,6 @@ h3{font-size:1.25rem}
 .wrap{max-width:1020px;margin:0 auto;padding:0 20px}
 section{padding:64px 0;border-top:1px solid var(--line);scroll-margin-top:120px}
 section:first-of-type{border-top:0}
-
-/* Staging banner — staging only, remove at cutover */
-.staging-banner{background:var(--navy);color:#fff;font-size:.85rem;padding:10px 0}
-.staging-banner .wrap{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
-.staging-banner strong{color:var(--gold-soft);letter-spacing:.08em}
-.staging-banner a{color:#fff}
 
 /* Top bar */
 .topbar{position:sticky;top:0;z-index:20;background:rgba(247,242,231,.97);
@@ -96,7 +90,6 @@ section:first-of-type{border-top:0}
 .film-meta .tag{background:#24365e;border-radius:999px;padding:2px 10px;font-size:.8rem}
 .film-meta a{color:var(--gold-soft);font-weight:700}
 .play-btn{background:var(--gold);color:#fff;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer}
-.placeholder-note{font-size:.85rem;color:#9fb0cc;margin-top:10px}
 
 /* States */
 .states-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:24px}

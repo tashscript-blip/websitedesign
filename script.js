@@ -56,8 +56,8 @@
   });
   setState('zero');
 
-  // --- Films: captioned placeholders (original generated clips not available as files) ---
-  // Each placeholder has a 10-second animated wave. Play/pause toggles the animation and timer.
+  // --- How-To guides: animated wave visuals with captions. ---
+  // No film files are used; the visuals are decorative and the text carries the guide.
   document.querySelectorAll('.film').forEach(function (film) {
     var btn = film.querySelector('.play-btn');
     var timer = film.querySelector('.film-timer');
@@ -139,7 +139,7 @@
       'Where: ' + val(fields.where) + '\n' +
       'Why: ' + val(fields.why) + '\n' +
       'How: ' + val(fields.how) + '\n' +
-      'Send route: PLACEHOLDER — destination undecided. Do not send yet.';
+      'Send to: traheem75th@gmail.com — copy this brief and email it.';
   }
   Object.keys(fields).forEach(function (k) {
     if (fields[k]) fields[k].addEventListener('input', function () { composeBrief(); saveDraft(); });
@@ -166,7 +166,7 @@
   var copyStatus = document.getElementById('copy-status');
   if (copyBtn) copyBtn.addEventListener('click', function () {
     var text = briefEl ? briefEl.textContent : '';
-    function done() { if (copyStatus) copyStatus.textContent = 'Brief copied. Send route is still undecided — see the note below.'; }
+    function done() { if (copyStatus) copyStatus.textContent = 'Brief copied. Email it to traheem75th@gmail.com.'; }
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(done, function () {
         if (copyStatus) copyStatus.textContent = 'Copy failed in this browser — select the brief text and copy it manually.';
@@ -185,7 +185,7 @@
     if (copyStatus) copyStatus.textContent = 'Brief cleared.';
   });
 
-  // Prevent any accidental submit: there is no send destination yet.
+  // The form composes a brief to copy and email; it does not submit anywhere.
   var form = document.getElementById('desk-form');
   if (form) form.addEventListener('submit', function (ev) { ev.preventDefault(); composeBrief(); });
 })();
